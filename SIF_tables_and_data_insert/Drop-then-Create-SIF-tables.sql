@@ -38,14 +38,19 @@ GO
 
 -- SUBSECTION: Drop tables with 2 in name first (could reference 1 or 0)
 
-  -- TO-DO
-
--- SUBSECTION: Drop tables with 1 in name second (could reference 0)
-
 IF OBJECT_ID('cdm_demo_gold.Dim1StaffPersonal', 'U') IS NOT NULL
 BEGIN 
     DROP TABLE cdm_demo_gold.Dim1StaffPersonal;
     PRINT N'Dropped cdm_demo_gold.Dim1StaffPersonal';
+END
+GO
+
+-- SUBSECTION: Drop tables with 1 in name second (could reference 0)
+
+IF OBJECT_ID('cdm_demo_gold.Dim2StaffList', 'U') IS NOT NULL
+BEGIN 
+    DROP TABLE cdm_demo_gold.Dim2StaffList;
+    PRINT N'Dropped cdm_demo_gold.Dim2StaffList';
 END
 GO
 
@@ -74,12 +79,12 @@ SET @IsClusteredValue = CAST(SESSION_CONTEXT(N'IsClustered') AS  VARCHAR (16));
 SET @IsUniqueEnforcedValue = CAST(SESSION_CONTEXT(N'IsUniqueEnforced') AS VARCHAR (16));
 SET @DynamicSql = '
 CREATE TABLE cdm_demo_gold.Dim1StaffPersonal (
-     [RefId] CHAR(36) NOT NULL
+     [RefId] CHAR (36) NOT NULL
     ,[LocalId] INT NOT NULL
     ,[StateProvinceId] VARCHAR (111) NULL
     ,[Title] VARCHAR (111) NULL
     ,[EmploymentStatus] VARCHAR (111) NULL
-    ,CONSTRAINT [StaffPersonalKey1] PRIMARY KEY ' + @IsClusteredValue + ' ([RefId]) ' + @IsUniqueEnforcedValue + '
+    ,CONSTRAINT [PK_StaffPersonal] PRIMARY KEY ' + @IsClusteredValue + ' ([RefId]) ' + @IsUniqueEnforcedValue + '
     ,CONSTRAINT [StaffPersonalLocalIdUnique] UNIQUE ([LocalId]) ' + @IsUniqueEnforcedValue + '
 );
 ';
@@ -90,4 +95,23 @@ GO
 
 -- SUBSECTION: Tables with 2 in name have FK referencing parent 1 table(s)
 
-  -- TO-DO
+BEGIN
+DECLARE @IsClusteredValue VARCHAR (16);
+DECLARE @IsUniqueEnforcedValue VARCHAR (16);
+DECLARE @DynamicSql NVARCHAR(MAX);
+SET @IsClusteredValue = CAST(SESSION_CONTEXT(N'IsClustered') AS  VARCHAR (16));
+SET @IsUniqueEnforcedValue = CAST(SESSION_CONTEXT(N'IsUniqueEnforced') AS VARCHAR (16));
+SET @DynamicSql = '
+CREATE TABLE cdm_demo_gold.Dim2StaffList (
+     [StaffRefId] CHAR (36)  NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,CONSTRAINT [PK_StaffList] PRIMARY KEY ' + @IsClusteredValue + ' ([StaffRefId]) ' + @IsUniqueEnforcedValue + '
+    ,CONSTRAINT [StaffListLocalIdUnique] UNIQUE ([StaffLocalId]) ' + @IsUniqueEnforcedValue + '
+    ,CONSTRAINT [FK_StaffList_StaffPersonal_RefId] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId]) ' + @IsUniqueEnforcedValue + '
+    ,CONSTRAINT [FK_StaffList_StaffPersonal_LocalId] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId]) ' + @IsUniqueEnforcedValue + '
+);
+';
+EXEC sp_executesql @DynamicSql;
+PRINT N'Created cdm_demo_gold.Dim2StaffList';
+END
+GO
