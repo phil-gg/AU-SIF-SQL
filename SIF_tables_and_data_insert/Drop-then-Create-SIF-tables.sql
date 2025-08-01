@@ -79,8 +79,12 @@ CREATE TABLE cdm_demo_gold.Dim1StaffPersonal (
     ,[StateProvinceId] VARCHAR (111) NULL
     ,[Title] VARCHAR (111) NULL
     ,[EmploymentStatus] VARCHAR (111) NULL
-    ,CONSTRAINT [StaffPersonalKey1] PRIMARY KEY ' + @IsClusteredValue + ' ([RefId]) ' + @IsUniqueEnforcedValue +
-');
+    ,CONSTRAINT [StaffPersonalKey1] PRIMARY KEY ' + @IsClusteredValue + ' ([RefId]) ' + @IsUniqueEnforcedValue + '
+    ,CONSTRAINT [StaffPersonalUUID] CHECK ([RefId] LIKE
+        ''[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][-][0-9a-f][0-9a-f][0-9a-f][0-9a-f][-][7][0-9a-f][0-9a-f][0-9a-f][-][89ab][0-9a-f][0-9a-f][0-9a-f][-][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]''
+        )
+    ,CONSTRAINT [StaffPersonalLocalIdUnique] UNIQUE ([LocalId]) ' + @IsUniqueEnforcedValue + '
+);
 ';
 EXEC sp_executesql @DynamicSql;
 PRINT N'Created cdm_demo_gold.Dim1StaffPersonal';
