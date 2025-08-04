@@ -90,7 +90,6 @@ GO
 CREATE TABLE cdm_demo_gold.Dim0ElectronicIdType (
      [TypeKey] CHAR (2) NOT NULL,
      [TypeValue] VARCHAR (255) NULL,
-     -- Define a primary key constraint on the TypeKey column.
      CONSTRAINT [PK_ElectronicIdType] PRIMARY KEY ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim0ElectronicIdType';
@@ -100,6 +99,17 @@ INSERT INTO cdm_demo_gold.Dim0ElectronicIdType ([TypeKey], [TypeValue]) VALUES
     ('03', 'PIN'),
     ('04', 'RFID');
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0ElectronicIdType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0NameUsageType (
+     [TypeKey] CHAR (3) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_ElectronicIdType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0NameUsageType';
+INSERT INTO cdm_demo_gold.Dim0NameUsageType ([TypeKey], [TypeValue]) VALUES
+-- Add values here
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0NameUsageType';
 GO
 
 
