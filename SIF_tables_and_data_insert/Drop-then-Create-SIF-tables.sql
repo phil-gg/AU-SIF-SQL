@@ -87,6 +87,21 @@ INSERT INTO cdm_demo_gold.Dim0StaffEmploymentStatus ([TypeKey], [TypeValue]) VAL
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0StaffEmploymentStatus';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim0ElectronicIdType (
+     [TypeKey] CHAR (2) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     -- Define a primary key constraint on the TypeKey column.
+     CONSTRAINT [PK_ElectronicIdType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0ElectronicIdType';
+INSERT INTO cdm_demo_gold.Dim0ElectronicIdType ([TypeKey], [TypeValue]) VALUES
+    ('01', 'Barcode'),
+    ('02', 'Magstripe'),
+    ('03', 'PIN'),
+    ('04', 'RFID');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0ElectronicIdType';
+GO
+
 
 
 -- SUBSECTION: Tables with 1 in name define a new PK used by child 2 table(s) 
@@ -117,6 +132,19 @@ CREATE TABLE cdm_demo_gold.Dim2StaffList (
     ,CONSTRAINT [PK_StaffList] PRIMARY KEY ([StaffLocalId])
 );
 PRINT N'created cdm_demo_gold.Dim2StaffList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StaffElectronicIdList (
+     [StaffRefId] CHAR (36)  NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[ElectronicIdValue] VARCHAR (111) NULL
+    ,[ElectronicIdTypeKey] CHAR (2) NULL
+    ,CONSTRAINT [FKRef_StaffElectronicIdList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffElectronicIdList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffElectronicIdList] PRIMARY KEY ([StaffLocalId])
+    ,CONSTRAINT [FK_StaffElectronicIdList_ElectronicIdListType] FOREIGN KEY ([ElectronicIdTypeKey]) REFERENCES cdm_demo_gold.Dim0ElectronicIdType ([TypeKey])
+);
+PRINT N'created cdm_demo_gold.Dim2StaffElectronicIdList';
 GO
 
 
