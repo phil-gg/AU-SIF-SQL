@@ -1,20 +1,37 @@
+/* ************************************************************************** */
+/* SECTION: Create target SIF data structure                                  */
+/* ************************************************************************** */
+
+-- Each instance of "VARCHAR (111)" that is a placeholder datatype only.
+-- Such placeholder datatypes will need to be replaced during mapping.
+
+-- SUBSECTION: Tables with 0 in name implement SIF codes (no other dependencies)
+
+  -- TO-DO
+
+-- SUBSECTION: Tables with 1 in name define a new PK used by child 2 table(s) 
+
 CREATE TABLE cdm_demo_gold.Dim1StaffPersonal (
      [RefId] CHAR (36) NOT NULL
     ,[LocalId] INT NOT NULL
     ,[StateProvinceId] VARCHAR (111) NULL
     ,[Title] VARCHAR (111) NULL
     ,[EmploymentStatus] VARCHAR (111) NULL
-    ,CONSTRAINT [PK_StaffPersonal] PRIMARY KEY ([RefId])
-    ,CONSTRAINT [StaffPersonalLocalIdUnique] UNIQUE ([LocalId])
+    ,CONSTRAINT [RefUnique_StaffPersonal] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_StaffPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_StaffPersonal] PRIMARY KEY ([LocalId])
 );
+
+
+
+-- SUBSECTION: Tables with 2 in name have FK referencing parent 1 table(s)
 
 CREATE TABLE cdm_demo_gold.Dim2StaffList (
      [StaffRefId] CHAR (36)  NOT NULL
     ,[StaffLocalId] INT NOT NULL
-    ,CONSTRAINT [PK_StaffList] PRIMARY KEY ([StaffRefId])
-    ,CONSTRAINT [StaffListLocalIdUnique] UNIQUE ([StaffLocalId])
-    ,CONSTRAINT [FK_StaffList_StaffPersonal_RefId] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
-    ,CONSTRAINT [FK_StaffList_StaffPersonal_LocalId] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [FKRef_StaffList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffList] PRIMARY KEY ([StaffLocalId])
 );
 
 

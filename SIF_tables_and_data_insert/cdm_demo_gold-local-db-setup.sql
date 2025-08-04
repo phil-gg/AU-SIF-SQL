@@ -7,28 +7,28 @@ GO
 IF NOT EXISTS (
                 SELECT 1
                 FROM sys.databases
-                WHERE name = N'CommonDataModel_Schema'
+                WHERE name = N'demo_integration_gold'
                 )
 BEGIN
-        PRINT 'Database [CommonDataModel_Schema] does not exist. Creating now...';
+        PRINT 'Database [demo_integration_gold] does not exist. Creating now...';
 
-        CREATE DATABASE [CommonDataModel_Schema];
+        CREATE DATABASE [demo_integration_gold];
 
-        PRINT 'Database [CommonDataModel_Schema] created successfully.';
+        PRINT 'Database [demo_integration_gold] created successfully.';
 END
 ELSE
 BEGIN
-        PRINT 'Database [CommonDataModel_Schema] already exists.';
+        PRINT 'Database [demo_integration_gold] already exists.';
 END
 GO
 
 -- Switch context to the target database
-USE [CommonDataModel_Schema];
+USE [demo_integration_gold];
 GO
 
 -- Enable query store if available
 IF SERVERPROPERTY('ProductVersion') > '12'
-        ALTER DATABASE [CommonDataModel_Schema]
+        ALTER DATABASE [demo_integration_gold]
 
 SET QUERY_STORE = ON;
 
@@ -56,8 +56,8 @@ BEGIN
 END
 GO
 
--- WARNING: The following makes the CommonDataModel_Schema database really insecure!
--- Grant db_owner role to guest user for CommonDataModel_Schema database
+-- WARNING: The following makes the demo_integration_gold database really insecure!
+-- Grant db_owner role to guest user for demo_integration_gold database
 IF NOT EXISTS (
                 SELECT 1
                 FROM sys.database_role_members
@@ -73,7 +73,7 @@ IF NOT EXISTS (
                                 )
                 )
 BEGIN
-        PRINT 'guest is not yet db_owner for CommonDataModel_Schema. Granting now...';
+        PRINT 'guest is not yet db_owner for demo_integration_gold. Granting now...';
 
         ALTER ROLE db_owner ADD MEMBER guest;
 
@@ -81,7 +81,7 @@ BEGIN
 END
 ELSE
 BEGIN
-        PRINT 'guest is already a db_owner for CommonDataModel_Schema.';
+        PRINT 'guest is already a db_owner for demo_integration_gold.';
 END
 GO
 
