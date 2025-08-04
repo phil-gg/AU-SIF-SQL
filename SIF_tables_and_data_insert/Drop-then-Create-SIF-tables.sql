@@ -108,7 +108,6 @@ CREATE TABLE cdm_demo_gold.Dim0NameUsageType (
 );
 PRINT N'Created cdm_demo_gold.Dim0NameUsageType';
 INSERT INTO cdm_demo_gold.Dim0NameUsageType ([TypeKey], [TypeValue]) VALUES
-INSERT INTO cdm_demo_gold.Dim0NameUsageType ([TypeKey], [TypeValue]) VALUES
     ('AKA', 'Also known as or alias'),
     ('BTH', 'Name at Birth'),
     ('LGL', 'Legal Name of the client as defined by the organisation which collects it (legal not defined by SIF standard)'),
