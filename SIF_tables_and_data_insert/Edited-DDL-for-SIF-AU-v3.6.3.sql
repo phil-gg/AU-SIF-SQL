@@ -7,7 +7,23 @@
 
 -- SUBSECTION: Tables with 0 in name implement SIF codes (no other dependencies)
 
-  -- TO-DO
+CREATE TABLE cdm_demo_gold.Dim0StaffEmploymentStatus (
+     [TypeKey] CHAR (1) NOT NULL
+    ,[TypeValue] VARCHAR (255) NULL
+    ,CONSTRAINT [PK_StaffEmploymentStatus] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0StaffEmploymentStatus';
+INSERT INTO cdm_demo_gold.Dim0StaffEmploymentStatus ([TypeKey], [TypeValue]) VALUES
+    ('A', 'Active'),
+    ('I', 'Inactive'),
+    ('N', 'No Longer Employed'),
+    ('O', 'On Leave'),
+    ('S', 'Suspended'),
+    ('X', 'Other - Details Not Available');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0StaffEmploymentStatus';
+GO
+
+
 
 -- SUBSECTION: Tables with 1 in name define a new PK used by child 2 table(s) 
 
@@ -21,6 +37,8 @@ CREATE TABLE cdm_demo_gold.Dim1StaffPersonal (
     ,CONSTRAINT [RefUUID_StaffPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_StaffPersonal] PRIMARY KEY ([LocalId])
 );
+PRINT N'Created cdm_demo_gold.Dim1StaffPersonal';
+GO
 
 
 
@@ -33,6 +51,8 @@ CREATE TABLE cdm_demo_gold.Dim2StaffList (
     ,CONSTRAINT [FKLocal_StaffList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
     ,CONSTRAINT [PK_StaffList] PRIMARY KEY ([StaffLocalId])
 );
+PRINT N'created cdm_demo_gold.Dim2StaffList';
+GO
 
 
 

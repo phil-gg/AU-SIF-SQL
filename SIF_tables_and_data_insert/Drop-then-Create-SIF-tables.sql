@@ -18,6 +18,8 @@ BEGIN
 END
 GO
 
+
+
 -- SUBSECTION: Drop tables with 1 in name second (could reference 0)
 
 IF OBJECT_ID('cdm_demo_gold.Dim1StaffPersonal', 'U') IS NOT NULL
@@ -27,9 +29,18 @@ BEGIN
 END
 GO
 
+
+
 -- SUBSECTION: Drop tables with 0 in name last
 
-  -- TO-DO
+IF OBJECT_ID('cdm_demo_gold.Dim0StaffEmploymentStatus', 'U') IS NOT NULL
+BEGIN 
+    DROP TABLE cdm_demo_gold.Dim0StaffEmploymentStatus;
+    PRINT N'Dropped cdm_demo_gold.Dim0StaffEmploymentStatus';
+END
+GO
+
+
 
 /* ************************************************************************** */
 /* SECTION: Create target SIF data structure                                  */
@@ -46,6 +57,14 @@ CREATE TABLE cdm_demo_gold.Dim0StaffEmploymentStatus (
     ,CONSTRAINT [PK_StaffEmploymentStatus] PRIMARY KEY ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim0StaffEmploymentStatus';
+INSERT INTO cdm_demo_gold.Dim0StaffEmploymentStatus ([TypeKey], [TypeValue]) VALUES
+    ('A', 'Active'),
+    ('I', 'Inactive'),
+    ('N', 'No Longer Employed'),
+    ('O', 'On Leave'),
+    ('S', 'Suspended'),
+    ('X', 'Other - Details Not Available');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0StaffEmploymentStatus';
 GO
 
 
