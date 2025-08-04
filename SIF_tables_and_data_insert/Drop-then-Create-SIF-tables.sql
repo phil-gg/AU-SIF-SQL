@@ -27,7 +27,7 @@ INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
 WHERE s.name = @schemaName
   AND kc.type IN ('PK', 'UQ'); -- 'PK' for Primary Key, 'UQ' for Unique Constraint
 
--- 3. Drop all Check Constraints
+-- Drop all Check Constraints
 SELECT @sql += N'ALTER TABLE ' + QUOTENAME(OBJECT_SCHEMA_NAME(cc.parent_object_id)) + '.' + QUOTENAME(OBJECT_NAME(cc.parent_object_id)) + ' DROP CONSTRAINT ' + QUOTENAME(cc.name) + ';' + CHAR(13) + CHAR(10)
 FROM sys.check_constraints cc
 INNER JOIN sys.tables t ON cc.parent_object_id = t.object_id
@@ -162,9 +162,35 @@ CREATE TABLE cdm_demo_gold.Dim1Country (
     ,[CountryRecordComment] VARCHAR (255) NULL
     ,[DisplayOrder] INT NOT NULL
     ,CONSTRAINT [PK_Country] PRIMARY KEY ([LocalId])
-    ,CONSTRAINT [RefUnique_CountryNatCode] UNIQUE ([NatCode])
+    ,CONSTRAINT [Unique_CountryNatCode] UNIQUE ([NatCode])
 );
 PRINT N'Created cdm_demo_gold.Dim1Country';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim1Language (
+     [LocalId] CHAR (4) NOT NULL
+    ,[NatCode] CHAR (4) NULL
+    ,[InActive] BIT NULL
+    ,[LanguageName] VARCHAR (255) NULL
+    ,[LanguageRecordComment] VARCHAR (255) NULL
+    ,[DisplayOrder] INT NOT NULL
+    ,CONSTRAINT [PK_Language] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [Unique_LanguageNatCode] UNIQUE ([NatCode])
+);
+PRINT N'Created cdm_demo_gold.Dim1Language';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim1VisaSubClass (
+     [LocalId] CHAR (5) NOT NULL
+    ,[VisaSubClassCode] VARCHAR (40) NOT NULL
+    ,[VisaSubClassName] VARCHAR (255) NULL
+    ,[VisaType] VARCHAR (255) NULL
+    ,[InActive] BIT NULL
+    ,[DisplayOrder] INT NOT NULL
+    ,CONSTRAINT [PK_VisaSubClass] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [Unique_VisaSubClassCode] UNIQUE ([VisaSubClassCode])
+);
+PRINT N'Created cdm_demo_gold.Dim1VisaSubClass';
 GO
 
 
