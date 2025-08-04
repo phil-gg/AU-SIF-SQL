@@ -154,6 +154,19 @@ CREATE TABLE cdm_demo_gold.Dim1StaffPersonal (
 PRINT N'Created cdm_demo_gold.Dim1StaffPersonal';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim1Country (
+     [LocalId] VARCHAR (5) NOT NULL
+    ,[NatCode] CHAR (4) NULL
+    ,[InActive] BIT NULL
+    ,[CountryName] VARCHAR (255) NULL
+    ,[CountryRecordComment] VARCHAR (255) NULL
+    ,[DisplayOrder] INT NOT NULL
+    ,CONSTRAINT [PK_Country] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [RefUnique_CountryNatCode] UNIQUE ([NatCode])
+);
+PRINT N'Created cdm_demo_gold.Dim1Country';
+GO
+
 
 
 -- SUBSECTION: Tables with 2 in name have FK referencing parent 1 table(s)
@@ -214,7 +227,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffNames (
     ,CONSTRAINT [FK_StaffNames_PreferredFamilyNameFirst] FOREIGN KEY ([PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_StaffNames_NameUsageType] FOREIGN KEY ([NameUsageTypeKey]) REFERENCES cdm_demo_gold.Dim0NameUsageType ([TypeKey])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffOtherIdList';
+PRINT N'created cdm_demo_gold.Dim2StaffNames';
 GO
 
 
