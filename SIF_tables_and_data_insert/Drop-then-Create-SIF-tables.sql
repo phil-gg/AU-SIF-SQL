@@ -54,6 +54,8 @@ CREATE TABLE cdm_demo_gold.Dim1StaffPersonal (
     ,CONSTRAINT [RefUUID_StaffPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_StaffPersonal] PRIMARY KEY ([LocalId])
 );
+PRINT N'Created cdm_demo_gold.Dim1StaffPersonal';
+GO
 
 
 
@@ -66,6 +68,8 @@ CREATE TABLE cdm_demo_gold.Dim2StaffList (
     ,CONSTRAINT [FKLocal_StaffList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
     ,CONSTRAINT [PK_StaffList] PRIMARY KEY ([StaffLocalId])
 );
+PRINT N'created cdm_demo_gold.Dim2StaffList';
+GO
 
 
 
