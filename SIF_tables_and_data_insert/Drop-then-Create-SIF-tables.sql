@@ -40,7 +40,15 @@ GO
 
 -- SUBSECTION: Tables with 0 in name implement SIF codes (no other dependencies)
 
-  -- TO-DO
+CREATE TABLE cdm_demo_gold.Dim0StaffEmploymentStatus (
+     [TypeKey] CHAR (1) NOT NULL
+    ,[TypeValue] VARCHAR (255) NULL
+    ,CONSTRAINT [PK_StaffEmploymentStatus] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0StaffEmploymentStatus';
+GO
+
+
 
 -- SUBSECTION: Tables with 1 in name define a new PK used by child 2 table(s) 
 
