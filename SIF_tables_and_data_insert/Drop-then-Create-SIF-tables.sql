@@ -206,10 +206,12 @@ CREATE TABLE cdm_demo_gold.Dim2StaffNames (
     ,[PreferredGivenName] VARCHAR (111) NULL
     ,[Suffix] VARCHAR (111) NULL
     ,[FullName] VARCHAR (111) NULL
-    ,[NameUsageTypeKey] VARCHAR (111) NOT NULL
+    ,[NameUsageTypeKey] CHAR (3) NOT NULL
     ,CONSTRAINT [FKRef_StaffNames_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
     ,CONSTRAINT [FKLocal_StaffNames_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
     ,CONSTRAINT [PK_StaffNames] PRIMARY KEY ([StaffLocalId])
+    ,CONSTRAINT [FK_StaffNames_FamilyNameFirst] FOREIGN KEY ([FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StaffNames_PreferredFamilyNameFirst] FOREIGN KEY ([PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_StaffNames_NameUsageType] FOREIGN KEY ([NameUsageTypeKey]) REFERENCES cdm_demo_gold.Dim0NameUsageType ([TypeKey])
 );
 PRINT N'created cdm_demo_gold.Dim2StaffOtherIdList';
