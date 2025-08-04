@@ -147,4 +147,17 @@ CREATE TABLE cdm_demo_gold.Dim2StaffElectronicIdList (
 PRINT N'created cdm_demo_gold.Dim2StaffElectronicIdList';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim2StaffOtherIdList (
+     [StaffRefId] CHAR (36)  NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[OtherIdValue] VARCHAR (111) NULL
+    ,[OtherIdType] VARCHAR (111) NULL -- Not a key, and no FK relationship this time, unlike electronic, above
+    ,CONSTRAINT [FKRef_StaffOtherIdList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffOtherIdList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffOtherIdList] PRIMARY KEY ([StaffLocalId])
+);
+PRINT N'created cdm_demo_gold.Dim2StaffOtherIdList';
+GO
+
+
 
