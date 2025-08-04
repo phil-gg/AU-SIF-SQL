@@ -122,9 +122,23 @@ INSERT INTO cdm_demo_gold.Dim0NameUsageType ([TypeKey], [TypeValue]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0NameUsageType';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim0YesNoType (
+     [TypeKey] CHAR (1) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_YesNoType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0YesNoType';
+INSERT INTO cdm_demo_gold.Dim0YesNoType ([TypeKey], [TypeValue]) VALUES
+    ('N', 'No'),
+    ('U', 'Unknown'),
+    ('X', 'Not Provided'),
+    ('Y', 'Yes');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0YesNoType';
+GO
 
 
--- SUBSECTION: Tables with 1 in name define a new PK used by child 2 table(s) 
+
+-- SUBSECTION: Tables with 1 in name define a new PK used by child 2 table(s)
 
 CREATE TABLE cdm_demo_gold.Dim1StaffPersonal (
      [RefId] CHAR (36) NOT NULL
@@ -145,7 +159,7 @@ GO
 -- SUBSECTION: Tables with 2 in name have FK referencing parent 1 table(s)
 
 CREATE TABLE cdm_demo_gold.Dim2StaffList (
-     [StaffRefId] CHAR (36)  NOT NULL
+     [StaffRefId] CHAR (36) NOT NULL
     ,[StaffLocalId] INT NOT NULL
     ,CONSTRAINT [FKRef_StaffList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
     ,CONSTRAINT [FKLocal_StaffList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
@@ -155,7 +169,7 @@ PRINT N'created cdm_demo_gold.Dim2StaffList';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StaffElectronicIdList (
-     [StaffRefId] CHAR (36)  NOT NULL
+     [StaffRefId] CHAR (36) NOT NULL
     ,[StaffLocalId] INT NOT NULL
     ,[ElectronicIdValue] VARCHAR (111) NULL
     ,[ElectronicIdTypeKey] CHAR (2) NULL
@@ -168,13 +182,35 @@ PRINT N'created cdm_demo_gold.Dim2StaffElectronicIdList';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StaffOtherIdList (
-     [StaffRefId] CHAR (36)  NOT NULL
+     [StaffRefId] CHAR (36) NOT NULL
     ,[StaffLocalId] INT NOT NULL
     ,[OtherIdValue] VARCHAR (111) NULL
     ,[OtherIdType] VARCHAR (111) NULL -- Not a key, and no FK relationship this time, unlike electronic, above
     ,CONSTRAINT [FKRef_StaffOtherIdList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
     ,CONSTRAINT [FKLocal_StaffOtherIdList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
     ,CONSTRAINT [PK_StaffOtherIdList] PRIMARY KEY ([StaffLocalId])
+);
+PRINT N'created cdm_demo_gold.Dim2StaffOtherIdList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StaffNames (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[Title] VARCHAR (111) NULL
+    ,[FamilyName] VARCHAR (111) NULL
+    ,[GivenName] VARCHAR (111) NULL
+    ,[MiddleName] VARCHAR (111) NULL
+    ,[FamilyNameFirst] CHAR (1) NULL
+    ,[PreferredFamilyName] VARCHAR (111) NULL
+    ,[PreferredFamilyNameFirst] CHAR (1) NULL
+    ,[PreferredGivenName] VARCHAR (111) NULL
+    ,[Suffix] VARCHAR (111) NULL
+    ,[FullName] VARCHAR (111) NULL
+    ,[NameUsageTypeKey] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_StaffNames_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffNames_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffNames] PRIMARY KEY ([StaffLocalId])
+    ,CONSTRAINT [FK_StaffNames_NameUsageType] FOREIGN KEY ([NameUsageTypeKey]) REFERENCES cdm_demo_gold.Dim0NameUsageType ([TypeKey])
 );
 PRINT N'created cdm_demo_gold.Dim2StaffOtherIdList';
 GO
