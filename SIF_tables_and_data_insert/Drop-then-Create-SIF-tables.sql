@@ -6,41 +6,61 @@ PRINT N'Using database [demo_integration_gold].';
 GO
 
 /* ************************************************************************** */
-/* SECTION: Conditional drop table for every table created by this script     */
+/* SECTION: Dynamically drop all constraints & user tables in cdm_demo_gold   */
 /* ************************************************************************** */
 
--- SUBSECTION: Drop tables with 2 in name first (could reference 1 or 0)
+DECLARE @schemaName SYSNAME = 'cdm_demo_gold';
+DECLARE @sql NVARCHAR(MAX) = N'';
 
-IF OBJECT_ID('cdm_demo_gold.Dim2StaffList', 'U') IS NOT NULL
-BEGIN 
-    DROP TABLE cdm_demo_gold.Dim2StaffList;
-    PRINT N'Dropped cdm_demo_gold.Dim2StaffList';
-END
+-- Drop all Foreign Key Constraints
+SELECT @sql += N'ALTER TABLE ' + QUOTENAME(OBJECT_SCHEMA_NAME(fk.parent_object_id)) + '.' + QUOTENAME(OBJECT_NAME(fk.parent_object_id)) + ' DROP CONSTRAINT ' + QUOTENAME(fk.name) + ';' + CHAR(13) + CHAR(10)
+FROM sys.foreign_keys fk
+INNER JOIN sys.tables t ON fk.parent_object_id = t.object_id
+INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
+WHERE s.name = @schemaName;
+
+-- Drop all Primary Key and Unique Constraints (including any clustered index created by a PK)
+SELECT @sql += N'ALTER TABLE ' + QUOTENAME(OBJECT_SCHEMA_NAME(kc.parent_object_id)) + '.' + QUOTENAME(OBJECT_NAME(kc.parent_object_id)) + ' DROP CONSTRAINT ' + QUOTENAME(kc.name) + ';' + CHAR(13) + CHAR(10)
+FROM sys.key_constraints kc
+INNER JOIN sys.tables t ON kc.parent_object_id = t.object_id
+INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
+WHERE s.name = @schemaName
+  AND kc.type IN ('PK', 'UQ'); -- 'PK' for Primary Key, 'UQ' for Unique Constraint
+
+-- 3. Drop all Check Constraints
+SELECT @sql += N'ALTER TABLE ' + QUOTENAME(OBJECT_SCHEMA_NAME(cc.parent_object_id)) + '.' + QUOTENAME(OBJECT_NAME(cc.parent_object_id)) + ' DROP CONSTRAINT ' + QUOTENAME(cc.name) + ';' + CHAR(13) + CHAR(10)
+FROM sys.check_constraints cc
+INNER JOIN sys.tables t ON cc.parent_object_id = t.object_id
+INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
+WHERE s.name = @schemaName;
+
+-- Print the generated SQL for review
+PRINT N'Dropping contraints as shown below...';
+PRINT @sql;
+
+-- Execute the dynamic SQL
+EXEC sp_executesql @sql;
+PRINT N'All constraints (Foreign Key, Primary Key, Unique, Check) for user tables in schema ' + @schemaName + ' have deleted.';
 GO
 
+-- Now constraints dropped, tables can be dropped without errors
+DECLARE @schemaName SYSNAME = 'cdm_demo_gold';
+DECLARE @sql NVARCHAR(MAX) = N'';
 
+-- Drop all user tables within the specified schema
+SELECT @sql += N'DROP TABLE ' + QUOTENAME(TABLE_SCHEMA) + '.' + QUOTENAME(TABLE_NAME) + ';' + CHAR(13) + CHAR(10)
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_SCHEMA = @schemaName
+  AND TABLE_TYPE = 'BASE TABLE'; -- Ensures only user-defined tables are targeted
 
--- SUBSECTION: Drop tables with 1 in name second (could reference 0)
+-- Print the generated SQL for review
+PRINT N'Dropping tables as shown below...';
+PRINT @sql;
 
-IF OBJECT_ID('cdm_demo_gold.Dim1StaffPersonal', 'U') IS NOT NULL
-BEGIN 
-    DROP TABLE cdm_demo_gold.Dim1StaffPersonal;
-    PRINT N'Dropped cdm_demo_gold.Dim1StaffPersonal';
-END
+-- Execute the dynamic SQL
+EXEC sp_executesql @sql;
+PRINT N'All user tables in schema ' + @schemaName + ' have deleted.';
 GO
-
-
-
--- SUBSECTION: Drop tables with 0 in name last
-
-IF OBJECT_ID('cdm_demo_gold.Dim0StaffEmploymentStatus', 'U') IS NOT NULL
-BEGIN 
-    DROP TABLE cdm_demo_gold.Dim0StaffEmploymentStatus;
-    PRINT N'Dropped cdm_demo_gold.Dim0StaffEmploymentStatus';
-END
-GO
-
-
 
 /* ************************************************************************** */
 /* SECTION: Create target SIF data structure                                  */
@@ -76,10 +96,11 @@ CREATE TABLE cdm_demo_gold.Dim1StaffPersonal (
     ,[LocalId] INT NOT NULL
     ,[StateProvinceId] VARCHAR (111) NULL
     ,[Title] VARCHAR (111) NULL
-    ,[EmploymentStatus] VARCHAR (111) NULL
+    ,[EmploymentStatus] CHAR (1) NULL
     ,CONSTRAINT [RefUnique_StaffPersonal] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_StaffPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_StaffPersonal] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FK_StaffPersonal_EmploymentStatus] FOREIGN KEY ([EmploymentStatus]) REFERENCES cdm_demo_gold.Dim0StaffEmploymentStatus ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim1StaffPersonal';
 GO
@@ -97,6 +118,5 @@ CREATE TABLE cdm_demo_gold.Dim2StaffList (
 );
 PRINT N'created cdm_demo_gold.Dim2StaffList';
 GO
-
 
 

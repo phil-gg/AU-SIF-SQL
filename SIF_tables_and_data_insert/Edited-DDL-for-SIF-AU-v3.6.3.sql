@@ -32,10 +32,11 @@ CREATE TABLE cdm_demo_gold.Dim1StaffPersonal (
     ,[LocalId] INT NOT NULL
     ,[StateProvinceId] VARCHAR (111) NULL
     ,[Title] VARCHAR (111) NULL
-    ,[EmploymentStatus] VARCHAR (111) NULL
+    ,[EmploymentStatus] CHAR (1) NULL
     ,CONSTRAINT [RefUnique_StaffPersonal] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_StaffPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_StaffPersonal] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FK_StaffPersonal_EmploymentStatus] FOREIGN KEY ([EmploymentStatus]) REFERENCES cdm_demo_gold.Dim0StaffEmploymentStatus ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim1StaffPersonal';
 GO
