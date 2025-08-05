@@ -848,6 +848,20 @@ INSERT INTO cdm_demo_gold.Dim0AlertMessageType ([TypeKey], [TypeValue]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0AlertMessageType';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim0MedicalSeverity (
+     [TypeKey] VARCHAR (8) NOT NULL,
+     CONSTRAINT [PK_MedicalSeverity] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0MedicalSeverity';
+INSERT INTO cdm_demo_gold.Dim0MedicalSeverity ([TypeKey]) VALUES
+    ('Low'),
+    ('Moderate'),
+    ('High'),
+    ('Severe'),
+    ('Unknown');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0MedicalSeverity';
+GO
+
 
 
 -- -----------------------------------------------------------------------------
@@ -1369,3 +1383,15 @@ CREATE TABLE cdm_demo_gold.Dim2StudentAlertMessages (
 PRINT N'Created cdm_demo_gold.Dim2StudentAlertMessages';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim2StudentMedicalAlertMessages (
+     [StudentRefId] CHAR (36) NOT NULL
+    ,[StudentLocalId] INT NOT NULL
+    ,[MedicalAlertContent] VARCHAR (896) NOT NULL
+    ,[MedicalSeverity] VARCHAR (8) NOT NULL
+    ,CONSTRAINT [FKRef_StudentMedicalAlertMessages_StudentPersonal] FOREIGN KEY ([StudentRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentMedicalAlertMessages_StudentPersonal] FOREIGN KEY ([StudentLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentMedicalAlertMessages] PRIMARY KEY ([StudentLocalId],[MedicalAlertContent])
+    ,CONSTRAINT [FK_StudentMedicalAlertMessages_MedicalSeverity] FOREIGN KEY ([MedicalSeverity]) REFERENCES cdm_demo_gold.Dim0MedicalSeverity ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentMedicalAlertMessages';
+GO
