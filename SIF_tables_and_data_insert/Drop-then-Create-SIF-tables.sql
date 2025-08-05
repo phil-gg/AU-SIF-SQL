@@ -789,6 +789,49 @@ INSERT INTO cdm_demo_gold.Dim0SpatialUnitType ([TypeKey], [TypeValue]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SpatialUnitType';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim0PhoneNumberType (
+     [TypeKey] CHAR (4) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_PhoneNumberType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0PhoneNumberType';
+INSERT INTO cdm_demo_gold.Dim0PhoneNumberType ([TypeKey], [TypeValue]) VALUES
+    ('0096', 'Main telephone number'),
+    ('0350', 'Alternate telephone number'),
+    ('0359', 'Answering service'),
+    ('0370', 'Beeper number'),
+    ('0400', 'Appointment telephone number'),
+    ('0426', 'Telex number'),
+    ('0437', 'Telemail'),
+    ('0448', 'Voice mail'),
+    ('0478', 'Instant messaging number'),
+    ('0486', 'Media conferencing number'),
+    ('0777', 'Home Telephone Number'),
+    ('0779', 'Home Mobile'),
+    ('0887', 'Work Telephone Number'),
+    ('0888', 'Mobile'),
+    ('0889', 'Work Mobile'),
+    ('2364', 'Facsimile number');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0PhoneNumberType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0EmailType (
+     [TypeKey] CHAR (2) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_EmailType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0EmailType';
+INSERT INTO cdm_demo_gold.Dim0EmailType ([TypeKey], [TypeValue]) VALUES
+    ('01', 'Primary'),
+    ('02', 'Alternate 1'),
+    ('03', 'Alternate 2'),
+    ('04', 'Alternate 3'),
+    ('05', 'Alternate 4'),
+    ('06', 'Work'),
+    ('07', 'Personal');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0EmailType';
+GO
+
 
 
 -- SUBSECTION: Tables with 1 in name define a new PK used by child 2 table(s)
@@ -844,6 +887,17 @@ CREATE TABLE cdm_demo_gold.Dim1VisaSubClass (
     ,CONSTRAINT [Unique_VisaSubClassCode] UNIQUE ([VisaSubClassCode])
 );
 PRINT N'Created cdm_demo_gold.Dim1VisaSubClass';
+GO
+
+-- Don't think BCE will ever send Staff household contact info in SIF messages.
+-- Therefore recommend this table be removed for production.
+CREATE TABLE cdm_demo_gold.Dim1StaffHouseholdContactInfo (
+     [HouseholdContactId] VARCHAR (111) NOT NULL
+    ,[PreferenceNumber] INT NULL
+    ,[HouseholdSalutation] VARCHAR (111) NULL
+    ,CONSTRAINT [PK_HouseholdContactInfo] PRIMARY KEY ([HouseholdContactId])
+);
+PRINT N'created cdm_demo_gold.Dim1StaffHouseholdContactInfo';
 GO
 
 
@@ -1083,6 +1137,134 @@ CREATE TABLE cdm_demo_gold.Dim2StaffAddressList (
     ,CONSTRAINT [FK_StaffAddressList_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
     ,CONSTRAINT [FK_StaffAddressList_StateProvince] FOREIGN KEY ([StateProvince]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
 );
+PRINT N'created cdm_demo_gold.Dim2StaffAddressList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StaffPhoneNumberList (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[PhoneNumberType] CHAR (4) NOT NULL
+    ,[Number] VARCHAR (111) NOT NULL
+    ,[Extension] VARCHAR (111) NULL
+    ,[ListedStatus] VARCHAR (111) NULL
+    ,[Preference] INT NULL
+    ,CONSTRAINT [FKRef_StaffPhoneNumberList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffPhoneNumberList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffPhoneNumberList] PRIMARY KEY ([StaffLocalId],[PhoneNumberType])
+    ,CONSTRAINT [FK_StaffPhoneNumberList_PhoneNumberType] FOREIGN KEY ([PhoneNumberType]) REFERENCES cdm_demo_gold.Dim0PhoneNumberType ([TypeKey])
+);
+PRINT N'created cdm_demo_gold.Dim2StaffPhoneNumberList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StaffEmailList (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[EmailType] CHAR (2) NOT NULL
+    ,[Email] VARCHAR (255) NOT NULL
+    ,CONSTRAINT [FKRef_StaffEmailList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffEmailList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffEmailList] PRIMARY KEY ([StaffLocalId],[EmailType])
+    ,CONSTRAINT [FK_StaffEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
+);
+PRINT N'created cdm_demo_gold.Dim2StaffEmailList';
+GO
+
+-- Don't think BCE will ever send Staff household contact info in SIF messages.
+-- Therefore recommend this table be removed for production.
+CREATE TABLE cdm_demo_gold.Bridge2StaffHouseholdContactInfo (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[StaffHouseholdContactId] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_StaffHouseholdContactInfo_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffHouseholdContactInfo_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffHouseholdContactInfo] PRIMARY KEY ([StaffLocalId], [StaffHouseholdContactId])
+    ,CONSTRAINT [FK_StaffHouseholdContactInfo_HouseholdContactId] FOREIGN KEY ([StaffHouseholdContactId]) REFERENCES cdm_demo_gold.Dim1StaffHouseholdContactInfo ([HouseholdContactId])
+);
+PRINT N'created cdm_demo_gold.Bridge2StaffHouseholdContactInfo';
+GO
+
+-- Don't think BCE will ever send Staff household contact info in SIF messages.
+-- Therefore recommend this table be removed for production.
+CREATE TABLE cdm_demo_gold.Dim2StaffHouseholdContactAddressList (
+     [StaffHouseholdContactLocalId] VARCHAR (111) NOT NULL
+    ,[AddressLocalId] VARCHAR (111) NOT NULL
+    ,[AddressType] VARCHAR (5) NOT NULL
+    ,[AddressRole] CHAR (4) NOT NULL
+    ,[EffectiveFromDate] DATETIME NULL
+    ,[EffectiveToDate] DATETIME NULL
+    ,[AddressStreet_Line1] VARCHAR (111) NULL
+    ,[AddressStreet_Line2] VARCHAR (111) NULL
+    ,[AddressStreet_Line3] VARCHAR (111) NULL
+    ,[AddressStreet_Complex] VARCHAR (111) NULL
+    ,[AddressStreet_StreetNumber] VARCHAR (111) NULL
+    ,[AddressStreet_StreetPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_StreetName] VARCHAR (111) NULL
+    ,[AddressStreet_StreetType] VARCHAR (111) NULL
+    ,[AddressStreet_StreetSuffix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentType] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumber] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberSuffix] VARCHAR (111) NULL
+    ,[City] VARCHAR (111) NOT NULL
+    ,[StateProvince] VARCHAR (3) NULL
+    ,[Country] VARCHAR (111) NULL
+    ,[PostalCode] VARCHAR (111) NOT NULL
+-- LatLong to 5dp is accurate to about 1 metre on Earth
+    ,[GridLocation_DecimalLatitude] DECIMAL (7,5) NULL
+    ,[GridLocation_DecimalLongitude] DECIMAL (8,5) NULL
+    ,[MapReference_MapType] VARCHAR (111) NULL
+    ,[MapReference_XCoordinate] VARCHAR (111) NULL
+    ,[MapReference_YCoordinate] VARCHAR (111) NULL
+    ,[MapReference_MapNumber] VARCHAR (111) NULL
+    ,[RadioContact] VARCHAR (111) NULL
+    ,[Community] VARCHAR (111) NULL
+    ,[AddressGlobalUID] VARCHAR (111) NULL
+    ,[StatisticalAreaLevel4Code] CHAR (3) NULL
+    ,[StatisticalAreaLevel4Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel3Code] CHAR (5) NULL
+    ,[StatisticalAreaLevel3Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel2Code] CHAR (9) NULL
+    ,[StatisticalAreaLevel2Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel1] CHAR (11) NULL
+    ,[StatisticalAreaMeshBlock] CHAR (11) NULL
+    ,[LocalGovernmentAreaName] VARCHAR (111) NULL
+    ,CONSTRAINT [FKLocal_StaffHouseholdContactAddressList_StaffHouseholdContact] FOREIGN KEY ([StaffHouseholdContactLocalId]) REFERENCES cdm_demo_gold.Dim1StaffHouseholdContactInfo ([HouseholdContactId])
+    ,CONSTRAINT [PK_StaffHouseholdContactAddressList] PRIMARY KEY ([StaffHouseholdContactLocalId],[AddressLocalId])
+    ,CONSTRAINT [FK_StaffHouseholdContactAddressList_AddressType] FOREIGN KEY ([AddressType]) REFERENCES cdm_demo_gold.Dim0AddressType ([TypeKey])
+    ,CONSTRAINT [FK_StaffHouseholdContactAddressList_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
+    ,CONSTRAINT [FK_StaffHouseholdContactAddressList_StateProvince] FOREIGN KEY ([StateProvince]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
+);
+PRINT N'created cdm_demo_gold.Dim2StaffHouseholdContactAddressList';
+GO
+
+-- Don't think BCE will ever send Staff household contact info in SIF messages.
+-- Therefore recommend this table be removed for production.
+CREATE TABLE cdm_demo_gold.Dim2StaffHouseholdContactPhoneNumberList (
+     [StaffHouseholdContactLocalId] VARCHAR (111) NOT NULL
+    ,[PhoneNumberType] CHAR (4) NOT NULL
+    ,[Number] VARCHAR (111) NOT NULL
+    ,[Extension] VARCHAR (111) NULL
+    ,[ListedStatus] VARCHAR (111) NULL
+    ,[Preference] INT NULL
+    ,CONSTRAINT [FKLocal_StaffHouseholdContactPhoneNumberList_StaffPersonal] FOREIGN KEY ([StaffHouseholdContactLocalId]) REFERENCES cdm_demo_gold.Dim1StaffHouseholdContactInfo ([HouseholdContactId])
+    ,CONSTRAINT [PK_StaffHouseholdContactPhoneNumberList] PRIMARY KEY ([StaffHouseholdContactLocalId],[PhoneNumberType])
+    ,CONSTRAINT [FK_StaffHouseholdContactPhoneNumberList_PhoneNumberType] FOREIGN KEY ([PhoneNumberType]) REFERENCES cdm_demo_gold.Dim0PhoneNumberType ([TypeKey])
+);
+PRINT N'created cdm_demo_gold.Dim2StaffHouseholdContactPhoneNumberList';
+GO
+
+-- Don't think BCE will ever send Staff household contact info in SIF messages.
+-- Therefore recommend this table be removed for production.
+CREATE TABLE cdm_demo_gold.Dim2StaffHouseholdContactEmailList (
+     [StaffHouseholdContactLocalId] VARCHAR (111) NOT NULL
+    ,[EmailType] CHAR (2) NOT NULL
+    ,[Email] VARCHAR (255) NOT NULL
+    ,CONSTRAINT [FKLocal_StaffHouseholdContactEmailList_StaffPersonal] FOREIGN KEY ([StaffHouseholdContactLocalId]) REFERENCES cdm_demo_gold.Dim1StaffHouseholdContactInfo ([HouseholdContactId])
+    ,CONSTRAINT [PK_StaffHouseholdContactEmailList] PRIMARY KEY ([StaffHouseholdContactLocalId],[EmailType])
+    ,CONSTRAINT [FK_StaffHouseholdContactEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
+);
+PRINT N'created cdm_demo_gold.Dim2StaffHouseholdContactEmailList';
+GO
 
 
 
