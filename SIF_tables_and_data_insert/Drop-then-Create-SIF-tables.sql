@@ -729,6 +729,66 @@ INSERT INTO cdm_demo_gold.Dim0MaritalStatus ([TypeKey], [TypeValue]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0MaritalStatus';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim0AddressType (
+     [TypeKey] VARCHAR (5) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_AddressType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0AddressType';
+INSERT INTO cdm_demo_gold.Dim0AddressType ([TypeKey], [TypeValue]) VALUES
+    ('0123', 'Mailing address'),
+    ('0123A', 'Alternate Mailing address'),
+    ('0124', 'Shipping address'),
+    ('0124A', 'Alternate Shipping address'),
+    ('0125', 'Billing address'),
+    ('0765', 'Physical location address'),
+    ('0765A', 'Alternate Physical location address'),
+    ('9999', 'Other'),
+    ('9999A', 'Alternate Other address');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0AddressType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0AddressRole (
+     [TypeKey] CHAR (4) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_AddressRole] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0AddressRole';
+INSERT INTO cdm_demo_gold.Dim0AddressRole ([TypeKey], [TypeValue]) VALUES
+    ('012A', 'Term Address'),
+    ('012B', 'Home Address'),
+    ('012C', 'Home Stay Address'),
+    ('013A', 'Overseas Address'),
+    ('1073', 'Other home address'),
+    ('1074', 'Employer''s address'),
+    ('1075', 'Employment address'),
+    ('2382', 'Other organisation address'),
+    ('9999', 'Other Address');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0AddressRole';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0SpatialUnitType (
+     [TypeKey] VARCHAR (5) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_SpatialUnitType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0SpatialUnitType';
+INSERT INTO cdm_demo_gold.Dim0SpatialUnitType ([TypeKey], [TypeValue]) VALUES
+    ('MB', 'Mesh Block'),
+    ('SA1', 'Statistical Area Level 1'),
+    ('SA2', 'Statistical Area Level 2'),
+    ('SA3', 'Statistical Area Level 3'),
+    ('SA4', 'Statistical Area Level 4'),
+    ('GCCSA', 'Greater Capital City Statistical Areas'),
+    ('S/T', 'State and Territory'),
+    ('LG', 'Local Government Area'),
+    ('TR', 'TourismRegion'),
+    ('ILOC', 'Indigenous Location'),
+    ('IARE', 'Indigenous Area'),
+    ('IREG', 'Indigenous Region');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SpatialUnitType';
+GO
+
 
 
 -- SUBSECTION: Tables with 1 in name define a new PK used by child 2 table(s)
@@ -760,7 +820,7 @@ CREATE TABLE cdm_demo_gold.Dim1Country (
 PRINT N'Created cdm_demo_gold.Dim1Country';
 GO
 
-CREATE TABLE cdm_demo_gold.Dim1Language (
+CREATE TABLE cdm_demo_gold.Dim1Languages (
      [LocalId] CHAR (4) NOT NULL
     ,[NatCode] CHAR (4) NULL
     ,[InActive] BIT NULL
@@ -770,7 +830,7 @@ CREATE TABLE cdm_demo_gold.Dim1Language (
     ,CONSTRAINT [PK_Language] PRIMARY KEY ([LocalId])
     ,CONSTRAINT [Unique_LanguageNatCode] UNIQUE ([NatCode])
 );
-PRINT N'Created cdm_demo_gold.Dim1Language';
+PRINT N'Created cdm_demo_gold.Dim1Languages';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim1VisaSubClass (
@@ -804,10 +864,10 @@ CREATE TABLE cdm_demo_gold.Dim2StaffElectronicIdList (
      [StaffRefId] CHAR (36) NOT NULL
     ,[StaffLocalId] INT NOT NULL
     ,[ElectronicIdValue] VARCHAR (111) NULL
-    ,[ElectronicIdTypeKey] CHAR (2) NULL
+    ,[ElectronicIdTypeKey] CHAR (2) NOT NULL
     ,CONSTRAINT [FKRef_StaffElectronicIdList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
     ,CONSTRAINT [FKLocal_StaffElectronicIdList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
-    ,CONSTRAINT [PK_StaffElectronicIdList] PRIMARY KEY ([StaffLocalId])
+    ,CONSTRAINT [PK_StaffElectronicIdList] PRIMARY KEY ([StaffLocalId],[ElectronicIdTypeKey])
     ,CONSTRAINT [FK_StaffElectronicIdList_ElectronicIdListType] FOREIGN KEY ([ElectronicIdTypeKey]) REFERENCES cdm_demo_gold.Dim0ElectronicIdType ([TypeKey])
 );
 PRINT N'created cdm_demo_gold.Dim2StaffElectronicIdList';
@@ -817,10 +877,10 @@ CREATE TABLE cdm_demo_gold.Dim2StaffOtherIdList (
      [StaffRefId] CHAR (36) NOT NULL
     ,[StaffLocalId] INT NOT NULL
     ,[OtherIdValue] VARCHAR (111) NULL
-    ,[OtherIdType] VARCHAR (111) NULL -- Not a key, and no FK relationship this time, unlike electronic, above
+    ,[OtherIdType] VARCHAR (111) NOT NULL -- Not a key, and no FK relationship this time, unlike electronic, above
     ,CONSTRAINT [FKRef_StaffOtherIdList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
     ,CONSTRAINT [FKLocal_StaffOtherIdList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
-    ,CONSTRAINT [PK_StaffOtherIdList] PRIMARY KEY ([StaffLocalId])
+    ,CONSTRAINT [PK_StaffOtherIdList] PRIMARY KEY ([StaffLocalId],[OtherIdType])
 );
 PRINT N'created cdm_demo_gold.Dim2StaffOtherIdList';
 GO
@@ -841,7 +901,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffNames (
     ,[NameUsageTypeKey] CHAR (3) NOT NULL
     ,CONSTRAINT [FKRef_StaffNames_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
     ,CONSTRAINT [FKLocal_StaffNames_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
-    ,CONSTRAINT [PK_StaffNames] PRIMARY KEY ([StaffLocalId])
+    ,CONSTRAINT [PK_StaffNames] PRIMARY KEY ([StaffLocalId],[NameUsageTypeKey])
     ,CONSTRAINT [FK_StaffNames_FamilyNameFirst] FOREIGN KEY ([FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_StaffNames_PreferredFamilyNameFirst] FOREIGN KEY ([PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_StaffNames_NameUsageType] FOREIGN KEY ([NameUsageTypeKey]) REFERENCES cdm_demo_gold.Dim0NameUsageType ([TypeKey])
@@ -909,6 +969,120 @@ CREATE TABLE cdm_demo_gold.Dim2StaffDemographics (
 );
 PRINT N'created cdm_demo_gold.Dim2StaffDemographics';
 GO
+
+CREATE TABLE cdm_demo_gold.Bridge2StaffCountriesOfCitizenship (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[CountryLocalId] VARCHAR (5) NOT NULL
+    ,CONSTRAINT [FKRef_StaffCountriesOfCitizenship_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffCountriesOfCitizenship_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffCountriesOfCitizenship] PRIMARY KEY ([StaffLocalId], [CountryLocalId])
+    ,CONSTRAINT [FK_StaffCountriesOfCitizenship_CountryLocalId] FOREIGN KEY ([CountryLocalId]) REFERENCES cdm_demo_gold.Dim1Country ([LocalId])
+);
+PRINT N'created cdm_demo_gold.Bridge2StaffCountriesOfCitizenship';
+GO
+
+CREATE TABLE cdm_demo_gold.Bridge2StaffCountriesOfResidency (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[CountryLocalId] VARCHAR (5) NOT NULL
+    ,CONSTRAINT [FKRef_StaffCountriesOfResidency_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffCountriesOfResidency_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffCountriesOfResidency] PRIMARY KEY ([StaffLocalId], [CountryLocalId])
+    ,CONSTRAINT [FK_StaffCountriesOfResidency_CountryLocalId] FOREIGN KEY ([CountryLocalId]) REFERENCES cdm_demo_gold.Dim1Country ([LocalId])
+);
+PRINT N'created cdm_demo_gold.Bridge2StaffCountriesOfResidency';
+GO
+
+CREATE TABLE cdm_demo_gold.Bridge2StaffLanguages (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[LanguageLocalId] CHAR (4) NOT NULL
+    ,CONSTRAINT [FKRef_StaffLanguages_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffLanguages_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffLanguages] PRIMARY KEY ([StaffLocalId], [LanguageLocalId])
+    ,CONSTRAINT [FK_StaffLanguages_LanguageLocalId] FOREIGN KEY ([LanguageLocalId]) REFERENCES cdm_demo_gold.Dim1Languages ([LocalId])
+);
+PRINT N'created cdm_demo_gold.Bridge2StaffLanguages';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StaffReligiousEvent (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[ReligiousEventDescription] VARCHAR (111)  NOT NULL
+    ,[ReligiousEventDate] DATETIME  NOT NULL
+    ,CONSTRAINT [FKRef_StaffReligiousEvent_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffReligiousEvent_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffReligiousEvent] PRIMARY KEY ([StaffLocalId],[ReligiousEventDate])
+);
+PRINT N'created cdm_demo_gold.Dim2StaffReligiousEvent';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StaffPassport (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[Number] VARCHAR (111) NOT NULL
+    ,[ExpiryDate] DATETIME  NULL
+    ,[Country] VARCHAR (5)  NOT NULL
+    ,CONSTRAINT [FKRef_StaffPassport_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffPassport_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffPassport] PRIMARY KEY ([StaffLocalId],[Number],[Country])
+    ,CONSTRAINT [FK_StaffPassport_Country] FOREIGN KEY ([Country]) REFERENCES cdm_demo_gold.Dim1Country ([LocalId])
+);
+PRINT N'created cdm_demo_gold.Dim2StaffPassport';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StaffAddressList (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[AddressLocalId] VARCHAR (111) NOT NULL
+    ,[AddressType] VARCHAR (5) NOT NULL
+    ,[AddressRole] CHAR (4) NOT NULL
+    ,[EffectiveFromDate] DATETIME NULL
+    ,[EffectiveToDate] DATETIME NULL
+    ,[AddressStreet_Line1] VARCHAR (111) NULL
+    ,[AddressStreet_Line2] VARCHAR (111) NULL
+    ,[AddressStreet_Line3] VARCHAR (111) NULL
+    ,[AddressStreet_Complex] VARCHAR (111) NULL
+    ,[AddressStreet_StreetNumber] VARCHAR (111) NULL
+    ,[AddressStreet_StreetPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_StreetName] VARCHAR (111) NULL
+    ,[AddressStreet_StreetType] VARCHAR (111) NULL
+    ,[AddressStreet_StreetSuffix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentType] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumber] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberSuffix] VARCHAR (111) NULL
+    ,[City] VARCHAR (111) NOT NULL
+    ,[StateProvince] VARCHAR (3) NULL
+    ,[Country] VARCHAR (111) NULL
+    ,[PostalCode] VARCHAR (111) NOT NULL
+-- LatLong to 5dp is accurate to about 1 metre on Earth
+    ,[GridLocation_DecimalLatitude] DECIMAL (7,5) NULL
+    ,[GridLocation_DecimalLongitude] DECIMAL (8,5) NULL
+    ,[MapReference_MapType] VARCHAR (111) NULL
+    ,[MapReference_XCoordinate] VARCHAR (111) NULL
+    ,[MapReference_YCoordinate] VARCHAR (111) NULL
+    ,[MapReference_MapNumber] VARCHAR (111) NULL
+    ,[RadioContact] VARCHAR (111) NULL
+    ,[Community] VARCHAR (111) NULL
+    ,[AddressGlobalUID] VARCHAR (111) NULL
+    ,[StatisticalAreaLevel4Code] CHAR (3) NULL
+    ,[StatisticalAreaLevel4Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel3Code] CHAR (5) NULL
+    ,[StatisticalAreaLevel3Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel2Code] CHAR (9) NULL
+    ,[StatisticalAreaLevel2Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel1] CHAR (11) NULL
+    ,[StatisticalAreaMeshBlock] CHAR (11) NULL
+    ,[LocalGovernmentAreaName] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_StaffAddressList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAddressList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffAddressList] PRIMARY KEY ([StaffLocalId],[AddressLocalId])
+    ,CONSTRAINT [FK_StaffAddressList_AddressType] FOREIGN KEY ([AddressType]) REFERENCES cdm_demo_gold.Dim0AddressType ([TypeKey])
+    ,CONSTRAINT [FK_StaffAddressList_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
+    ,CONSTRAINT [FK_StaffAddressList_StateProvince] FOREIGN KEY ([StateProvince]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
+);
 
 
 
