@@ -918,6 +918,41 @@ GO
 -- SUBSECTION: 3.10.10 StudentPersonal --
 -- --------------------------------------
 
+CREATE TABLE cdm_demo_gold.StudentPersonal (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[StateProvinceId] VARCHAR (111) NULL
+    ,[NationalUniqueStudentIdentifier] CHAR (10) NULL
+    ,[ProjectedGraduationYear] SMALLINT NULL
+    ,[OnTimeGraduationYear] SMALLINT NULL
+    ,[GraduationDate] DATETIME NULL
+    ,[MostRecent_SchoolLocalId] VARCHAR (111) NULL
+    ,[MostRecent_SchoolACARAId] VARCHAR (111) NULL
+    ,[MostRecent_LocalCampusId] VARCHAR (111) NULL
+    ,[MostRecent_HomeGroup] VARCHAR (111) NULL
+    ,[AcceptableUsePolicy] VARCHAR (111) NULL
+    ,[GiftedTalented] VARCHAR (111) NULL
+    ,[EconomicDisadvantage] VARCHAR (111) NULL
+    ,[ESL] VARCHAR (111) NULL
+    ,[ESLDateAssessed] DATETIME NULL
+    ,[YoungCarersRole] VARCHAR (111) NULL
+    ,[Disability] VARCHAR (111) NULL
+    ,[CategoryOfDisability] VARCHAR (111) NULL
+    ,[IntegrationAide] VARCHAR (111) NULL
+    ,[EducationSupport] VARCHAR (111) NULL
+    ,[HomeSchooledStudent] VARCHAR (111) NULL
+    ,[IndependentStudent] VARCHAR (111) NULL
+    ,[Sensitive] VARCHAR (111) NULL
+    ,[OfflineDelivery] VARCHAR (111) NULL
+    ,[ESLSupport] VARCHAR (111) NULL
+    ,[PrePrimaryEducation] VARCHAR (111) NULL
+    ,[PrePrimaryEducationHours] VARCHAR (111) NULL
+    ,[FirstAUSchoolEnrollment] DATETIME NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_StudentPersonal] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_StudentPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_StudentPersonal] PRIMARY KEY ([LocalId])
+
 
 
 -- -----------------------------------------------------------------------------
@@ -1305,5 +1340,16 @@ GO
 -- SUBSECTION: 3.10.10 StudentPersonal --
 -- --------------------------------------
 
-
+CREATE TABLE cdm_demo_gold.Dim2StaffEmailList (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[EmailType] CHAR (2) NOT NULL
+    ,[Email] VARCHAR (255) NOT NULL
+    ,CONSTRAINT [FKRef_StaffEmailList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffEmailList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffEmailList] PRIMARY KEY ([StaffLocalId],[EmailType])
+    ,CONSTRAINT [FK_StaffEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
+);
+PRINT N'created cdm_demo_gold.Dim2StaffEmailList';
+GO
 
