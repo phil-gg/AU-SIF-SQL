@@ -136,6 +136,599 @@ INSERT INTO cdm_demo_gold.Dim0YesNoType ([TypeKey], [TypeValue]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0YesNoType';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim0IndigenousStatus (
+     [TypeKey] INT NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_IndigenousStatus] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0IndigenousStatus';
+INSERT INTO cdm_demo_gold.Dim0IndigenousStatus ([TypeKey], [TypeValue]) VALUES
+    (1, 'Aboriginal but not Torres Strait Islander origin'),
+    (2, 'Torres Strait Islander but not Aboriginal origin'),
+    (3, 'Both Aboriginal and Torres Strait Islander origin'),
+    (4, 'Neither Aboriginal nor Torres Strait Islander origin'),
+    (9, 'Not Stated/Unknown');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0IndigenousStatus';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0SexCode (
+     [TypeKey] INT NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_SexCode] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0SexCode';
+INSERT INTO cdm_demo_gold.Dim0SexCode ([TypeKey], [TypeValue]) VALUES
+    (1, 'Male'),
+    (2, 'Female'),
+    (3, 'Intersex or indeterminate'),
+    (4, 'Self-described'),
+    (9, 'Not Stated/Inadequately Described');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SexCode';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0BirthdateVerification (
+     [TypeKey] VARCHAR (4) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_BirthdateVerification] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0BirthdateVerification';
+INSERT INTO cdm_demo_gold.Dim0BirthdateVerification ([TypeKey], [TypeValue]) VALUES
+    ('1004', 'Birth certificate'),
+    ('1006', 'Hospital certificate'),
+    ('1008', 'Passport'),
+    ('1009', 'Physician''s certificate'),
+    ('1010', 'Previously verified school records'),
+    ('1011', 'State-issued ID'),
+    ('1012', 'Driver''s license'),
+    ('1013', 'Immigration document/visa'),
+    ('3423', 'Other official document'),
+    ('3424', 'Other non-official document'),
+    ('9999', 'Other'),
+    ('N', 'Birthdate NOT Verified'),
+    ('Y', 'Documentation Sighted, type not recorded');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0BirthdateVerification';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0StateTerritoryCode (
+     [TypeKey] VARCHAR (3) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_StateTerritoryCode] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0StateTerritoryCode';
+INSERT INTO cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey], [TypeValue]) VALUES
+    ('ACT', 'Australian Capital Territory'),
+    ('NSW', 'New South Wales'),
+    ('NT', 'Northern Territory'),
+    ('OTH', 'Other Territories'),
+    ('QLD', 'Queensland'),
+    ('SA', 'South Australia'),
+    ('TAS', 'Tasmania'),
+    ('VIC', 'Victoria'),
+    ('WA', 'Western Australia'),
+    ('XXX', 'Not Provided');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0StateTerritoryCode';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0AustralianCitizenshipStatus (
+     [TypeKey] CHAR (1) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_AusCitizenshipCode] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0AustralianCitizenshipStatus';
+INSERT INTO cdm_demo_gold.Dim0AustralianCitizenshipStatus ([TypeKey], [TypeValue]) VALUES
+    ('1', 'Australian Citizen'),
+    ('2', 'New Zealand Citizen'),
+    ('3', 'Permanent Resident'),
+    ('4', 'Temporary Entry Permit'),
+    ('5', 'Other Overseas'),
+    ('8', 'Permanent Humanitarian Visa'),
+    ('X', 'Not Provided');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0AustralianCitizenshipStatus';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0EnglishProficiency (
+     [TypeKey] INT NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_EnglishProficiency] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0EnglishProficiency';
+INSERT INTO cdm_demo_gold.Dim0EnglishProficiency ([TypeKey], [TypeValue]) VALUES
+    (0, 'Not Stated/Inadequately described'),
+    (1, 'Very well'),
+    (2, 'Well'),
+    (3, 'Not well'),
+    (4, 'Not at all'),
+    (9, 'Not Applicable - English is first language spoken and do not speak a language other than English at home');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0EnglishProficiency';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0DwellingArrangement (
+     [TypeKey] CHAR (4) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_DwellingArrangement] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0DwellingArrangement';
+INSERT INTO cdm_demo_gold.Dim0DwellingArrangement ([TypeKey], [TypeValue]) VALUES
+    ('1669', 'Boarding house'),
+    ('1670', 'Cooperative house'),
+    ('1671', 'Crisis shelter'),
+    ('1672', 'Disaster shelter'),
+    ('1673', 'Residential school/dormitory'),
+    ('1674', 'Family residence - Both Parents/Guardians'),
+    ('1675', 'Foster home'),
+    ('1676', 'Institution'),
+    ('1677', 'Prison or juvenile detention center'),
+    ('1678', 'Rooming house'),
+    ('1679', 'Transient shelter'),
+    ('167I', 'Independent'),
+    ('167o', 'Family residence - One Parent/Guardian'),
+    ('1680', 'No home (Homeless Youth)'),
+    ('1681', 'Other dormitory'),
+    ('168A', 'Arranged by State - Out of Home Care'),
+    ('3425', 'Group home/halfway house'),
+    ('4000', 'Boarder'),
+    ('9999', 'Other');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0DwellingArrangement';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0ReligionType (
+     [TypeKey] VARCHAR (6) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_ReligionType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0ReligionType';
+INSERT INTO cdm_demo_gold.Dim0ReligionType ([TypeKey], [TypeValue]) VALUES
+    ('000000', 'Inadequately described'),
+    ('000001', 'Not Stated'),
+    ('1511', 'Buddhism'),
+    ('2511', 'Anglican'),
+    ('2512', 'Assyrian Apostolic'),
+    ('2513', 'Baptist'),
+    ('2515', 'Catholic'),
+    ('2516', 'Churches of Christ'),
+    ('2517', 'Eastern Orthodox'),
+    ('2518', 'Jehovah''s Witnesses'),
+    ('2521', 'Latter Day Saints'),
+    ('2522', 'Lutheran'),
+    ('2523', 'Oriental Orthodox'),
+    ('2524', 'Pentecostal'),
+    ('2525', 'Presbyterian and Reformed'),
+    ('2526', 'Salvation Army'),
+    ('2527', 'Seventh-day Adventist'),
+    ('2528', 'Uniting Church'),
+    ('2531', 'Other Protestant'),
+    ('2532', 'Other Christian'),
+    ('3511', 'Hinduism'),
+    ('4511', 'Shia Islam'),
+    ('4512', 'Sunni Islam'),
+    ('4513', 'Other Islam'),
+    ('5511', 'Judaism'),
+    ('6511', 'Sikhism'),
+    ('8511', 'Australian Aboriginal Traditional Religions'),
+    ('8512', 'Baha''i'),
+    ('8513', 'Chinese Religions'),
+    ('8514', 'Druse'),
+    ('8515', 'Japanese Religions'),
+    ('8516', 'Nature Religions'),
+    ('8517', 'Spiritualism'),
+    ('8518', 'Miscellaneous Religions'),
+    ('9511', 'No Religion, so described'),
+    ('9512', 'Secular Beliefs'),
+    ('9513', 'Other Spiritual Beliefs'),
+    ('25143', 'Brethren'),
+    ('151100', 'Buddhism, nfd'),
+    ('250000', 'Christian, nfd'),
+    ('251200', 'Assyrian Apostolic, nfd'),
+    ('251500', 'Catholic, nfd'),
+    ('251600', 'Churches of Christ, nfd'),
+    ('252100', 'Latter Day Saints, nfd'),
+    ('252300', 'Oriental Orthodox, nfd'),
+    ('252400', 'Pentecostal, nfd'),
+    ('252500', 'Presbyterian and Reformed, nfd'),
+    ('253100', 'Other Protestant, nfd'),
+    ('253200', 'Other Christian, nfd'),
+    ('450000', 'Islam, nfd'),
+    ('851300', 'Chinese Religions, nfd'),
+    ('851500', 'Japanese Religions, nfd'),
+    ('851600', 'Nature Religions, nfd'),
+    ('950000', 'Secular Beliefs and Other Spiritual Beliefs and No Religious Affiliation, nfd'),
+    ('951200', 'Secular Beliefs, nfd'),
+    ('951300', 'Other Spiritual Beliefs, nfd');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0ReligionType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0PermanentResidentStatus (
+     [TypeKey] VARCHAR (2) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_PermanentResidentStatus] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0PermanentResidentStatus';
+INSERT INTO cdm_demo_gold.Dim0PermanentResidentStatus ([TypeKey], [TypeValue]) VALUES
+    ('99', 'Unknown'),
+    ('N', 'Not a Resident'),
+    ('P', 'Permanent Resident'),
+    ('T', 'Temporary Resident');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0PermanentResidentStatus';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0VisaStudyEntitlement (
+     [TypeKey] VARCHAR (9) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_VisaStudyEntitlement] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0VisaStudyEntitlement';
+INSERT INTO cdm_demo_gold.Dim0VisaStudyEntitlement ([TypeKey], [TypeValue]) VALUES
+    ('Nil', 'No entitlement to study'),
+    ('Limited', 'Limited entitlement to study'),
+    ('Unlimited', 'Unlimited entitlement to study');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0VisaStudyEntitlement';
+GO
+
+
+CREATE TABLE cdm_demo_gold.Dim0ImmunisationCertificateStatus (
+     [TypeKey] VARCHAR (2) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_ImmunisationCertificateStatus] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0ImmunisationCertificateStatus';
+INSERT INTO cdm_demo_gold.Dim0ImmunisationCertificateStatus ([TypeKey], [TypeValue]) VALUES
+    ('C', 'Complete'),
+    ('I', 'Incomplete no reason given'),
+    ('IM', 'Incomplete - Medical Reason'),
+    ('IN', 'Incomplete and Not up to date'),
+    ('IO', 'Incomplete - Objection'),
+    ('IU', 'Incomplete but Up to date'),
+    ('N', 'Not Sighted or Not Provided');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0ImmunisationCertificateStatus';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0CulturalEthnicGroups (
+     [TypeKey] CHAR (4) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_CulturalEthnicGroups] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0CulturalEthnicGroups';
+INSERT INTO cdm_demo_gold.Dim0CulturalEthnicGroups ([TypeKey], [TypeValue]) VALUES
+    ('0000', 'Inadequately described'),
+    ('0001', 'Not stated'),
+    ('0901', 'Eurasian, so described'),
+    ('0902', 'Asian, so described'),
+    ('0903', 'African, so described'),
+    ('0904', 'European, so described'),
+    ('0905', 'Caucasian, so described'),
+    ('0906', 'Creole, so described'),
+    ('1000', 'Oceanian, nfd'),
+    ('1100', 'Australian Peoples, nfd'),
+    ('1101', 'Australian'),
+    ('1102', 'Australian Aboriginal'),
+    ('1103', 'Australian South Sea Islander'),
+    ('1104', 'Torres Strait Islander'),
+    ('1105', 'Norfolk Islander'),
+    ('1200', 'New Zealand Peoples, nfd'),
+    ('1201', 'Maori'),
+    ('1202', 'New Zealander'),
+    ('1300', 'Melanesian and Papuan, nfd'),
+    ('1301', 'New Caledonian'),
+    ('1302', 'Ni-Vanuatu'),
+    ('1303', 'Papua New Guinean'),
+    ('1304', 'Solomon Islander'),
+    ('1399', 'Melanesian and Papuan, nec'),
+    ('1400', 'Micronesian, nfd'),
+    ('1401', 'I-Kiribati'),
+    ('1402', 'Nauruan'),
+    ('1499', 'Micronesian, nec'),
+    ('1500', 'Polynesian, nfd'),
+    ('1501', 'Cook Islander'),
+    ('1502', 'Fijian'),
+    ('1503', 'Niuean'),
+    ('1504', 'Samoan'),
+    ('1505', 'Tongan'),
+    ('1506', 'Hawaiian'),
+    ('1507', 'Tahitian'),
+    ('1508', 'Tokelauan'),
+    ('1511', 'Tuvaluan'),
+    ('1512', 'Pitcairn'),
+    ('1599', 'Polynesian, nec'),
+    ('2000', 'North-West European, nfd'),
+    ('2100', 'British, nfd'),
+    ('2101', 'English'),
+    ('2102', 'Scottish'),
+    ('2103', 'Welsh'),
+    ('2104', 'Channel Islander'),
+    ('2105', 'Manx'),
+    ('2199', 'British, nec'),
+    ('2201', 'Irish'),
+    ('2300', 'Western European, nfd'),
+    ('2301', 'Austrian'),
+    ('2303', 'Dutch'),
+    ('2304', 'Flemish'),
+    ('2305', 'French'),
+    ('2306', 'German'),
+    ('2307', 'Swiss'),
+    ('2311', 'Belgian'),
+    ('2312', 'Frisian'),
+    ('2313', 'Luxembourg'),
+    ('2399', 'Western European, nec'),
+    ('2400', 'Northern European, nfd'),
+    ('2401', 'Danish'),
+    ('2402', 'Finnish'),
+    ('2403', 'Icelandic'),
+    ('2404', 'Norwegian'),
+    ('2405', 'Swedish'),
+    ('2499', 'Northern European, nec'),
+    ('3000', 'Southern and Eastern European, nfd'),
+    ('3100', 'Southern European, nfd'),
+    ('3101', 'Basque'),
+    ('3102', 'Catalan'),
+    ('3103', 'Italian'),
+    ('3104', 'Maltese'),
+    ('3105', 'Portuguese'),
+    ('3106', 'Spanish'),
+    ('3107', 'Gibraltarian'),
+    ('3199', 'Southern European, nec'),
+    ('3200', 'South Eastern European, nfd'),
+    ('3201', 'Albanian'),
+    ('3202', 'Bosnian'),
+    ('3203', 'Bulgarian'),
+    ('3204', 'Croatian'),
+    ('3205', 'Greek'),
+    ('3206', 'Macedonian'),
+    ('3207', 'Moldovan'),
+    ('3208', 'Montenegrin'),
+    ('3211', 'Romanian'),
+    ('3212', 'Roma Gypsy'),
+    ('3213', 'Serbian'),
+    ('3214', 'Slovene'),
+    ('3215', 'Cypriot'),
+    ('3216', 'Vlach'),
+    ('3299', 'South Eastern European, nec'),
+    ('3300', 'Eastern European, nfd'),
+    ('3301', 'Belarusan'),
+    ('3302', 'Czech'),
+    ('3303', 'Estonian'),
+    ('3304', 'Hungarian'),
+    ('3305', 'Latvian'),
+    ('3306', 'Lithuanian'),
+    ('3307', 'Polish'),
+    ('3308', 'Russian'),
+    ('3311', 'Slovak'),
+    ('3312', 'Ukrainian'),
+    ('3313', 'Sorb/Wend'),
+    ('3399', 'Eastern European, nec'),
+    ('4000', 'North African and Middle Eastern, nfd'),
+    ('4100', 'Arab, nfd'),
+    ('4101', 'Algerian'),
+    ('4102', 'Egyptian'),
+    ('4103', 'Iraqi'),
+    ('4104', 'Jordanian'),
+    ('4105', 'Kuwaiti'),
+    ('4106', 'Lebanese'),
+    ('4107', 'Libyan'),
+    ('4108', 'Moroccan'),
+    ('4111', 'Palestinian'),
+    ('4112', 'Saudi Arabian'),
+    ('4113', 'Syrian'),
+    ('4114', 'Tunisian'),
+    ('4115', 'Yemeni'),
+    ('4116', 'Bahraini'),
+    ('4117', 'Emirati'),
+    ('4118', 'Omani'),
+    ('4121', 'Qatari'),
+    ('4199', 'Arab, nec'),
+    ('4201', 'Jewish'),
+    ('4300', 'Peoples of the Sudan, nfd'),
+    ('4301', 'Bari'),
+    ('4302', 'Darfur'),
+    ('4303', 'Dinka'),
+    ('4304', 'Nuer'),
+    ('4305', 'South Sudanese'),
+    ('4306', 'Sudanese'),
+    ('4399', 'Peoples of the Sudan, nec'),
+    ('4900', 'Other North African and Middle Eastern, nfd'),
+    ('4902', 'Berber'),
+    ('4903', 'Coptic'),
+    ('4904', 'Iranian'),
+    ('4905', 'Kurdish'),
+    ('4907', 'Turkish'),
+    ('4908', 'Assyrian'),
+    ('4911', 'Chaldean'),
+    ('4912', 'Mandaean'),
+    ('4913', 'Nubian'),
+    ('4914', 'Yezidi'),
+    ('4999', 'Other North African and Middle Eastern, nec'),
+    ('5000', 'South-East Asian, nfd'),
+    ('5100', 'Mainland South-East Asian, nfd'),
+    ('5101', 'Anglo-Burmese'),
+    ('5102', 'Burmese'),
+    ('5103', 'Hmong'),
+    ('5104', 'Khmer (Cambodian)'),
+    ('5105', 'Lao'),
+    ('5106', 'Thai'),
+    ('5107', 'Vietnamese'),
+    ('5108', 'Karen'),
+    ('5111', 'Mon'),
+    ('5112', 'Chin'),
+    ('5113', 'Rohingya'),
+    ('5199', 'Mainland South-East Asian, nec'),
+    ('5200', 'Maritime South-East Asian, nfd'),
+    ('5201', 'Filipino'),
+    ('5202', 'Indonesian'),
+    ('5203', 'Javanese'),
+    ('5204', 'Madurese'),
+    ('5205', 'Malay'),
+    ('5206', 'Sundanese'),
+    ('5207', 'Timorese'),
+    ('5208', 'Acehnese'),
+    ('5211', 'Balinese'),
+    ('5212', 'Bruneian'),
+    ('5213', 'Kadazan'),
+    ('5214', 'Singaporean'),
+    ('5215', 'Temoq'),
+    ('5299', 'Maritime South-East Asian, nec'),
+    ('6000', 'North-East Asian, nfd'),
+    ('6100', 'Chinese Asian, nfd'),
+    ('6101', 'Chinese'),
+    ('6102', 'Taiwanese'),
+    ('6199', 'Chinese Asian, nec'),
+    ('6900', 'Other North-East Asian, nfd'),
+    ('6901', 'Japanese'),
+    ('6902', 'Korean'),
+    ('6903', 'Mongolian'),
+    ('6904', 'Tibetan'),
+    ('6999', 'Other North-East Asian, nec'),
+    ('7000', 'Southern and Central Asian, nfd'),
+    ('7100', 'Southern Asian, nfd'),
+    ('7101', 'Anglo-Indian'),
+    ('7102', 'Bengali'),
+    ('7103', 'Burgher'),
+    ('7104', 'Gujarati'),
+    ('7106', 'Indian'),
+    ('7107', 'Malayali'),
+    ('7111', 'Nepalese'),
+    ('7112', 'Pakistani'),
+    ('7113', 'Punjabi'),
+    ('7114', 'Sikh'),
+    ('7115', 'Sinhalese'),
+    ('7117', 'Maldivian'),
+    ('7118', 'Bangladeshi'),
+    ('7121', 'Bhutanese'),
+    ('7122', 'Fijian Indian'),
+    ('7123', 'Kashmiri'),
+    ('7124', 'Parsi'),
+    ('7125', 'Sindhi'),
+    ('7126', 'Sri Lankan'),
+    ('7127', 'Sri Lankan Tamil'),
+    ('7128', 'Indian Tamil'),
+    ('7131', 'Tamil, nfd'),
+    ('7132', 'Telugu'),
+    ('7199', 'Southern Asian, nec'),
+    ('7200', 'Central Asian, nfd'),
+    ('7201', 'Afghan'),
+    ('7202', 'Armenian'),
+    ('7203', 'Georgian'),
+    ('7204', 'Kazakh'),
+    ('7205', 'Pathan'),
+    ('7206', 'Uzbek'),
+    ('7207', 'Azeri'),
+    ('7208', 'Hazara'),
+    ('7211', 'Tajik'),
+    ('7212', 'Tatar'),
+    ('7213', 'Turkmen'),
+    ('7214', 'Uighur'),
+    ('7215', 'Kyrgyz'),
+    ('7299', 'Central Asian, nec'),
+    ('8000', 'Peoples of the Americas, nfd'),
+    ('8100', 'North American, nfd'),
+    ('8101', 'African American'),
+    ('8102', 'American'),
+    ('8103', 'Canadian'),
+    ('8104', 'French Canadian'),
+    ('8105', 'Hispanic North American'),
+    ('8106', 'Native North American Indian'),
+    ('8107', 'Bermudan'),
+    ('8199', 'North American, nec'),
+    ('8200', 'South American, nfd'),
+    ('8201', 'Argentinian'),
+    ('8202', 'Bolivian'),
+    ('8203', 'Brazilian'),
+    ('8204', 'Chilean'),
+    ('8205', 'Colombian'),
+    ('8206', 'Ecuadorian'),
+    ('8207', 'Guyanese'),
+    ('8208', 'Peruvian'),
+    ('8211', 'Uruguayan'),
+    ('8212', 'Venezuelan'),
+    ('8213', 'Paraguayan'),
+    ('8299', 'South American, nec'),
+    ('8300', 'Central American, nfd'),
+    ('8301', 'Mexican'),
+    ('8302', 'Nicaraguan'),
+    ('8303', 'Salvadoran'),
+    ('8304', 'Costa Rican'),
+    ('8305', 'Guatemalan'),
+    ('8306', 'Mayan'),
+    ('8399', 'Central American, nec'),
+    ('8400', 'Caribbean Islander, nfd'),
+    ('8401', 'Cuban'),
+    ('8402', 'Jamaican'),
+    ('8403', 'Trinidadian Tobagonian'),
+    ('8404', 'Barbadian'),
+    ('8405', 'Puerto Rican'),
+    ('8499', 'Caribbean Islander, nec'),
+    ('9000', 'Sub-Saharan African, nfd'),
+    ('9100', 'Central and West African, nfd'),
+    ('9101', 'Akan'),
+    ('9102', 'Fulani'),
+    ('9103', 'Ghanaian'),
+    ('9104', 'Nigerian'),
+    ('9105', 'Yoruba'),
+    ('9106', 'Ivorean'),
+    ('9107', 'Liberian'),
+    ('9108', 'Sierra Leonean'),
+    ('9111', 'Acholi'),
+    ('9112', 'Cameroonian'),
+    ('9113', 'Congolese'),
+    ('9114', 'Gio'),
+    ('9115', 'Igbo'),
+    ('9116', 'Krahn'),
+    ('9117', 'Mandinka'),
+    ('9118', 'Senegalese'),
+    ('9121', 'Themne'),
+    ('9122', 'Togolese'),
+    ('9199', 'Central and West African, nec'),
+    ('9200', 'Southern and East African, nfd'),
+    ('9201', 'Afrikaner'),
+    ('9202', 'Angolan'),
+    ('9203', 'Eritrean'),
+    ('9204', 'Ethiopian'),
+    ('9205', 'Kenyan'),
+    ('9206', 'Malawian'),
+    ('9207', 'Mauritian'),
+    ('9208', 'Mozambican'),
+    ('9211', 'Namibian'),
+    ('9212', 'Oromo'),
+    ('9213', 'Seychellois'),
+    ('9214', 'Somali'),
+    ('9215', 'South African'),
+    ('9216', 'Tanzanian'),
+    ('9217', 'Ugandan'),
+    ('9218', 'Zambian'),
+    ('9221', 'Zimbabwean'),
+    ('9222', 'Amhara'),
+    ('9223', 'Batswana'),
+    ('9225', 'Hutu'),
+    ('9226', 'Masai'),
+    ('9228', 'Tigrayan'),
+    ('9231', 'Tigre'),
+    ('9232', 'Zulu'),
+    ('9233', 'Burundian'),
+    ('9234', 'Kunama'),
+    ('9235', 'Madi'),
+    ('9236', 'Ogaden'),
+    ('9237', 'Rwandan'),
+    ('9238', 'Shona'),
+    ('9241', 'Swahili'),
+    ('9242', 'Swazilander'),
+    ('9299', 'Southern and East African, nec');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0CulturalEthnicGroups';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0MaritalStatus (
+     [TypeKey] INT NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_MaritalStatus] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0MaritalStatus';
+INSERT INTO cdm_demo_gold.Dim0MaritalStatus ([TypeKey], [TypeValue]) VALUES
+    (1, 'Never Married'),
+    (2, 'Widowed'),
+    (3, 'Divorced'),
+    (4, 'Separated'),
+    (5, 'Married (registered and de facto)'),
+    (6, 'Not stated/inadequately described');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0MaritalStatus';
+GO
+
 
 
 -- SUBSECTION: Tables with 1 in name define a new PK used by child 2 table(s)
@@ -254,6 +847,67 @@ CREATE TABLE cdm_demo_gold.Dim2StaffNames (
     ,CONSTRAINT [FK_StaffNames_NameUsageType] FOREIGN KEY ([NameUsageTypeKey]) REFERENCES cdm_demo_gold.Dim0NameUsageType ([TypeKey])
 );
 PRINT N'created cdm_demo_gold.Dim2StaffNames';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StaffDemographics (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[IndigenousStatus] INT NULL
+    ,[Gender] INT NULL
+    ,[BirthDate] DATETIME NULL
+    ,[DateOfDeath] DATETIME NULL
+    ,[Deceased] CHAR (1) NULL
+    ,[BirthDateVerification] VARCHAR (4) NULL
+    ,[PlaceOfBirth] VARCHAR (111) NULL
+    ,[StateOfBirth] VARCHAR (3) NULL
+    ,[CountryOfBirth] VARCHAR (5) NULL
+    ,[CountryArrivalDate] DATETIME NULL
+    ,[AustralianCitizenshipStatus] CHAR (1) NULL
+    ,[EnglishProficiency] INT NULL
+    ,[DwellingArrangement] CHAR (4) NULL
+    ,[Religion] VARCHAR (6) NULL
+    ,[ReligiousRegion] VARCHAR (111) NULL
+    ,[PermanentResident] VARCHAR (2) NULL
+    ,[VisaSubClass] CHAR (5) NULL
+    ,[VisaStatisticalCode] VARCHAR (111) NULL
+    ,[VisaNumber] VARCHAR (111) NULL
+    ,[VisaGrantDate] DATETIME NULL
+    ,[VisaExpiryDate] DATETIME NULL
+    ,[VisaConditions] VARCHAR (111) NULL
+    ,[VisaStudyEntitlement] VARCHAR (9) NULL
+    ,[LBOTE] CHAR (1) NULL
+    ,[InterpreterRequired] CHAR (1) NULL
+    ,[ImmunisationCertificateStatus] VARCHAR (2) NULL
+    ,[CulturalBackground] CHAR (4) NULL
+    ,[MaritalStatus] INT NULL
+    ,[MedicareNumber] VARCHAR (111) NULL
+    ,[MedicarePositionNumber] VARCHAR (111) NULL
+    ,[MedicareCardHolder] VARCHAR (111) NULL
+    ,[PrivateHealthInsurer] VARCHAR (111) NULL
+    ,[PrivateHealthPolicyId] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_StaffDemographics_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffDemographics_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffDemographics] PRIMARY KEY ([StaffLocalId])
+    ,CONSTRAINT [FK_StaffDemographics_IndigenousStatus] FOREIGN KEY ([IndigenousStatus]) REFERENCES cdm_demo_gold.Dim0IndigenousStatus ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_GenderAkaSexCode] FOREIGN KEY ([Gender]) REFERENCES cdm_demo_gold.Dim0SexCode ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_Deceased] FOREIGN KEY ([Deceased]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_BirthdateVerification] FOREIGN KEY ([BirthdateVerification]) REFERENCES cdm_demo_gold.Dim0BirthdateVerification ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_StateOfBirth] FOREIGN KEY ([StateOfBirth]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_CountryOfBirth] FOREIGN KEY ([CountryOfBirth]) REFERENCES cdm_demo_gold.Dim1Country ([LocalId])
+    ,CONSTRAINT [FK_StaffDemographics_AustralianCitizenshipStatus] FOREIGN KEY ([AustralianCitizenshipStatus]) REFERENCES cdm_demo_gold.Dim0AustralianCitizenshipStatus ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_EnglishProficiency] FOREIGN KEY ([EnglishProficiency]) REFERENCES cdm_demo_gold.Dim0EnglishProficiency ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_DwellingArrangement] FOREIGN KEY ([DwellingArrangement]) REFERENCES cdm_demo_gold.Dim0DwellingArrangement ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_Religion] FOREIGN KEY ([Religion]) REFERENCES cdm_demo_gold.Dim0ReligionType ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_PermanentResident] FOREIGN KEY ([PermanentResident]) REFERENCES cdm_demo_gold.Dim0PermanentResidentStatus ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_VisaSubClass] FOREIGN KEY ([VisaSubClass]) REFERENCES cdm_demo_gold.Dim1VisaSubClass ([LocalId])
+    ,CONSTRAINT [FK_StaffDemographics_VisaStudyEntitlement] FOREIGN KEY ([VisaStudyEntitlement]) REFERENCES cdm_demo_gold.Dim0VisaStudyEntitlement ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_LBOTE] FOREIGN KEY ([LBOTE]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_InterpreterRequired] FOREIGN KEY ([InterpreterRequired]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_ImmunisationCertificateStatus] FOREIGN KEY ([ImmunisationCertificateStatus]) REFERENCES cdm_demo_gold.Dim0ImmunisationCertificateStatus ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_CulturalBackground] FOREIGN KEY ([CulturalBackground]) REFERENCES cdm_demo_gold.Dim0CulturalEthnicGroups ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_MaritalStatus] FOREIGN KEY ([MaritalStatus]) REFERENCES cdm_demo_gold.Dim0MaritalStatus ([TypeKey])
+);
+PRINT N'created cdm_demo_gold.Dim2StaffDemographics';
 GO
 
 
