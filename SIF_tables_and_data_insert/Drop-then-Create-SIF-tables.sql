@@ -834,6 +834,20 @@ INSERT INTO cdm_demo_gold.Dim0EmailType ([TypeKey], [TypeValue]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0EmailType';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim0AlertMessageType (
+     [TypeKey] VARCHAR (11) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_AlertMessageType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0AlertMessageType';
+INSERT INTO cdm_demo_gold.Dim0AlertMessageType ([TypeKey], [TypeValue]) VALUES
+    ('Legal', 'Custody, guardian, court orders (e.g. must attend school), lawsuits, etc.'),
+    ('Discipline', 'Student is suspended, expelled, on probation, etc.'),
+    ('Educational', 'Academic probation, etc.'),
+    ('Other', '');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0AlertMessageType';
+GO
+
 
 
 -- -----------------------------------------------------------------------------
@@ -911,14 +925,14 @@ CREATE TABLE cdm_demo_gold.Dim1StaffHouseholdContactInfo (
     ,[HouseholdSalutation] VARCHAR (111) NULL
     ,CONSTRAINT [PK_HouseholdContactInfo] PRIMARY KEY ([HouseholdContactId])
 );
-PRINT N'created cdm_demo_gold.Dim1StaffHouseholdContactInfo';
+PRINT N'Created cdm_demo_gold.Dim1StaffHouseholdContactInfo';
 GO
 
 -- --------------------------------------
 -- SUBSECTION: 3.10.10 StudentPersonal --
 -- --------------------------------------
 
-CREATE TABLE cdm_demo_gold.StudentPersonal (
+CREATE TABLE cdm_demo_gold.Dim1StudentPersonal (
      [RefId] CHAR (36) NOT NULL
     ,[LocalId] INT NOT NULL
     ,[StateProvinceId] VARCHAR (111) NULL
@@ -952,7 +966,9 @@ CREATE TABLE cdm_demo_gold.StudentPersonal (
     ,CONSTRAINT [RefUnique_StudentPersonal] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_StudentPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_StudentPersonal] PRIMARY KEY ([LocalId])
-
+);
+PRINT N'Created cdm_demo_gold.Dim1StudentPersonal';
+GO
 
 
 -- -----------------------------------------------------------------------------
@@ -970,7 +986,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffList (
     ,CONSTRAINT [FKLocal_StaffList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
     ,CONSTRAINT [PK_StaffList] PRIMARY KEY ([StaffLocalId])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffList';
+PRINT N'Created cdm_demo_gold.Dim2StaffList';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StaffElectronicIdList (
@@ -983,7 +999,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffElectronicIdList (
     ,CONSTRAINT [PK_StaffElectronicIdList] PRIMARY KEY ([StaffLocalId],[ElectronicIdTypeKey])
     ,CONSTRAINT [FK_StaffElectronicIdList_ElectronicIdListType] FOREIGN KEY ([ElectronicIdTypeKey]) REFERENCES cdm_demo_gold.Dim0ElectronicIdType ([TypeKey])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffElectronicIdList';
+PRINT N'Created cdm_demo_gold.Dim2StaffElectronicIdList';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StaffOtherIdList (
@@ -995,7 +1011,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffOtherIdList (
     ,CONSTRAINT [FKLocal_StaffOtherIdList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
     ,CONSTRAINT [PK_StaffOtherIdList] PRIMARY KEY ([StaffLocalId],[OtherIdType])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffOtherIdList';
+PRINT N'Created cdm_demo_gold.Dim2StaffOtherIdList';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StaffNames (
@@ -1019,7 +1035,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffNames (
     ,CONSTRAINT [FK_StaffNames_PreferredFamilyNameFirst] FOREIGN KEY ([PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_StaffNames_NameUsageType] FOREIGN KEY ([NameUsageTypeKey]) REFERENCES cdm_demo_gold.Dim0NameUsageType ([TypeKey])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffNames';
+PRINT N'Created cdm_demo_gold.Dim2StaffNames';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StaffDemographics (
@@ -1080,7 +1096,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffDemographics (
     ,CONSTRAINT [FK_StaffDemographics_CulturalBackground] FOREIGN KEY ([CulturalBackground]) REFERENCES cdm_demo_gold.Dim0CulturalEthnicGroups ([TypeKey])
     ,CONSTRAINT [FK_StaffDemographics_MaritalStatus] FOREIGN KEY ([MaritalStatus]) REFERENCES cdm_demo_gold.Dim0MaritalStatus ([TypeKey])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffDemographics';
+PRINT N'Created cdm_demo_gold.Dim2StaffDemographics';
 GO
 
 CREATE TABLE cdm_demo_gold.Bridge2StaffCountriesOfCitizenship (
@@ -1092,7 +1108,7 @@ CREATE TABLE cdm_demo_gold.Bridge2StaffCountriesOfCitizenship (
     ,CONSTRAINT [PK_StaffCountriesOfCitizenship] PRIMARY KEY ([StaffLocalId], [CountryLocalId])
     ,CONSTRAINT [FK_StaffCountriesOfCitizenship_CountryLocalId] FOREIGN KEY ([CountryLocalId]) REFERENCES cdm_demo_gold.Dim1Country ([LocalId])
 );
-PRINT N'created cdm_demo_gold.Bridge2StaffCountriesOfCitizenship';
+PRINT N'Created cdm_demo_gold.Bridge2StaffCountriesOfCitizenship';
 GO
 
 CREATE TABLE cdm_demo_gold.Bridge2StaffCountriesOfResidency (
@@ -1104,7 +1120,7 @@ CREATE TABLE cdm_demo_gold.Bridge2StaffCountriesOfResidency (
     ,CONSTRAINT [PK_StaffCountriesOfResidency] PRIMARY KEY ([StaffLocalId], [CountryLocalId])
     ,CONSTRAINT [FK_StaffCountriesOfResidency_CountryLocalId] FOREIGN KEY ([CountryLocalId]) REFERENCES cdm_demo_gold.Dim1Country ([LocalId])
 );
-PRINT N'created cdm_demo_gold.Bridge2StaffCountriesOfResidency';
+PRINT N'Created cdm_demo_gold.Bridge2StaffCountriesOfResidency';
 GO
 
 CREATE TABLE cdm_demo_gold.Bridge2StaffLanguages (
@@ -1116,7 +1132,7 @@ CREATE TABLE cdm_demo_gold.Bridge2StaffLanguages (
     ,CONSTRAINT [PK_StaffLanguages] PRIMARY KEY ([StaffLocalId], [LanguageLocalId])
     ,CONSTRAINT [FK_StaffLanguages_LanguageLocalId] FOREIGN KEY ([LanguageLocalId]) REFERENCES cdm_demo_gold.Dim1Languages ([LocalId])
 );
-PRINT N'created cdm_demo_gold.Bridge2StaffLanguages';
+PRINT N'Created cdm_demo_gold.Bridge2StaffLanguages';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StaffReligiousEvent (
@@ -1128,7 +1144,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffReligiousEvent (
     ,CONSTRAINT [FKLocal_StaffReligiousEvent_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
     ,CONSTRAINT [PK_StaffReligiousEvent] PRIMARY KEY ([StaffLocalId],[ReligiousEventDate])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffReligiousEvent';
+PRINT N'Created cdm_demo_gold.Dim2StaffReligiousEvent';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StaffPassport (
@@ -1142,7 +1158,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffPassport (
     ,CONSTRAINT [PK_StaffPassport] PRIMARY KEY ([StaffLocalId],[Number],[Country])
     ,CONSTRAINT [FK_StaffPassport_Country] FOREIGN KEY ([Country]) REFERENCES cdm_demo_gold.Dim1Country ([LocalId])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffPassport';
+PRINT N'Created cdm_demo_gold.Dim2StaffPassport';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StaffAddressList (
@@ -1196,7 +1212,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffAddressList (
     ,CONSTRAINT [FK_StaffAddressList_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
     ,CONSTRAINT [FK_StaffAddressList_StateProvince] FOREIGN KEY ([StateProvince]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffAddressList';
+PRINT N'Created cdm_demo_gold.Dim2StaffAddressList';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StaffPhoneNumberList (
@@ -1212,7 +1228,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffPhoneNumberList (
     ,CONSTRAINT [PK_StaffPhoneNumberList] PRIMARY KEY ([StaffLocalId],[PhoneNumberType])
     ,CONSTRAINT [FK_StaffPhoneNumberList_PhoneNumberType] FOREIGN KEY ([PhoneNumberType]) REFERENCES cdm_demo_gold.Dim0PhoneNumberType ([TypeKey])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffPhoneNumberList';
+PRINT N'Created cdm_demo_gold.Dim2StaffPhoneNumberList';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StaffEmailList (
@@ -1225,7 +1241,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffEmailList (
     ,CONSTRAINT [PK_StaffEmailList] PRIMARY KEY ([StaffLocalId],[EmailType])
     ,CONSTRAINT [FK_StaffEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffEmailList';
+PRINT N'Created cdm_demo_gold.Dim2StaffEmailList';
 GO
 
 -- Don't think BCE will ever send Staff household contact info in SIF messages.
@@ -1239,7 +1255,7 @@ CREATE TABLE cdm_demo_gold.Bridge2StaffHouseholdContactInfo (
     ,CONSTRAINT [PK_StaffHouseholdContactInfo] PRIMARY KEY ([StaffLocalId], [StaffHouseholdContactId])
     ,CONSTRAINT [FK_StaffHouseholdContactInfo_HouseholdContactId] FOREIGN KEY ([StaffHouseholdContactId]) REFERENCES cdm_demo_gold.Dim1StaffHouseholdContactInfo ([HouseholdContactId])
 );
-PRINT N'created cdm_demo_gold.Bridge2StaffHouseholdContactInfo';
+PRINT N'Created cdm_demo_gold.Bridge2StaffHouseholdContactInfo';
 GO
 
 -- Don't think BCE will ever send Staff household contact info in SIF messages.
@@ -1293,7 +1309,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffHouseholdContactAddressList (
     ,CONSTRAINT [FK_StaffHouseholdContactAddressList_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
     ,CONSTRAINT [FK_StaffHouseholdContactAddressList_StateProvince] FOREIGN KEY ([StateProvince]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffHouseholdContactAddressList';
+PRINT N'Created cdm_demo_gold.Dim2StaffHouseholdContactAddressList';
 GO
 
 -- Don't think BCE will ever send Staff household contact info in SIF messages.
@@ -1309,7 +1325,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffHouseholdContactPhoneNumberList (
     ,CONSTRAINT [PK_StaffHouseholdContactPhoneNumberList] PRIMARY KEY ([StaffHouseholdContactLocalId],[PhoneNumberType])
     ,CONSTRAINT [FK_StaffHouseholdContactPhoneNumberList_PhoneNumberType] FOREIGN KEY ([PhoneNumberType]) REFERENCES cdm_demo_gold.Dim0PhoneNumberType ([TypeKey])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffHouseholdContactPhoneNumberList';
+PRINT N'Created cdm_demo_gold.Dim2StaffHouseholdContactPhoneNumberList';
 GO
 
 -- Don't think BCE will ever send Staff household contact info in SIF messages.
@@ -1322,7 +1338,7 @@ CREATE TABLE cdm_demo_gold.Dim2StaffHouseholdContactEmailList (
     ,CONSTRAINT [PK_StaffHouseholdContactEmailList] PRIMARY KEY ([StaffHouseholdContactLocalId],[EmailType])
     ,CONSTRAINT [FK_StaffHouseholdContactEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffHouseholdContactEmailList';
+PRINT N'Created cdm_demo_gold.Dim2StaffHouseholdContactEmailList';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StaffMostRecentNAPLANClassList (
@@ -1333,23 +1349,23 @@ CREATE TABLE cdm_demo_gold.Dim2StaffMostRecentNAPLANClassList (
     ,CONSTRAINT [FKLocal_StaffMostRecentNAPLANClassList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
     ,CONSTRAINT [PK_StaffMostRecentNAPLANClassList] PRIMARY KEY ([StaffLocalId],[ClassCode])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffMostRecentNAPLANClassList';
+PRINT N'Created cdm_demo_gold.Dim2StaffMostRecentNAPLANClassList';
 GO
 
 -- --------------------------------------
 -- SUBSECTION: 3.10.10 StudentPersonal --
 -- --------------------------------------
 
-CREATE TABLE cdm_demo_gold.Dim2StaffEmailList (
-     [StaffRefId] CHAR (36) NOT NULL
-    ,[StaffLocalId] INT NOT NULL
-    ,[EmailType] CHAR (2) NOT NULL
-    ,[Email] VARCHAR (255) NOT NULL
-    ,CONSTRAINT [FKRef_StaffEmailList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
-    ,CONSTRAINT [FKLocal_StaffEmailList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
-    ,CONSTRAINT [PK_StaffEmailList] PRIMARY KEY ([StaffLocalId],[EmailType])
-    ,CONSTRAINT [FK_StaffEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
+CREATE TABLE cdm_demo_gold.Dim2StudentAlertMessages (
+     [StudentRefId] CHAR (36) NOT NULL
+    ,[StudentLocalId] INT NOT NULL
+    ,[AlertMessageContent] VARCHAR (896) NOT NULL
+    ,[AlertMessageType] VARCHAR (11) NOT NULL
+    ,CONSTRAINT [FKRef_StudentAlertMessages_StudentPersonal] FOREIGN KEY ([StudentRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentAlertMessages_StudentPersonal] FOREIGN KEY ([StudentLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentAlertMessages] PRIMARY KEY ([StudentLocalId],[AlertMessageContent])
+    ,CONSTRAINT [FK_StudentAlertMessages_AlertMessageType] FOREIGN KEY ([AlertMessageType]) REFERENCES cdm_demo_gold.Dim0AlertMessageType ([TypeKey])
 );
-PRINT N'created cdm_demo_gold.Dim2StaffEmailList';
+PRINT N'Created cdm_demo_gold.Dim2StudentAlertMessages';
 GO
 
