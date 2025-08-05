@@ -69,7 +69,9 @@ GO
 -- Each instance of "VARCHAR (111)" that is a placeholder datatype only.
 -- Such placeholder datatypes will need to be replaced during mapping.
 
--- SUBSECTION: Tables with 0 in name implement SIF codes (no other dependencies)
+-- -----------------------------------------------------------------------------
+-- DEPENDENCY: Tables with 0 in name implement SIF codes (1&2 then have FKs)  --
+-- -----------------------------------------------------------------------------
 
 CREATE TABLE cdm_demo_gold.Dim0StaffEmploymentStatus (
      [TypeKey] CHAR (1) NOT NULL
@@ -834,14 +836,26 @@ GO
 
 
 
--- SUBSECTION: Tables with 1 in name define a new PK used by child 2 table(s)
+-- -----------------------------------------------------------------------------
+-- DEPENDENCY: Tables with 1 in name may have FKs to tables with 0            --
+-- -----------------------------------------------------------------------------
 
+-- -----------------------------------
+-- SUBSECTION: 3.10.7 StaffPersonal --
+-- -----------------------------------
+
+-- TO-DO: May want SchoolLocalId and SchoolACARAId and LocalCampusId to be FKs.
 CREATE TABLE cdm_demo_gold.Dim1StaffPersonal (
      [RefId] CHAR (36) NOT NULL
     ,[LocalId] INT NOT NULL
     ,[StateProvinceId] VARCHAR (111) NULL
     ,[Title] VARCHAR (111) NULL
     ,[EmploymentStatus] CHAR (1) NULL
+    ,[MostRecent_SchoolLocalId] VARCHAR (111) NULL
+    ,[MostRecent_SchoolACARAId] VARCHAR (111) NULL
+    ,[MostRecent_LocalCampusId] VARCHAR (111) NULL
+    ,[MostRecent_HomeGroup] VARCHAR (111) NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
     ,CONSTRAINT [RefUnique_StaffPersonal] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_StaffPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_StaffPersonal] PRIMARY KEY ([LocalId])
@@ -900,9 +914,19 @@ CREATE TABLE cdm_demo_gold.Dim1StaffHouseholdContactInfo (
 PRINT N'created cdm_demo_gold.Dim1StaffHouseholdContactInfo';
 GO
 
+-- --------------------------------------
+-- SUBSECTION: 3.10.10 StudentPersonal --
+-- --------------------------------------
 
 
--- SUBSECTION: Tables with 2 in name have FK referencing parent 1 table(s)
+
+-- -----------------------------------------------------------------------------
+-- DEPENDENCY: Tables with 2 in name have FK to table(s) with 1 (& maybe 0)   --
+-- -----------------------------------------------------------------------------
+
+-- -----------------------------------
+-- SUBSECTION: 3.10.7 StaffPersonal --
+-- -----------------------------------
 
 CREATE TABLE cdm_demo_gold.Dim2StaffList (
      [StaffRefId] CHAR (36) NOT NULL
@@ -1265,6 +1289,21 @@ CREATE TABLE cdm_demo_gold.Dim2StaffHouseholdContactEmailList (
 );
 PRINT N'created cdm_demo_gold.Dim2StaffHouseholdContactEmailList';
 GO
+
+CREATE TABLE cdm_demo_gold.Dim2StaffMostRecentNAPLANClassList (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[ClassCode] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_StaffMostRecentNAPLANClassList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffMostRecentNAPLANClassList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffMostRecentNAPLANClassList] PRIMARY KEY ([StaffLocalId],[ClassCode])
+);
+PRINT N'created cdm_demo_gold.Dim2StaffMostRecentNAPLANClassList';
+GO
+
+-- --------------------------------------
+-- SUBSECTION: 3.10.10 StudentPersonal --
+-- --------------------------------------
 
 
 
