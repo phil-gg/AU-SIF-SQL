@@ -834,6 +834,8 @@ INSERT INTO cdm_demo_gold.Dim0EmailType ([TypeKey], [TypeValue]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0EmailType';
 GO
 
+-- Student but not Staff Dim0 items from here
+
 CREATE TABLE cdm_demo_gold.Dim0AlertMessageType (
      [TypeKey] VARCHAR (11) NOT NULL,
      [TypeValue] VARCHAR (255) NULL,
@@ -860,6 +862,34 @@ INSERT INTO cdm_demo_gold.Dim0MedicalSeverity ([TypeKey]) VALUES
     ('Severe'),
     ('Unknown');
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0MedicalSeverity';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0DisabilityNCCDCategory (
+     [TypeKey] VARCHAR (16) NOT NULL,
+     CONSTRAINT [PK_DisabilityNCCDCategory] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0DisabilityNCCDCategory';
+INSERT INTO cdm_demo_gold.Dim0DisabilityNCCDCategory ([TypeKey]) VALUES
+    ('None'),
+    ('Cognitive'),
+    ('Physical'),
+    ('Sensory'),
+    ('Social-Emotional');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0DisabilityNCCDCategory';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0PrePrimaryEducationHours (
+     [TypeKey] CHAR (1) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_PrePrimaryEducationHours] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0PrePrimaryEducationHours';
+INSERT INTO cdm_demo_gold.Dim0PrePrimaryEducationHours ([TypeKey], [TypeValue]) VALUES
+    ('F', 'Full Time'),
+    ('P', 'Part Time'),
+    ('O', 'Other - not elsewhere classified'),
+    ('U', 'Unknown or Not Provided');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0PrePrimaryEducationHours';
 GO
 
 
@@ -961,29 +991,43 @@ CREATE TABLE cdm_demo_gold.Dim1StudentPersonal (
     ,[MostRecent_SchoolACARAId] VARCHAR (111) NULL
     ,[MostRecent_LocalCampusId] VARCHAR (111) NULL
     ,[MostRecent_HomeGroup] VARCHAR (111) NULL
-    ,[AcceptableUsePolicy] VARCHAR (111) NULL
-    ,[GiftedTalented] VARCHAR (111) NULL
-    ,[EconomicDisadvantage] VARCHAR (111) NULL
-    ,[ESL] VARCHAR (111) NULL
+    ,[AcceptableUsePolicy] CHAR (1) NULL
+    ,[GiftedTalented] CHAR (1) NULL
+    ,[EconomicDisadvantage] CHAR (1) NULL
+    ,[ESL] CHAR (1) NULL
     ,[ESLDateAssessed] DATETIME NULL
-    ,[YoungCarersRole] VARCHAR (111) NULL
-    ,[Disability] VARCHAR (111) NULL
-    ,[CategoryOfDisability] VARCHAR (111) NULL
-    ,[IntegrationAide] VARCHAR (111) NULL
-    ,[EducationSupport] VARCHAR (111) NULL
-    ,[HomeSchooledStudent] VARCHAR (111) NULL
-    ,[IndependentStudent] VARCHAR (111) NULL
-    ,[Sensitive] VARCHAR (111) NULL
-    ,[OfflineDelivery] VARCHAR (111) NULL
-    ,[ESLSupport] VARCHAR (111) NULL
+    ,[YoungCarersRole] CHAR (1) NULL
+    ,[Disability] CHAR (1) NULL
+    ,[CategoryOfDisability] VARCHAR (16) NULL
+    ,[IntegrationAide] CHAR (1) NULL
+    ,[EducationSupport] CHAR (1) NULL
+    ,[HomeSchooledStudent] CHAR (1) NULL
+    ,[IndependentStudent] CHAR (1) NULL
+    ,[Sensitive] CHAR (1) NULL
+    ,[OfflineDelivery] CHAR (1) NULL
+    ,[ESLSupport] CHAR (1) NULL
     ,[PrePrimaryEducation] VARCHAR (111) NULL
-    ,[PrePrimaryEducationHours] VARCHAR (111) NULL
+    ,[PrePrimaryEducationHours] CHAR (1) NULL
     ,[FirstAUSchoolEnrollment] DATETIME NULL
     ,[ee_Placeholder] VARCHAR (111) NULL
     ,CONSTRAINT [RefUnique_StudentPersonal] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_StudentPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_StudentPersonal] PRIMARY KEY ([LocalId])
--- TO-DO: More constraints here.
+    ,CONSTRAINT [FK_StudentPersonal_AcceptableUsePolicy] FOREIGN KEY ([AcceptableUsePolicy]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_GiftedTalented] FOREIGN KEY ([GiftedTalented]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_EconomicDisadvantage] FOREIGN KEY ([EconomicDisadvantage]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_ESL] FOREIGN KEY ([ESL]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_YoungCarersRole] FOREIGN KEY ([YoungCarersRole]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_Disability] FOREIGN KEY ([Disability]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_CategoryOfDisability] FOREIGN KEY ([CategoryOfDisability]) REFERENCES cdm_demo_gold.Dim0DisabilityNCCDCategory ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_IntegrationAide] FOREIGN KEY ([IntegrationAide]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_EducationSupport] FOREIGN KEY ([EducationSupport]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_HomeSchooledStudent] FOREIGN KEY ([HomeSchooledStudent]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_IndependentStudent] FOREIGN KEY ([IndependentStudent]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_Sensitive] FOREIGN KEY ([Sensitive]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_OfflineDelivery] FOREIGN KEY ([OfflineDelivery]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_ESLSupport] FOREIGN KEY ([ESLSupport]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_PrePrimaryEducationHours] FOREIGN KEY ([PrePrimaryEducationHours]) REFERENCES cdm_demo_gold.Dim0PrePrimaryEducationHours ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim1StudentPersonal';
 GO
