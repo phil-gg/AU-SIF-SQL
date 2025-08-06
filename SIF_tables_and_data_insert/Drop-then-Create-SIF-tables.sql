@@ -892,6 +892,54 @@ INSERT INTO cdm_demo_gold.Dim0PrePrimaryEducationHours ([TypeKey], [TypeValue]) 
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0PrePrimaryEducationHours';
 GO
 
+-- StudentContact (aka parents & guardians) Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0EmploymentType (
+     [TypeKey] INT NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_EmploymentType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0EmploymentType';
+INSERT INTO cdm_demo_gold.Dim0EmploymentType ([TypeKey], [TypeValue]) VALUES
+    (1, 'Qualified professionals, senior management in large business organisation, government administration and defence'),
+    (2, 'Other business managers, arts/media/sportspersons and associate professionals'),
+    (3, 'Tradesmen/women, clerks and skilled office, sales and service staff'),
+    (4, 'Machine operators, hospitality staff, assistants, labourers and related workers'),
+    (8, 'Out of employed work for 12 months or more (if less use previous occupational group)'),
+    (9, 'Unknown');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0EmploymentType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0SchoolEducationLevelType (
+     [TypeKey] INT NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_SchoolEducationLevelType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0SchoolEducationLevelType';
+INSERT INTO cdm_demo_gold.Dim0SchoolEducationLevelType ([TypeKey], [TypeValue]) VALUES
+    (0, 'Not stated/Unknown'),
+    (1, 'Year 9 or equivalent or below'),
+    (2, 'Year 10 or equivalent'),
+    (3, 'Year 11 or equivalent'),
+    (4, 'Year 12 or equivalent');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SchoolEducationLevelType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0NonSchoolEducationType (
+     [TypeKey] INT NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_NonSchoolEducationType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0NonSchoolEducationType';
+INSERT INTO cdm_demo_gold.Dim0NonSchoolEducationType ([TypeKey], [TypeValue]) VALUES
+    (0, 'Not stated/Unknown'),
+    (5, 'Certificate I to IV (including trade certificate)'),
+    (6, 'Advanced diploma/Diploma'),
+    (7, 'Bachelor degree or above'),
+    (8, 'No non-school qualification');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0NonSchoolEducationType';
+GO
+
 
 
 -- -------------------------------------------------------------------------- --
@@ -1043,6 +1091,38 @@ CREATE TABLE cdm_demo_gold.Dim1StudentHouseholdContactInfo (
 PRINT N'Created cdm_demo_gold.Dim1StudentHouseholdContactInfo';
 GO
 
+-- ----------------------------------------- --
+-- SUBSECTION: 3.10.8 StudentContactPersonal --
+-- ----------------------------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim1StudentContactPersonal (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[EmploymentType] INT NULL
+    ,[SchoolEducationalLevel] INT NULL
+    ,[NonSchoolEducation] INT NULL
+    ,[Employment] VARCHAR (111) NULL
+    ,[Workplace] VARCHAR (111) NULL
+    ,[WorkingWithChildrenCheckStateTerritory] VARCHAR (3) NOT NULL
+    ,[WorkingWithChildrenCheckNumber] VARCHAR (111) NOT NULL
+    ,[WorkingWithChildrenCheckHolderName] VARCHAR (111) NULL
+    ,[WorkingWithChildrenCheckType] VARCHAR (111) NULL
+    ,[WorkingWithChildrenCheckReasons] VARCHAR (111) NULL
+    ,[WorkingWithChildrenCheckDetermination] VARCHAR (111) NULL
+    ,[WorkingWithChildrenCheckCheckDate] DATETIME NULL
+    ,[WorkingWithChildrenCheckDeterminationDate] DATETIME NULL
+    ,[WorkingWithChildrenCheckExpiryDate] DATETIME NULL
+    ,CONSTRAINT [RefUnique_StudentContactPersonal] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_StudentContactPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_StudentContactPersonal] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FK_StaffDemographics_EmploymentType] FOREIGN KEY ([EmploymentType]) REFERENCES cdm_demo_gold.Dim0EmploymentType ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_SchoolEducationalLevel] FOREIGN KEY ([SchoolEducationalLevel]) REFERENCES cdm_demo_gold.Dim0SchoolEducationLevelType ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_NonSchoolEducation] FOREIGN KEY ([NonSchoolEducation]) REFERENCES cdm_demo_gold.Dim0NonSchoolEducationType ([TypeKey])
+    ,CONSTRAINT [FK_StaffDemographics_WorkingWithChildrenCheckStateTerritory] FOREIGN KEY ([WorkingWithChildrenCheckStateTerritory]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim1StudentContactPersonal';
+GO
+
 
 
 -- -------------------------------------------------------------------------- --
@@ -1053,6 +1133,8 @@ GO
 -- SUBSECTION: 3.10.7 StaffPersonal --
 -- -------------------------------- --
 
+-- Not needed, duplicate of Dim1StaffPersonal, and Dim2PartyList
+-- Therefore recommend this table be removed for production.
 CREATE TABLE cdm_demo_gold.Dim2StaffList (
      [StaffRefId] CHAR (36) NOT NULL
     ,[StaffLocalId] INT NOT NULL
@@ -1430,6 +1512,18 @@ GO
 -- SUBSECTION: 3.10.10 StudentPersonal --
 -- ----------------------------------- --
 
+-- Not needed, duplicate of Dim1StudentPersonal, and Dim2PartyList
+-- Therefore recommend this table be removed for production.
+CREATE TABLE cdm_demo_gold.Dim2StudentList (
+     [StudentRefId] CHAR (36) NOT NULL
+    ,[StudentLocalId] INT NOT NULL
+    ,CONSTRAINT [FKRef_StudentList_StudentPersonal] FOREIGN KEY ([StudentRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentList_StudentPersonal] FOREIGN KEY ([StudentLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentList] PRIMARY KEY ([StudentLocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentList';
+GO
+
 CREATE TABLE cdm_demo_gold.Dim2StudentAlertMessages (
      [StudentRefId] CHAR (36) NOT NULL
     ,[StudentLocalId] INT NOT NULL
@@ -1454,16 +1548,6 @@ CREATE TABLE cdm_demo_gold.Dim2StudentMedicalAlertMessages (
     ,CONSTRAINT [FK_StudentMedicalAlertMessages_MedicalSeverity] FOREIGN KEY ([MedicalSeverity]) REFERENCES cdm_demo_gold.Dim0MedicalSeverity ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim2StudentMedicalAlertMessages';
-GO
-
-CREATE TABLE cdm_demo_gold.Dim2StudentList (
-     [StudentRefId] CHAR (36) NOT NULL
-    ,[StudentLocalId] INT NOT NULL
-    ,CONSTRAINT [FKRef_StudentList_StudentPersonal] FOREIGN KEY ([StudentRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
-    ,CONSTRAINT [FKLocal_StudentList_StudentPersonal] FOREIGN KEY ([StudentLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
-    ,CONSTRAINT [PK_StudentList] PRIMARY KEY ([StudentLocalId])
-);
-PRINT N'Created cdm_demo_gold.Dim2StudentList';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StudentElectronicIdList (
@@ -1828,6 +1912,10 @@ CREATE TABLE cdm_demo_gold.Dim2StudentMostRecentNAPLANClassList (
 );
 PRINT N'Created cdm_demo_gold.Dim2StudentMostRecentNAPLANClassList';
 GO
+
+-- ----------------------------------------- --
+-- SUBSECTION: 3.10.8 StudentContactPersonal --
+-- ----------------------------------------- --
 
 
 
