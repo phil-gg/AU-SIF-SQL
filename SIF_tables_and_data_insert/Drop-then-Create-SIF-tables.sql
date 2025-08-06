@@ -1123,6 +1123,17 @@ CREATE TABLE cdm_demo_gold.Dim1StudentContactPersonal (
 PRINT N'Created cdm_demo_gold.Dim1StudentContactPersonal';
 GO
 
+-- Don't think BCE will ever send StudentContact household contact info in SIF messages.
+-- Therefore recommend this table be removed for production.
+CREATE TABLE cdm_demo_gold.Dim1StudentContactHouseholdContactInfo (
+     [HouseholdContactId] VARCHAR (111) NOT NULL
+    ,[PreferenceNumber] INT NULL
+    ,[HouseholdSalutation] VARCHAR (111) NULL
+    ,CONSTRAINT [PK_StudentContactHouseholdContactInfo] PRIMARY KEY ([HouseholdContactId])
+);
+PRINT N'Created cdm_demo_gold.Dim1StudentContactHouseholdContactInfo';
+GO
+
 
 
 -- -------------------------------------------------------------------------- --
@@ -1916,6 +1927,357 @@ GO
 -- ----------------------------------------- --
 -- SUBSECTION: 3.10.8 StudentContactPersonal --
 -- ----------------------------------------- --
+
+-- Not needed, duplicate of Dim1StudentContactPersonal, and Dim2PartyList
+-- Therefore recommend this table be removed for production.
+CREATE TABLE cdm_demo_gold.Dim2StudentContactPersonList (
+     [StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,CONSTRAINT [FKRef_StudentContactPersonList_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactPersonList_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentContactPersonList] PRIMARY KEY ([StudentContactLocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentContactList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StudentContactOtherIdList (
+     [StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,[OtherIdValue] VARCHAR (111) NULL
+    ,[OtherIdType] VARCHAR (111) NOT NULL -- Not a key, and no FK relationship this time, unlike electronic, above
+    ,CONSTRAINT [FKRef_StudentContactOtherIdList_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactOtherIdList_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentContactOtherIdList] PRIMARY KEY ([StudentContactLocalId],[OtherIdType])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentContactOtherIdList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StudentContactNames (
+     [StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,[Title] VARCHAR (111) NULL
+    ,[FamilyName] VARCHAR (111) NULL
+    ,[GivenName] VARCHAR (111) NULL
+    ,[MiddleName] VARCHAR (111) NULL
+    ,[FamilyNameFirst] CHAR (1) NULL
+    ,[PreferredFamilyName] VARCHAR (111) NULL
+    ,[PreferredFamilyNameFirst] CHAR (1) NULL
+    ,[PreferredGivenName] VARCHAR (111) NULL
+    ,[Suffix] VARCHAR (111) NULL
+    ,[FullName] VARCHAR (111) NULL
+    ,[NameUsageTypeKey] CHAR (3) NOT NULL
+    ,CONSTRAINT [FKRef_StudentContactNames_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactNames_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentContactNames] PRIMARY KEY ([StudentContactLocalId],[NameUsageTypeKey])
+    ,CONSTRAINT [FK_StudentContactNames_FamilyNameFirst] FOREIGN KEY ([FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactNames_PreferredFamilyNameFirst] FOREIGN KEY ([PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactNames_NameUsageType] FOREIGN KEY ([NameUsageTypeKey]) REFERENCES cdm_demo_gold.Dim0NameUsageType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentContactNames';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StudentContactDemographics (
+     [StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,[IndigenousStatus] INT NULL
+    ,[Gender] INT NULL
+    ,[BirthDate] DATETIME NULL
+    ,[DateOfDeath] DATETIME NULL
+    ,[Deceased] CHAR (1) NULL
+    ,[BirthDateVerification] VARCHAR (4) NULL
+    ,[PlaceOfBirth] VARCHAR (111) NULL
+    ,[StateOfBirth] VARCHAR (3) NULL
+    ,[CountryOfBirth] VARCHAR (5) NULL
+    ,[CountryArrivalDate] DATETIME NULL
+    ,[AustralianCitizenshipStatus] CHAR (1) NULL
+    ,[EnglishProficiency] INT NULL
+    ,[DwellingArrangement] CHAR (4) NULL
+    ,[Religion] VARCHAR (6) NULL
+    ,[ReligiousRegion] VARCHAR (111) NULL
+    ,[PermanentResident] VARCHAR (2) NULL
+    ,[VisaSubClass] CHAR (5) NULL
+    ,[VisaStatisticalCode] VARCHAR (111) NULL
+    ,[VisaNumber] VARCHAR (111) NULL
+    ,[VisaGrantDate] DATETIME NULL
+    ,[VisaExpiryDate] DATETIME NULL
+    ,[VisaConditions] VARCHAR (111) NULL
+    ,[VisaStudyEntitlement] VARCHAR (9) NULL
+    ,[LBOTE] CHAR (1) NULL
+    ,[InterpreterRequired] CHAR (1) NULL
+    ,[ImmunisationCertificateStatus] VARCHAR (2) NULL
+    ,[CulturalBackground] CHAR (4) NULL
+    ,[MaritalStatus] INT NULL
+    ,[MedicareNumber] VARCHAR (111) NULL
+    ,[MedicarePositionNumber] VARCHAR (111) NULL
+    ,[MedicareCardHolder] VARCHAR (111) NULL
+    ,[PrivateHealthInsurer] VARCHAR (111) NULL
+    ,[PrivateHealthPolicyId] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_StudentContactDemographics_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactDemographics_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentContactDemographics] PRIMARY KEY ([StudentContactLocalId])
+    ,CONSTRAINT [FK_StudentContactDemographics_IndigenousStatus] FOREIGN KEY ([IndigenousStatus]) REFERENCES cdm_demo_gold.Dim0IndigenousStatus ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_GenderAkaSexCode] FOREIGN KEY ([Gender]) REFERENCES cdm_demo_gold.Dim0SexCode ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_Deceased] FOREIGN KEY ([Deceased]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_BirthdateVerification] FOREIGN KEY ([BirthdateVerification]) REFERENCES cdm_demo_gold.Dim0BirthdateVerification ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_StateOfBirth] FOREIGN KEY ([StateOfBirth]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_CountryOfBirth] FOREIGN KEY ([CountryOfBirth]) REFERENCES cdm_demo_gold.Dim1Country ([LocalId])
+    ,CONSTRAINT [FK_StudentContactDemographics_AustralianCitizenshipStatus] FOREIGN KEY ([AustralianCitizenshipStatus]) REFERENCES cdm_demo_gold.Dim0AustralianCitizenshipStatus ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_EnglishProficiency] FOREIGN KEY ([EnglishProficiency]) REFERENCES cdm_demo_gold.Dim0EnglishProficiency ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_DwellingArrangement] FOREIGN KEY ([DwellingArrangement]) REFERENCES cdm_demo_gold.Dim0DwellingArrangement ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_Religion] FOREIGN KEY ([Religion]) REFERENCES cdm_demo_gold.Dim0ReligionType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_PermanentResident] FOREIGN KEY ([PermanentResident]) REFERENCES cdm_demo_gold.Dim0PermanentResidentStatus ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_VisaSubClass] FOREIGN KEY ([VisaSubClass]) REFERENCES cdm_demo_gold.Dim1VisaSubClass ([LocalId])
+    ,CONSTRAINT [FK_StudentContactDemographics_VisaStudyEntitlement] FOREIGN KEY ([VisaStudyEntitlement]) REFERENCES cdm_demo_gold.Dim0VisaStudyEntitlement ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_LBOTE] FOREIGN KEY ([LBOTE]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_InterpreterRequired] FOREIGN KEY ([InterpreterRequired]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_ImmunisationCertificateStatus] FOREIGN KEY ([ImmunisationCertificateStatus]) REFERENCES cdm_demo_gold.Dim0ImmunisationCertificateStatus ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_CulturalBackground] FOREIGN KEY ([CulturalBackground]) REFERENCES cdm_demo_gold.Dim0CulturalEthnicGroups ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactDemographics_MaritalStatus] FOREIGN KEY ([MaritalStatus]) REFERENCES cdm_demo_gold.Dim0MaritalStatus ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentContactDemographics';
+GO
+
+CREATE TABLE cdm_demo_gold.Bridge2StudentContactCountriesOfCitizenship (
+     [StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,[CountryLocalId] VARCHAR (5) NOT NULL
+    ,CONSTRAINT [FKRef_StudentContactCountriesOfCitizenship_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactCountriesOfCitizenship_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentContactCountriesOfCitizenship] PRIMARY KEY ([StudentContactLocalId], [CountryLocalId])
+    ,CONSTRAINT [FK_StudentContactCountriesOfCitizenship_CountryLocalId] FOREIGN KEY ([CountryLocalId]) REFERENCES cdm_demo_gold.Dim1Country ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Bridge2StudentContactCountriesOfCitizenship';
+GO
+
+CREATE TABLE cdm_demo_gold.Bridge2StudentContactCountriesOfResidency (
+     [StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,[CountryLocalId] VARCHAR (5) NOT NULL
+    ,CONSTRAINT [FKRef_StudentContactCountriesOfResidency_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactCountriesOfResidency_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentContactCountriesOfResidency] PRIMARY KEY ([StudentContactLocalId], [CountryLocalId])
+    ,CONSTRAINT [FK_StudentContactCountriesOfResidency_CountryLocalId] FOREIGN KEY ([CountryLocalId]) REFERENCES cdm_demo_gold.Dim1Country ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Bridge2StudentContactCountriesOfResidency';
+GO
+
+CREATE TABLE cdm_demo_gold.Bridge2StudentContactLanguages (
+     [StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,[LanguageLocalId] CHAR (4) NOT NULL
+    ,CONSTRAINT [FKRef_StudentContactLanguages_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactLanguages_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentContactLanguages] PRIMARY KEY ([StudentContactLocalId], [LanguageLocalId])
+    ,CONSTRAINT [FK_StudentContactLanguages_LanguageLocalId] FOREIGN KEY ([LanguageLocalId]) REFERENCES cdm_demo_gold.Dim1Languages ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Bridge2StudentContactLanguages';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StudentContactReligiousEvent (
+     [StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,[ReligiousEventDescription] VARCHAR (111)  NOT NULL
+    ,[ReligiousEventDate] DATETIME  NOT NULL
+    ,CONSTRAINT [FKRef_StudentContactReligiousEvent_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactReligiousEvent_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentContactReligiousEvent] PRIMARY KEY ([StudentContactLocalId],[ReligiousEventDate])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentContactReligiousEvent';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StudentContactPassport (
+     [StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,[Number] VARCHAR (111) NOT NULL
+    ,[ExpiryDate] DATETIME  NULL
+    ,[Country] VARCHAR (5)  NOT NULL
+    ,CONSTRAINT [FKRef_StudentContactPassport_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactPassport_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentContactPassport] PRIMARY KEY ([StudentContactLocalId],[Number],[Country])
+    ,CONSTRAINT [FK_StudentContactPassport_Country] FOREIGN KEY ([Country]) REFERENCES cdm_demo_gold.Dim1Country ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentContactPassport';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StudentContactAddressList (
+     [StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,[AddressLocalId] VARCHAR (111) NOT NULL
+    ,[AddressType] VARCHAR (5) NOT NULL
+    ,[AddressRole] CHAR (4) NOT NULL
+    ,[EffectiveFromDate] DATETIME NULL
+    ,[EffectiveToDate] DATETIME NULL
+    ,[AddressStreet_Line1] VARCHAR (111) NULL
+    ,[AddressStreet_Line2] VARCHAR (111) NULL
+    ,[AddressStreet_Line3] VARCHAR (111) NULL
+    ,[AddressStreet_Complex] VARCHAR (111) NULL
+    ,[AddressStreet_StreetNumber] VARCHAR (111) NULL
+    ,[AddressStreet_StreetPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_StreetName] VARCHAR (111) NULL
+    ,[AddressStreet_StreetType] VARCHAR (111) NULL
+    ,[AddressStreet_StreetSuffix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentType] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumber] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberSuffix] VARCHAR (111) NULL
+    ,[City] VARCHAR (111) NOT NULL
+    ,[StateProvince] VARCHAR (3) NULL
+    ,[Country] VARCHAR (111) NULL
+    ,[PostalCode] VARCHAR (111) NOT NULL
+-- LatLong to 5dp is accurate to about 1 metre on Earth
+    ,[GridLocation_DecimalLatitude] DECIMAL (7,5) NULL
+    ,[GridLocation_DecimalLongitude] DECIMAL (8,5) NULL
+    ,[MapReference_MapType] VARCHAR (111) NULL
+    ,[MapReference_XCoordinate] VARCHAR (111) NULL
+    ,[MapReference_YCoordinate] VARCHAR (111) NULL
+    ,[MapReference_MapNumber] VARCHAR (111) NULL
+    ,[RadioContact] VARCHAR (111) NULL
+    ,[Community] VARCHAR (111) NULL
+    ,[AddressGlobalUID] VARCHAR (111) NULL
+    ,[StatisticalAreaLevel4Code] CHAR (3) NULL
+    ,[StatisticalAreaLevel4Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel3Code] CHAR (5) NULL
+    ,[StatisticalAreaLevel3Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel2Code] CHAR (9) NULL
+    ,[StatisticalAreaLevel2Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel1] CHAR (11) NULL
+    ,[StatisticalAreaMeshBlock] CHAR (11) NULL
+    ,[LocalGovernmentAreaName] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_StudentContactAddressList_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactAddressList_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentContactAddressList] PRIMARY KEY ([StudentContactLocalId],[AddressLocalId])
+    ,CONSTRAINT [FK_StudentContactAddressList_AddressType] FOREIGN KEY ([AddressType]) REFERENCES cdm_demo_gold.Dim0AddressType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactAddressList_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactAddressList_StateProvince] FOREIGN KEY ([StateProvince]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentContactAddressList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StudentContactPhoneNumberList (
+     [StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,[PhoneNumberType] CHAR (4) NOT NULL
+    ,[Number] VARCHAR (111) NOT NULL
+    ,[Extension] VARCHAR (111) NULL
+    ,[ListedStatus] VARCHAR (111) NULL
+    ,[Preference] INT NULL
+    ,CONSTRAINT [FKRef_StudentContactPhoneNumberList_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactPhoneNumberList_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentContactPhoneNumberList] PRIMARY KEY ([StudentContactLocalId],[PhoneNumberType])
+    ,CONSTRAINT [FK_StudentContactPhoneNumberList_PhoneNumberType] FOREIGN KEY ([PhoneNumberType]) REFERENCES cdm_demo_gold.Dim0PhoneNumberType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentContactPhoneNumberList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim2StudentContactEmailList (
+     [StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,[EmailType] CHAR (2) NOT NULL
+    ,[Email] VARCHAR (255) NOT NULL
+    ,CONSTRAINT [FKRef_StudentContactEmailList_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactEmailList_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentContactEmailList] PRIMARY KEY ([StudentContactLocalId],[EmailType])
+    ,CONSTRAINT [FK_StudentContactEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentContactEmailList';
+GO
+
+-- Don't think BCE will ever send StudentContact household contact info in SIF messages.
+-- Therefore recommend this table be removed for production.
+CREATE TABLE cdm_demo_gold.Bridge2StudentContactHouseholdContactInfo (
+     [StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,[StudentContactHouseholdContactId] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_StudentContactHouseholdContactInfo_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactHouseholdContactInfo_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [PK_BridgeStudentContactHouseholdContactInfo] PRIMARY KEY ([StudentContactLocalId], [StudentContactHouseholdContactId])
+    ,CONSTRAINT [FK_BridgeStudentContactHouseholdContactInfo_HouseholdContactId] FOREIGN KEY ([StudentContactHouseholdContactId]) REFERENCES cdm_demo_gold.Dim1StudentContactHouseholdContactInfo ([HouseholdContactId])
+);
+PRINT N'Created cdm_demo_gold.Bridge2StudentContactHouseholdContactInfo';
+GO
+
+-- Don't think BCE will ever send StudentContact household contact info in SIF messages.
+-- Therefore recommend this table be removed for production.
+CREATE TABLE cdm_demo_gold.Dim2StudentContactHouseholdContactAddressList (
+     [StudentContactHouseholdContactLocalId] VARCHAR (111) NOT NULL
+    ,[AddressLocalId] VARCHAR (111) NOT NULL
+    ,[AddressType] VARCHAR (5) NOT NULL
+    ,[AddressRole] CHAR (4) NOT NULL
+    ,[EffectiveFromDate] DATETIME NULL
+    ,[EffectiveToDate] DATETIME NULL
+    ,[AddressStreet_Line1] VARCHAR (111) NULL
+    ,[AddressStreet_Line2] VARCHAR (111) NULL
+    ,[AddressStreet_Line3] VARCHAR (111) NULL
+    ,[AddressStreet_Complex] VARCHAR (111) NULL
+    ,[AddressStreet_StreetNumber] VARCHAR (111) NULL
+    ,[AddressStreet_StreetPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_StreetName] VARCHAR (111) NULL
+    ,[AddressStreet_StreetType] VARCHAR (111) NULL
+    ,[AddressStreet_StreetSuffix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentType] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumber] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberSuffix] VARCHAR (111) NULL
+    ,[City] VARCHAR (111) NOT NULL
+    ,[StateProvince] VARCHAR (3) NULL
+    ,[Country] VARCHAR (111) NULL
+    ,[PostalCode] VARCHAR (111) NOT NULL
+-- LatLong to 5dp is accurate to about 1 metre on Earth
+    ,[GridLocation_DecimalLatitude] DECIMAL (7,5) NULL
+    ,[GridLocation_DecimalLongitude] DECIMAL (8,5) NULL
+    ,[MapReference_MapType] VARCHAR (111) NULL
+    ,[MapReference_XCoordinate] VARCHAR (111) NULL
+    ,[MapReference_YCoordinate] VARCHAR (111) NULL
+    ,[MapReference_MapNumber] VARCHAR (111) NULL
+    ,[RadioContact] VARCHAR (111) NULL
+    ,[Community] VARCHAR (111) NULL
+    ,[AddressGlobalUID] VARCHAR (111) NULL
+    ,[StatisticalAreaLevel4Code] CHAR (3) NULL
+    ,[StatisticalAreaLevel4Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel3Code] CHAR (5) NULL
+    ,[StatisticalAreaLevel3Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel2Code] CHAR (9) NULL
+    ,[StatisticalAreaLevel2Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel1] CHAR (11) NULL
+    ,[StatisticalAreaMeshBlock] CHAR (11) NULL
+    ,[LocalGovernmentAreaName] VARCHAR (111) NULL
+    ,CONSTRAINT [FKLocal_StudentContactHouseholdContactAddressList_StudentContactHouseholdContact] FOREIGN KEY ([StudentContactHouseholdContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactHouseholdContactInfo ([HouseholdContactId])
+    ,CONSTRAINT [PK_StudentContactHouseholdContactAddressList] PRIMARY KEY ([StudentContactHouseholdContactLocalId],[AddressLocalId])
+    ,CONSTRAINT [FK_StudentContactHouseholdContactAddressList_AddressType] FOREIGN KEY ([AddressType]) REFERENCES cdm_demo_gold.Dim0AddressType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactHouseholdContactAddressList_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactHouseholdContactAddressList_StateProvince] FOREIGN KEY ([StateProvince]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentContactHouseholdContactAddressList';
+GO
+
+-- Don't think BCE will ever send StudentContact household contact info in SIF messages.
+-- Therefore recommend this table be removed for production.
+CREATE TABLE cdm_demo_gold.Dim2StudentContactHouseholdContactPhoneNumberList (
+     [StudentContactHouseholdContactLocalId] VARCHAR (111) NOT NULL
+    ,[PhoneNumberType] CHAR (4) NOT NULL
+    ,[Number] VARCHAR (111) NOT NULL
+    ,[Extension] VARCHAR (111) NULL
+    ,[ListedStatus] VARCHAR (111) NULL
+    ,[Preference] INT NULL
+    ,CONSTRAINT [FKLocal_StudentContactHouseholdContactPhoneNumberList_StudentContactPersonal] FOREIGN KEY ([StudentContactHouseholdContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactHouseholdContactInfo ([HouseholdContactId])
+    ,CONSTRAINT [PK_StudentContactHouseholdContactPhoneNumberList] PRIMARY KEY ([StudentContactHouseholdContactLocalId],[PhoneNumberType])
+    ,CONSTRAINT [FK_StudentContactHouseholdContactPhoneNumberList_PhoneNumberType] FOREIGN KEY ([PhoneNumberType]) REFERENCES cdm_demo_gold.Dim0PhoneNumberType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentContactHouseholdContactPhoneNumberList';
+GO
+
+-- Don't think BCE will ever send StudentContact household contact info in SIF messages.
+-- Therefore recommend this table be removed for production.
+CREATE TABLE cdm_demo_gold.Dim2StudentContactHouseholdContactEmailList (
+     [StudentContactHouseholdContactLocalId] VARCHAR (111) NOT NULL
+    ,[EmailType] CHAR (2) NOT NULL
+    ,[Email] VARCHAR (255) NOT NULL
+    ,CONSTRAINT [FKLocal_StudentContactHouseholdContactEmailList_StudentContactPersonal] FOREIGN KEY ([StudentContactHouseholdContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactHouseholdContactInfo ([HouseholdContactId])
+    ,CONSTRAINT [PK_StudentContactHouseholdContactEmailList] PRIMARY KEY ([StudentContactHouseholdContactLocalId],[EmailType])
+    ,CONSTRAINT [FK_StudentContactHouseholdContactEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim2StudentContactHouseholdContactEmailList';
+GO
 
 
 
