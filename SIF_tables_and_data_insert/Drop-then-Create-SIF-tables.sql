@@ -973,6 +973,127 @@ INSERT INTO cdm_demo_gold.Dim0OperationalStatus ([TypeKey], [TypeValue]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0OperationalStatus';
 GO
 
+-- SchoolInfo Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0SchoolLevelType (
+     [TypeKey] VARCHAR (17) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_SchoolLevelType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0SchoolLevelType';
+INSERT INTO cdm_demo_gold.Dim0SchoolLevelType ([TypeKey], [TypeValue]) VALUES
+    ('Camp', 'Camp'),
+    ('Commty', 'Community College'),
+    ('EarlyCh', 'Early Childhood'),
+    ('JunPri', 'Junior Primary'),
+    ('Kgarten', 'Kindergarten only'),
+    ('Kind', 'Preschool/Kindergarten'),
+    ('Lang', 'Language'),
+    ('MCH', 'Maternal Child Health Centre'),
+    ('Middle', 'Middle School'),
+    ('Other', 'Other'),
+    ('PreSch', 'PreSchool only'),
+    ('Pri/Sec', 'Primary/Secondary Combined'),
+    ('Prim', 'Primary'),
+    ('Sec', 'Secondary'),
+    ('Senior', 'Senior Secondary School'),
+    ('Spec/P-12', 'Special/Primary/Secondary Combined'),
+    ('Spec/Pri', 'Special/Primary Combined'),
+    ('Spec/Sec', 'Special/Secondary Combined'),
+    ('Special', 'Special'),
+    ('SpecialAssistance', 'Special Assistance'),
+    ('Specif', 'Specific Purpose'),
+    ('Supp', 'SupportCentre'),
+    ('Unknown', 'Unknown');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SchoolLevelType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0SchoolFocusCode (
+     [TypeKey] CHAR (2) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_SchoolFocusCode] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0SchoolFocusCode';
+INSERT INTO cdm_demo_gold.Dim0SchoolFocusCode ([TypeKey], [TypeValue]) VALUES
+    ('01', 'Regular'),
+    ('02', 'Special Ed'),
+    ('03', 'Alternate'),
+    ('04', 'Vocational'),
+    ('98', 'Other'),
+    ('99', 'Not Provided');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SchoolFocusCode';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0ARIAClass (
+     [TypeKey] SMALLINT NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_ARIAClass] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0ARIAClass';
+INSERT INTO cdm_demo_gold.Dim0ARIAClass ([TypeKey], [TypeValue]) VALUES
+    (1, 'Major Cities (ARIA score 0 <= 0.20) — relatively unrestricted accessibility to a wide range of goods, services and opportunities for social interaction'),
+    (2, 'Inner Regional (ARIA score greater than 0.20 to <=2.40) — some restrictions to accessibility to some goods, services and opportunities for social interaction'),
+    (3, 'Outer Regional (ARIA score greater than 2.40 to <=5.92) — significantly restricted accessibility to goods, services and opportunities for social interaction'),
+    (4, 'Remote (ARIA score greater than 5.92 to <=10.53) — very restricted accessibility to goods, services and opportunities for social interaction'),
+    (5, 'Very Remote (ARIA score greater than 10.53 to <=15) — very little accessibility to goods, services and opportunities for social interaction');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0ARIAClass';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0SessionType (
+     [TypeKey] CHAR (4) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_SessionType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0SessionType';
+INSERT INTO cdm_demo_gold.Dim0SessionType ([TypeKey], [TypeValue]) VALUES
+    ('0827', 'Full school year'),
+    ('0828', 'Semester'),
+    ('0829', 'Trimester'),
+    ('0830', 'Quarter'),
+    ('0832', 'Mini-term'),
+    ('0833', 'Summer term'),
+    ('0837', 'Twelve month'),
+    ('9999', 'Other');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SessionType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0YearLevelCode (
+     [TypeKey] VARCHAR (8) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_YearLevelCode] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0YearLevelCode';
+INSERT INTO cdm_demo_gold.Dim0YearLevelCode ([TypeKey], [TypeValue]) VALUES
+    ('0', 'Year 1 minus 1 — For use for AG Collection Reporting. Full time Education Pre Year 1, equivalent to Year Level 1 minus 1, also known as Foundation'),
+    ('1', 'Year 1'),
+    ('11MINUS', '11 Years and Younger'),
+    ('12PLUS', '12 years and Older'),
+    ('2', 'Year 2'),
+    ('3', 'Year 3'),
+    ('4', 'Year 4'),
+    ('5', 'Year 5'),
+    ('6', 'Year 6'),
+    ('7', 'Year 7'),
+    ('8', 'Year 8'),
+    ('9', 'Year 9'),
+    ('10', 'Year 10'),
+    ('11', 'Year 11'),
+    ('12', 'Year 12'),
+    ('13', 'Year 13'),
+    ('CC', 'Childcare'),
+    ('K', 'Kindergarten'),
+    ('K3', '3yo Kindergarten'),
+    ('K4', '4yo Kindergarten'),
+    ('P', 'Prep'),
+    ('PS', 'Pre-School'),
+    ('UG', 'Ungraded'),
+    ('UGJunSec', 'Ungraded Junior Secondary'),
+    ('UGPri', 'Ungraded Primary'),
+    ('UGSec', 'Ungraded Secondary'),
+    ('UGSnrSec', 'Ungraded Senior Secondary');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0YearLevelCode';
+GO
+
 
 
 
@@ -1147,6 +1268,7 @@ CREATE TABLE cdm_demo_gold.Dim1StudentContactPersonal (
     ,[WorkingWithChildrenCheckCheckDate] DATETIME NULL
     ,[WorkingWithChildrenCheckDeterminationDate] DATETIME NULL
     ,[WorkingWithChildrenCheckExpiryDate] DATETIME NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
     ,CONSTRAINT [RefUnique_StudentContactPersonal] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_StudentContactPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_StudentContactPersonal] PRIMARY KEY ([LocalId])
@@ -1999,7 +2121,7 @@ CREATE TABLE cdm_demo_gold.Dim2StudentContactPersonList (
     ,CONSTRAINT [FKLocal_StudentContactPersonList_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
     ,CONSTRAINT [PK_StudentContactPersonList] PRIMARY KEY ([StudentContactLocalId])
 );
-PRINT N'Created cdm_demo_gold.Dim2StudentContactList';
+PRINT N'Created cdm_demo_gold.Dim2StudentContactPersonList';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim2StudentContactOtherIdList (
@@ -2429,7 +2551,6 @@ CREATE TABLE cdm_demo_gold.Dim2LEAContactList (
     ,[Name_PreferredGivenName] VARCHAR (111) NULL
     ,[Name_Suffix] VARCHAR (111) NULL
     ,[Name_FullName] VARCHAR (111) NULL
-    ,[Name_NameUsageTypeKey] CHAR (3) NOT NULL
     ,[PositionTitle] VARCHAR (111) NULL
     ,[Role] VARCHAR (111) NULL
     ,[RegistrationDetails] VARCHAR (111) NULL
@@ -2439,7 +2560,6 @@ CREATE TABLE cdm_demo_gold.Dim2LEAContactList (
     ,CONSTRAINT [PK_LEAContactList] PRIMARY KEY ([LEALocalId],[ContactLocalId])
     ,CONSTRAINT [FK_LEAContactList_FamilyNameFirst] FOREIGN KEY ([Name_FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_LEAContactList_PreferredFamilyNameFirst] FOREIGN KEY ([Name_PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
-    ,CONSTRAINT [FK_LEAContactList_NameUsageType] FOREIGN KEY ([Name_NameUsageTypeKey]) REFERENCES cdm_demo_gold.Dim0NameUsageType ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim2ContactInfo';
 GO
@@ -2527,15 +2647,111 @@ CREATE TABLE cdm_demo_gold.Dim2LEAContactEmailList (
 PRINT N'Created cdm_demo_gold.Dim2LEAContactEmailList';
 GO
 
+-- ----------------- --
+-- 3.10.5 SchoolInfo --
+-- ----------------- --
+
+-- BCE eMinerva Campus entity maps to SIF SchoolInfo entity
+-- For now, each BCE school (in eMinerva Campus) has a single physical location
+-- For as long as the above is true, recommend SIF Campus remains unused by BCE
+
+CREATE TABLE cdm_demo_gold.Dim2SchoolInfo (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[StateProvinceId] VARCHAR (111) NULL
+    ,[CommonwealthId] VARCHAR (111) NULL
+    ,[ParentCommonwealthId] VARCHAR (111) NULL
+    ,[ACARAId] VARCHAR (111) NULL
+    ,[SchoolName] VARCHAR (111) NOT NULL
+    ,[LEAInfoRefId] CHAR (36) NULL
+    ,[LEAInfoLocalId] INT NOT NULL
+    ,[OtherLEARefId] CHAR (36) NULL
+    ,[OtherLEALocalId] INT NOT NULL
+    ,[SchoolDistrict] VARCHAR (111) NULL
+    ,[SchoolDistrictLocalId] INT NULL
+    ,[SchoolType] VARCHAR (17) NULL
+    ,[SchoolFocus] CHAR(2) NULL
+    ,[SchoolURL] VARCHAR (255) NULL
+    ,[PrincipalName_Title] VARCHAR (111) NULL
+    ,[PrincipalName_FamilyName] VARCHAR (111) NULL
+    ,[PrincipalName_GivenName] VARCHAR (111) NULL
+    ,[PrincipalName_MiddleName] VARCHAR (111) NULL
+    ,[PrincipalName_FamilyNameFirst] CHAR (1) NULL
+    ,[PrincipalName_PreferredFamilyName] VARCHAR (111) NULL
+    ,[PrincipalName_PreferredFamilyNameFirst] CHAR (1) NULL
+    ,[PrincipalName_PreferredGivenName] VARCHAR (111) NULL
+    ,[PrincipalName_Suffix] VARCHAR (111) NULL
+    ,[PrincipalName_FullName] VARCHAR (111) NULL
+    ,[PrincipalName_NameUsageTypeKey] CHAR (3) NOT NULL
+    ,[PrincipalTitle] VARCHAR (111) NULL
+    ,[SessionType] CHAR (4) NULL
+    ,[ARIAScore] DECIMAL (5,3) NULL -- 0.000 to 15.000
+    ,[ARIAClass] SMALLINT NULL -- 1 to 5
+    ,[OperationalStatus] CHAR (1) NULL
+-- Working from here
+    ,[FederalElectorate] VARCHAR (111) NULL
+    ,[SchoolSector] VARCHAR (111) NOT NULL
+    ,[IndependentSchool] VARCHAR (111) NULL
+    ,[NonGovSystemicStatus] VARCHAR (111) NULL
+    ,[System] VARCHAR (111) NULL
+    ,[ReligiousAffiliation] VARCHAR (111) NULL
+    ,[SchoolGeographicLocation] VARCHAR (111) NULL
+    ,[LocalGovernmentArea] VARCHAR (111) NULL
+    ,[JurisdictionLowerHouse] VARCHAR (111) NULL
+    ,[SLA] VARCHAR (111) NULL
+    ,[SchoolCoEdStatus] VARCHAR (111) NULL
+    ,[BoardingSchoolStatus] VARCHAR (111) NULL
+    ,[Entity_Open] DATETIME NULL
+    ,[Entity_Close] DATETIME NULL
+    ,[SchoolTimeZone] VARCHAR (111) NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_SchoolInfo] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_SchoolInfo] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_SchoolInfo] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FK_SchoolInfo_LEARefId] FOREIGN KEY ([LEAInfoRefId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([RefId])
+    ,CONSTRAINT [FK_SchoolInfo_LEALocalId] FOREIGN KEY ([LEAInfoLocalId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([LocalId])
+    ,CONSTRAINT [FK_SchoolInfo_OtherLEARefId] FOREIGN KEY ([OtherLEARefId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([RefId])
+    ,CONSTRAINT [FK_SchoolInfo_OtherLEALocalId] FOREIGN KEY ([OtherLEALocalId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([LocalId])
+    ,CONSTRAINT [FK_SchoolInfo_SchoolDistrictLocalId] FOREIGN KEY ([SchoolDistrictLocalId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([LocalId])
+    ,CONSTRAINT [FK_SchoolInfo_SchoolType] FOREIGN KEY ([SchoolType]) REFERENCES cdm_demo_gold.Dim0SchoolLevelType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_SchoolFocus] FOREIGN KEY ([SchoolFocus]) REFERENCES cdm_demo_gold.Dim0SchoolFocusCode ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_FamilyNameFirst] FOREIGN KEY ([PrincipalName_FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_PreferredFamilyNameFirst] FOREIGN KEY ([PrincipalName_PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_NameUsageType] FOREIGN KEY ([PrincipalName_NameUsageTypeKey]) REFERENCES cdm_demo_gold.Dim0NameUsageType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_SessionType] FOREIGN KEY ([SessionType]) REFERENCES cdm_demo_gold.Dim0SessionType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_ARIAClass] FOREIGN KEY ([ARIAClass]) REFERENCES cdm_demo_gold.Dim0ARIAClass ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_OperationalStatus] FOREIGN KEY ([OperationalStatus]) REFERENCES cdm_demo_gold.Dim0OperationalStatus ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim2SchoolInfo';
+GO
+
+
+
+
+
+-- -------------------------------------------------------------------------- --
+-- DEPENDENCY: Tables with 3 in name have FK to table(s) with 2               --
+-- -------------------------------------------------------------------------- --
+
+-- ----------------- --
+-- 3.10.5 SchoolInfo --
+-- ----------------- --
+
+-- Dim3SchoolOtherIdList
+-- Dim3SchoolAddressList
+-- Dim3SchoolPhoneNumberList
+-- Dim3SchoolEmailList
+-- Dim3SchoolContactList
+-- Dim3SchoolYearLevels
+
+-- Dim3SchoolPrincipalPhoneNumberList
+-- Dim3SchoolPrincipalEmailList
+
 
 
 
 
 -- Upcoming headers and order to be completed:
-
--- ----------------- --
--- 3.10.5 SchoolInfo --
--- ----------------- --
 
 -- --------------- --
 -- 3.10.1 Identity --
