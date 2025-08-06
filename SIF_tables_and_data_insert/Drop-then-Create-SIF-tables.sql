@@ -2,7 +2,7 @@
 -- Enforcement of Primary Keys, Foreign Keys, and unique constraints test our mapping is correct.
 -- Such instance types can switch database with 'USE' command
 USE [demo_integration_gold];
-PRINT N'Using database [demo_integration_gold].';
+PRINT N'Using database [demo_integration_gold]';
 GO
 
 /* ************************************************************************** */
@@ -35,12 +35,12 @@ INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
 WHERE s.name = @schemaName;
 
 -- Print the generated SQL for review
-PRINT N'Dropping contraints as shown below...';
-PRINT @sql;
+-- PRINT N'Dropping contraints as shown below...';
+-- PRINT @sql;
 
 -- Execute the dynamic SQL
 EXEC sp_executesql @sql;
-PRINT N'All constraints (Foreign Key, Primary Key, Unique, Check) for user tables in schema ' + @schemaName + ' have deleted.';
+PRINT N'All constraints (Foreign Key, Primary Key, Unique, Check) for user tables in schema [' + @schemaName + '] have been deleted';
 GO
 
 -- Now constraints dropped, tables can be dropped without errors
@@ -54,12 +54,12 @@ WHERE TABLE_SCHEMA = @schemaName
   AND TABLE_TYPE = 'BASE TABLE'; -- Ensures only user-defined tables are targeted
 
 -- Print the generated SQL for review
-PRINT N'Dropping tables as shown below...';
-PRINT @sql;
+-- PRINT N'Dropping tables as shown below...';
+-- PRINT @sql;
 
 -- Execute the dynamic SQL
 EXEC sp_executesql @sql;
-PRINT N'All user tables in schema ' + @schemaName + ' have deleted.';
+PRINT N'All user tables in schema [' + @schemaName + '] have been deleted';
 GO
 
 /* ************************************************************************** */
@@ -940,6 +940,41 @@ INSERT INTO cdm_demo_gold.Dim0NonSchoolEducationType ([TypeKey], [TypeValue]) VA
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0NonSchoolEducationType';
 GO
 
+-- LEAInfo Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0EducationAgencyType (
+     [TypeKey] CHAR (2) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_EducationAgencyType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0EducationAgencyType';
+INSERT INTO cdm_demo_gold.Dim0EducationAgencyType ([TypeKey], [TypeValue]) VALUES
+    ('01', 'Jurisdictional agency'),
+    ('02', 'Cross-jurisdictional agency'),
+    ('03', 'Intra-jurisdictional agency'),
+    ('99', 'Other');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0EducationAgencyType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0OperationalStatus (
+     [TypeKey] CHAR (1) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_OperationalStatus] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0OperationalStatus';
+INSERT INTO cdm_demo_gold.Dim0OperationalStatus ([TypeKey], [TypeValue]) VALUES
+    ('B', 'Building or Construction Started'),
+    ('C', 'Closed'),
+    ('O', 'Open'),
+    ('P', 'Proposed'),
+    ('S', 'Site'),
+    ('U', 'Unstaffed');
+
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0OperationalStatus';
+GO
+
+
+
 
 
 -- -------------------------------------------------------------------------- --
@@ -1115,10 +1150,10 @@ CREATE TABLE cdm_demo_gold.Dim1StudentContactPersonal (
     ,CONSTRAINT [RefUnique_StudentContactPersonal] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_StudentContactPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_StudentContactPersonal] PRIMARY KEY ([LocalId])
-    ,CONSTRAINT [FK_StaffDemographics_EmploymentType] FOREIGN KEY ([EmploymentType]) REFERENCES cdm_demo_gold.Dim0EmploymentType ([TypeKey])
-    ,CONSTRAINT [FK_StaffDemographics_SchoolEducationalLevel] FOREIGN KEY ([SchoolEducationalLevel]) REFERENCES cdm_demo_gold.Dim0SchoolEducationLevelType ([TypeKey])
-    ,CONSTRAINT [FK_StaffDemographics_NonSchoolEducation] FOREIGN KEY ([NonSchoolEducation]) REFERENCES cdm_demo_gold.Dim0NonSchoolEducationType ([TypeKey])
-    ,CONSTRAINT [FK_StaffDemographics_WorkingWithChildrenCheckStateTerritory] FOREIGN KEY ([WorkingWithChildrenCheckStateTerritory]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
+    ,CONSTRAINT [FK_StudentContact_EmploymentType] FOREIGN KEY ([EmploymentType]) REFERENCES cdm_demo_gold.Dim0EmploymentType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContact_SchoolEducationalLevel] FOREIGN KEY ([SchoolEducationalLevel]) REFERENCES cdm_demo_gold.Dim0SchoolEducationLevelType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContact_NonSchoolEducation] FOREIGN KEY ([NonSchoolEducation]) REFERENCES cdm_demo_gold.Dim0NonSchoolEducationType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContact_WorkingWithChildrenCheckStateTerritory] FOREIGN KEY ([WorkingWithChildrenCheckStateTerritory]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim1StudentContactPersonal';
 GO
@@ -1133,6 +1168,33 @@ CREATE TABLE cdm_demo_gold.Dim1StudentContactHouseholdContactInfo (
 );
 PRINT N'Created cdm_demo_gold.Dim1StudentContactHouseholdContactInfo';
 GO
+
+-- -------------- --
+-- 3.10.2 LEAInfo --
+-- -------------- --
+
+CREATE TABLE cdm_demo_gold.Dim1LEAInfo (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[StateProvinceId] VARCHAR (111) NULL
+    ,[CommonwealthId] VARCHAR (111) NULL
+    ,[LEAName] VARCHAR (255) NOT NULL
+    ,[LEAURL] VARCHAR (255) NULL
+    ,[EducationAgencyType] CHAR (2) NULL
+    ,[OperationalStatus] CHAR (1) NULL
+    ,[JurisdictionLowerHouse] VARCHAR (111) NULL
+    ,[SLA] VARCHAR (111) NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_LEAInfo] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_LEAInfo] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_LEAInfo] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FK_LEAInfo_EducationAgencyType] FOREIGN KEY ([EducationAgencyType]) REFERENCES cdm_demo_gold.Dim0EducationAgencyType ([TypeKey])
+    ,CONSTRAINT [FK_LEAInfo_OperationalStatus] FOREIGN KEY ([OperationalStatus]) REFERENCES cdm_demo_gold.Dim0OperationalStatus ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim1LEAInfo';
+GO
+
+
 
 
 
@@ -2279,5 +2341,47 @@ CREATE TABLE cdm_demo_gold.Dim2StudentContactHouseholdContactEmailList (
 PRINT N'Created cdm_demo_gold.Dim2StudentContactHouseholdContactEmailList';
 GO
 
+-- -------------- --
+-- 3.10.2 LEAInfo --
+-- -------------- --
+
+-- Dim2LEAAddressList
+-- Dim2LEAPhoneNumberList
+-- Dim2LEAContactList
+-- Dim2LEAContactAddressList
+-- Dim2LEAContactPhoneNumberList
+-- Dim2LEAContactEmailList
 
 
+
+
+
+-- Upcoming headers and order to be completed:
+
+-- ----------------- --
+-- 3.10.5 SchoolInfo --
+-- ----------------- --
+
+-- --------------- --
+-- 3.10.1 Identity --
+-- --------------- --
+
+-- -------------------- --
+-- 3.10.3 PersonPicture --
+-- -------------------- --
+
+-- -------------------------------------- --
+-- 3.10.4 PersonPrivacyObligationDocument --
+-- -------------------------------------- --
+
+-- ---------------------- --
+-- 3.10.6 StaffAssignment --
+-- ---------------------- --
+
+-- --------------------------------- --
+-- 3.10.9 StudentContactRelationship --
+-- --------------------------------- --
+
+-- ------------------------------- --
+-- 3.10.11 StudentSchoolEnrollment --
+-- ------------------------------- --
