@@ -2540,7 +2540,7 @@ GO
 CREATE TABLE cdm_demo_gold.Dim2LEAContactList (
      [LEARefId] CHAR (36) NOT NULL
     ,[LEALocalId] INT NOT NULL
-    ,[ContactLocalId] VARCHAR (111) NOT NULL
+    ,[LEAContactLocalId] VARCHAR (111) NOT NULL
     ,[Name_Title] VARCHAR (111) NULL
     ,[Name_FamilyName] VARCHAR (111) NULL
     ,[Name_GivenName] VARCHAR (111) NULL
@@ -2557,94 +2557,11 @@ CREATE TABLE cdm_demo_gold.Dim2LEAContactList (
     ,[Qualifications] VARCHAR (111) NULL
     ,CONSTRAINT [FKRef_LEAContactList_LEAInfo] FOREIGN KEY ([LEARefId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([RefId])
     ,CONSTRAINT [FKLocal_LEAContactList_LEAInfo] FOREIGN KEY ([LEALocalId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([LocalId])
-    ,CONSTRAINT [PK_LEAContactList] PRIMARY KEY ([LEALocalId],[ContactLocalId])
+    ,CONSTRAINT [PK_LEAContactList] PRIMARY KEY ([LEAContactLocalId])
     ,CONSTRAINT [FK_LEAContactList_FamilyNameFirst] FOREIGN KEY ([Name_FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_LEAContactList_PreferredFamilyNameFirst] FOREIGN KEY ([Name_PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
 );
-PRINT N'Created cdm_demo_gold.Dim2ContactInfo';
-GO
-
-CREATE TABLE cdm_demo_gold.Dim2LEAContactAddressList (
-     [LEAContactRefId] CHAR (36) NOT NULL
-    ,[LEAContactLocalId] INT NOT NULL
-    ,[AddressLocalId] VARCHAR (111) NOT NULL
-    ,[AddressType] VARCHAR (5) NOT NULL
-    ,[AddressRole] CHAR (4) NOT NULL
-    ,[EffectiveFromDate] DATETIME NULL
-    ,[EffectiveToDate] DATETIME NULL
-    ,[AddressStreet_Line1] VARCHAR (111) NULL
-    ,[AddressStreet_Line2] VARCHAR (111) NULL
-    ,[AddressStreet_Line3] VARCHAR (111) NULL
-    ,[AddressStreet_Complex] VARCHAR (111) NULL
-    ,[AddressStreet_StreetNumber] VARCHAR (111) NULL
-    ,[AddressStreet_StreetPrefix] VARCHAR (111) NULL
-    ,[AddressStreet_StreetName] VARCHAR (111) NULL
-    ,[AddressStreet_StreetType] VARCHAR (111) NULL
-    ,[AddressStreet_StreetSuffix] VARCHAR (111) NULL
-    ,[AddressStreet_ApartmentType] VARCHAR (111) NULL
-    ,[AddressStreet_ApartmentNumberPrefix] VARCHAR (111) NULL
-    ,[AddressStreet_ApartmentNumber] VARCHAR (111) NULL
-    ,[AddressStreet_ApartmentNumberSuffix] VARCHAR (111) NULL
-    ,[City] VARCHAR (111) NOT NULL
-    ,[StateProvince] VARCHAR (3) NULL
-    ,[Country] VARCHAR (111) NULL
-    ,[PostalCode] VARCHAR (111) NOT NULL
--- LatLong to 5dp is accurate to about 1 metre on Earth
-    ,[GridLocation_DecimalLatitude] DECIMAL (7,5) NULL
-    ,[GridLocation_DecimalLongitude] DECIMAL (8,5) NULL
-    ,[MapReference_MapType] VARCHAR (111) NULL
-    ,[MapReference_XCoordinate] VARCHAR (111) NULL
-    ,[MapReference_YCoordinate] VARCHAR (111) NULL
-    ,[MapReference_MapNumber] VARCHAR (111) NULL
-    ,[RadioContact] VARCHAR (111) NULL
-    ,[Community] VARCHAR (111) NULL
-    ,[AddressGlobalUID] VARCHAR (111) NULL
-    ,[StatisticalAreaLevel4Code] CHAR (3) NULL
-    ,[StatisticalAreaLevel4Name] VARCHAR (50) NULL
-    ,[StatisticalAreaLevel3Code] CHAR (5) NULL
-    ,[StatisticalAreaLevel3Name] VARCHAR (50) NULL
-    ,[StatisticalAreaLevel2Code] CHAR (9) NULL
-    ,[StatisticalAreaLevel2Name] VARCHAR (50) NULL
-    ,[StatisticalAreaLevel1] CHAR (11) NULL
-    ,[StatisticalAreaMeshBlock] CHAR (11) NULL
-    ,[LocalGovernmentAreaName] VARCHAR (111) NULL
-    ,CONSTRAINT [FKRef_LEAContactAddressList_LEAInfo] FOREIGN KEY ([LEAContactRefId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([RefId])
-    ,CONSTRAINT [FKLocal_LEAContactAddressList_LEAInfo] FOREIGN KEY ([LEAContactLocalId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([LocalId])
-    ,CONSTRAINT [PK_LEAContactAddressList] PRIMARY KEY ([LEAContactLocalId],[AddressLocalId])
-    ,CONSTRAINT [FK_LEAContactAddressList_AddressType] FOREIGN KEY ([AddressType]) REFERENCES cdm_demo_gold.Dim0AddressType ([TypeKey])
-    ,CONSTRAINT [FK_LEAContactAddressList_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
-    ,CONSTRAINT [FK_LEAContactAddressList_StateProvince] FOREIGN KEY ([StateProvince]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
-);
-PRINT N'Created cdm_demo_gold.Dim2LEAContactAddressList';
-GO
-
-CREATE TABLE cdm_demo_gold.Dim2LEAContactPhoneNumberList (
-     [LEAContactRefId] CHAR (36) NOT NULL
-    ,[LEAContactLocalId] INT NOT NULL
-    ,[PhoneNumberType] CHAR (4) NOT NULL
-    ,[Number] VARCHAR (111) NOT NULL
-    ,[Extension] VARCHAR (111) NULL
-    ,[ListedStatus] VARCHAR (111) NULL
-    ,[Preference] INT NULL
-    ,CONSTRAINT [FKRef_LEAContactPhoneNumberList_LEAInfo] FOREIGN KEY ([LEAContactRefId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([RefId])
-    ,CONSTRAINT [FKLocal_LEAContactPhoneNumberList_LEAInfo] FOREIGN KEY ([LEAContactLocalId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([LocalId])
-    ,CONSTRAINT [PK_LEAContactPhoneNumberList] PRIMARY KEY ([LEAContactLocalId],[PhoneNumberType])
-    ,CONSTRAINT [FK_LEAContactPhoneNumberList_PhoneNumberType] FOREIGN KEY ([PhoneNumberType]) REFERENCES cdm_demo_gold.Dim0PhoneNumberType ([TypeKey])
-);
-PRINT N'Created cdm_demo_gold.Dim2LEAContactPhoneNumberList';
-GO
-
-CREATE TABLE cdm_demo_gold.Dim2LEAContactEmailList (
-     [LEAContactRefId] CHAR (36) NOT NULL
-    ,[LEAContactLocalId] INT NOT NULL
-    ,[EmailType] CHAR (2) NOT NULL
-    ,[Email] VARCHAR (255) NOT NULL
-    ,CONSTRAINT [FKRef_LEAContactEmailList_LEAInfo] FOREIGN KEY ([LEAContactRefId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([RefId])
-    ,CONSTRAINT [FKLocal_LEAContactEmailList_LEAInfo] FOREIGN KEY ([LEAContactLocalId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([LocalId])
-    ,CONSTRAINT [PK_LEAContactEmailList] PRIMARY KEY ([LEAContactLocalId],[EmailType])
-    ,CONSTRAINT [FK_LEAContactEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
-);
-PRINT N'Created cdm_demo_gold.Dim2LEAContactEmailList';
+PRINT N'Created cdm_demo_gold.Dim2LEAContactInfo';
 GO
 
 -- ----------------- --
@@ -2733,6 +2650,99 @@ GO
 -- DEPENDENCY: Tables with 3 in name have FK to table(s) with 2               --
 -- -------------------------------------------------------------------------- --
 
+-- -------------- --
+-- 3.10.2 LEAInfo --
+-- -------------- --
+
+CREATE TABLE cdm_demo_gold.Dim3LEAContactAddressList (
+     [LEARefId] CHAR (36) NOT NULL
+    ,[LEALocalId] INT NOT NULL
+    ,[LEAContactLocalId] VARCHAR (111) NOT NULL
+    ,[AddressLocalId] VARCHAR (111) NOT NULL
+    ,[AddressType] VARCHAR (5) NOT NULL
+    ,[AddressRole] CHAR (4) NOT NULL
+    ,[EffectiveFromDate] DATETIME NULL
+    ,[EffectiveToDate] DATETIME NULL
+    ,[AddressStreet_Line1] VARCHAR (111) NULL
+    ,[AddressStreet_Line2] VARCHAR (111) NULL
+    ,[AddressStreet_Line3] VARCHAR (111) NULL
+    ,[AddressStreet_Complex] VARCHAR (111) NULL
+    ,[AddressStreet_StreetNumber] VARCHAR (111) NULL
+    ,[AddressStreet_StreetPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_StreetName] VARCHAR (111) NULL
+    ,[AddressStreet_StreetType] VARCHAR (111) NULL
+    ,[AddressStreet_StreetSuffix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentType] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumber] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberSuffix] VARCHAR (111) NULL
+    ,[City] VARCHAR (111) NOT NULL
+    ,[StateProvince] VARCHAR (3) NULL
+    ,[Country] VARCHAR (111) NULL
+    ,[PostalCode] VARCHAR (111) NOT NULL
+-- LatLong to 5dp is accurate to about 1 metre on Earth
+    ,[GridLocation_DecimalLatitude] DECIMAL (7,5) NULL
+    ,[GridLocation_DecimalLongitude] DECIMAL (8,5) NULL
+    ,[MapReference_MapType] VARCHAR (111) NULL
+    ,[MapReference_XCoordinate] VARCHAR (111) NULL
+    ,[MapReference_YCoordinate] VARCHAR (111) NULL
+    ,[MapReference_MapNumber] VARCHAR (111) NULL
+    ,[RadioContact] VARCHAR (111) NULL
+    ,[Community] VARCHAR (111) NULL
+    ,[AddressGlobalUID] VARCHAR (111) NULL
+    ,[StatisticalAreaLevel4Code] CHAR (3) NULL
+    ,[StatisticalAreaLevel4Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel3Code] CHAR (5) NULL
+    ,[StatisticalAreaLevel3Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel2Code] CHAR (9) NULL
+    ,[StatisticalAreaLevel2Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel1] CHAR (11) NULL
+    ,[StatisticalAreaMeshBlock] CHAR (11) NULL
+    ,[LocalGovernmentAreaName] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_LEAContactAddressList_LEAInfo] FOREIGN KEY ([LEARefId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([RefId])
+    ,CONSTRAINT [FKLocal_LEAContactAddressList_LEAInfo] FOREIGN KEY ([LEALocalId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([LocalId])
+    ,CONSTRAINT [FKLocal_LEAContactAddressList_LEAContactInfo] FOREIGN KEY ([LEAContactLocalId]) REFERENCES cdm_demo_gold.Dim2LEAContactList ([LEAContactLocalId])
+    ,CONSTRAINT [PK_LEAContactAddressList] PRIMARY KEY ([LEAContactLocalId],[AddressLocalId])
+    ,CONSTRAINT [FK_LEAContactAddressList_AddressType] FOREIGN KEY ([AddressType]) REFERENCES cdm_demo_gold.Dim0AddressType ([TypeKey])
+    ,CONSTRAINT [FK_LEAContactAddressList_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
+    ,CONSTRAINT [FK_LEAContactAddressList_StateProvince] FOREIGN KEY ([StateProvince]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3LEAContactAddressList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim3LEAContactPhoneNumberList (
+     [LEARefId] CHAR (36) NOT NULL
+    ,[LEALocalId] INT NOT NULL
+    ,[LEAContactLocalId] VARCHAR (111) NOT NULL
+    ,[PhoneNumberType] CHAR (4) NOT NULL
+    ,[Number] VARCHAR (111) NOT NULL
+    ,[Extension] VARCHAR (111) NULL
+    ,[ListedStatus] VARCHAR (111) NULL
+    ,[Preference] INT NULL
+    ,CONSTRAINT [FKRef_LEAContactPhoneNumberList_LEAInfo] FOREIGN KEY ([LEARefId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([RefId])
+    ,CONSTRAINT [FKLocal_LEAContactPhoneNumberList_LEAInfo] FOREIGN KEY ([LEALocalId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([LocalId])
+    ,CONSTRAINT [FKLocal_LEAContactPhoneNumberList_LEAContactInfo] FOREIGN KEY ([LEAContactLocalId]) REFERENCES cdm_demo_gold.Dim2LEAContactList ([LEAContactLocalId])
+    ,CONSTRAINT [PK_LEAContactPhoneNumberList] PRIMARY KEY ([LEAContactLocalId],[PhoneNumberType])
+    ,CONSTRAINT [FK_LEAContactPhoneNumberList_PhoneNumberType] FOREIGN KEY ([PhoneNumberType]) REFERENCES cdm_demo_gold.Dim0PhoneNumberType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3LEAContactPhoneNumberList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim3LEAContactEmailList (
+     [LEARefId] CHAR (36) NOT NULL
+    ,[LEALocalId] INT NOT NULL
+    ,[LEAContactLocalId] VARCHAR (111) NOT NULL
+    ,[EmailType] CHAR (2) NOT NULL
+    ,[Email] VARCHAR (255) NOT NULL
+    ,CONSTRAINT [FKRef_LEAContactEmailList_LEAInfo] FOREIGN KEY ([LEARefId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([RefId])
+    ,CONSTRAINT [FKLocal_LEAContactEmailList_LEAInfo] FOREIGN KEY ([LEALocalId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([LocalId])
+    ,CONSTRAINT [FKLocal_LEAContactEmailList_LEAContactInfo] FOREIGN KEY ([LEAContactLocalId]) REFERENCES cdm_demo_gold.Dim2LEAContactList ([LEAContactLocalId])
+    ,CONSTRAINT [PK_LEAContactEmailList] PRIMARY KEY ([LEAContactLocalId],[EmailType])
+    ,CONSTRAINT [FK_LEAContactEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3LEAContactEmailList';
+GO
+
 -- ----------------- --
 -- 3.10.5 SchoolInfo --
 -- ----------------- --
@@ -2741,11 +2751,139 @@ GO
 -- Dim3SchoolAddressList
 -- Dim3SchoolPhoneNumberList
 -- Dim3SchoolEmailList
--- Dim3SchoolContactList
+
+CREATE TABLE cdm_demo_gold.Dim3SchoolContactList (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolContactLocalId] VARCHAR (111) NOT NULL
+    ,[Name_Title] VARCHAR (111) NULL
+    ,[Name_FamilyName] VARCHAR (111) NULL
+    ,[Name_GivenName] VARCHAR (111) NULL
+    ,[Name_MiddleName] VARCHAR (111) NULL
+    ,[Name_FamilyNameFirst] CHAR (1) NULL
+    ,[Name_PreferredFamilyName] VARCHAR (111) NULL
+    ,[Name_PreferredFamilyNameFirst] CHAR (1) NULL
+    ,[Name_PreferredGivenName] VARCHAR (111) NULL
+    ,[Name_Suffix] VARCHAR (111) NULL
+    ,[Name_FullName] VARCHAR (111) NULL
+    ,[PositionTitle] VARCHAR (111) NULL
+    ,[Role] VARCHAR (111) NULL
+    ,[RegistrationDetails] VARCHAR (111) NULL
+    ,[Qualifications] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_SchoolContactList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolContactList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolContactList] PRIMARY KEY ([SchoolContactLocalId])
+    ,CONSTRAINT [FK_SchoolContactList_FamilyNameFirst] FOREIGN KEY ([Name_FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolContactList_PreferredFamilyNameFirst] FOREIGN KEY ([Name_PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolContactInfo';
+GO
+
 -- Dim3SchoolYearLevels
 
 -- Dim3SchoolPrincipalPhoneNumberList
 -- Dim3SchoolPrincipalEmailList
+
+
+
+
+
+-- -------------------------------------------------------------------------- --
+-- DEPENDENCY: Tables with 4 in name have FK to table(s) with 3               --
+-- -------------------------------------------------------------------------- --
+
+-- ----------------- --
+-- 3.10.5 SchoolInfo --
+-- ----------------- --
+
+CREATE TABLE cdm_demo_gold.Dim4SchoolContactAddressList (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolContactLocalId] VARCHAR (111) NOT NULL
+    ,[AddressLocalId] VARCHAR (111) NOT NULL
+    ,[AddressType] VARCHAR (5) NOT NULL
+    ,[AddressRole] CHAR (4) NOT NULL
+    ,[EffectiveFromDate] DATETIME NULL
+    ,[EffectiveToDate] DATETIME NULL
+    ,[AddressStreet_Line1] VARCHAR (111) NULL
+    ,[AddressStreet_Line2] VARCHAR (111) NULL
+    ,[AddressStreet_Line3] VARCHAR (111) NULL
+    ,[AddressStreet_Complex] VARCHAR (111) NULL
+    ,[AddressStreet_StreetNumber] VARCHAR (111) NULL
+    ,[AddressStreet_StreetPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_StreetName] VARCHAR (111) NULL
+    ,[AddressStreet_StreetType] VARCHAR (111) NULL
+    ,[AddressStreet_StreetSuffix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentType] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumber] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberSuffix] VARCHAR (111) NULL
+    ,[City] VARCHAR (111) NOT NULL
+    ,[StateProvince] VARCHAR (3) NULL
+    ,[Country] VARCHAR (111) NULL
+    ,[PostalCode] VARCHAR (111) NOT NULL
+-- LatLong to 5dp is accurate to about 1 metre on Earth
+    ,[GridLocation_DecimalLatitude] DECIMAL (7,5) NULL
+    ,[GridLocation_DecimalLongitude] DECIMAL (8,5) NULL
+    ,[MapReference_MapType] VARCHAR (111) NULL
+    ,[MapReference_XCoordinate] VARCHAR (111) NULL
+    ,[MapReference_YCoordinate] VARCHAR (111) NULL
+    ,[MapReference_MapNumber] VARCHAR (111) NULL
+    ,[RadioContact] VARCHAR (111) NULL
+    ,[Community] VARCHAR (111) NULL
+    ,[AddressGlobalUID] VARCHAR (111) NULL
+    ,[StatisticalAreaLevel4Code] CHAR (3) NULL
+    ,[StatisticalAreaLevel4Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel3Code] CHAR (5) NULL
+    ,[StatisticalAreaLevel3Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel2Code] CHAR (9) NULL
+    ,[StatisticalAreaLevel2Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel1] CHAR (11) NULL
+    ,[StatisticalAreaMeshBlock] CHAR (11) NULL
+    ,[LocalGovernmentAreaName] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_SchoolContactAddressList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolContactAddressList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKLocal_SchoolContactAddressList_SchoolContactInfo] FOREIGN KEY ([SchoolContactLocalId]) REFERENCES cdm_demo_gold.Dim3SchoolContactList ([SchoolContactLocalId])
+    ,CONSTRAINT [PK_SchoolContactAddressList] PRIMARY KEY ([SchoolContactLocalId],[AddressLocalId])
+    ,CONSTRAINT [FK_SchoolContactAddressList_AddressType] FOREIGN KEY ([AddressType]) REFERENCES cdm_demo_gold.Dim0AddressType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolContactAddressList_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
+    ,CONSTRAINT [FK_SchoolContactAddressList_StateProvince] FOREIGN KEY ([StateProvince]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim4SchoolContactAddressList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim4SchoolContactPhoneNumberList (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolContactLocalId] VARCHAR (111) NOT NULL
+    ,[PhoneNumberType] CHAR (4) NOT NULL
+    ,[Number] VARCHAR (111) NOT NULL
+    ,[Extension] VARCHAR (111) NULL
+    ,[ListedStatus] VARCHAR (111) NULL
+    ,[Preference] INT NULL
+    ,CONSTRAINT [FKRef_SchoolContactPhoneNumberList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolContactPhoneNumberList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKLocal_SchoolContactPhoneNumberList_SchoolContactInfo] FOREIGN KEY ([SchoolContactLocalId]) REFERENCES cdm_demo_gold.Dim3SchoolContactList ([SchoolContactLocalId])
+    ,CONSTRAINT [PK_SchoolContactPhoneNumberList] PRIMARY KEY ([SchoolContactLocalId],[PhoneNumberType])
+    ,CONSTRAINT [FK_SchoolContactPhoneNumberList_PhoneNumberType] FOREIGN KEY ([PhoneNumberType]) REFERENCES cdm_demo_gold.Dim0PhoneNumberType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim4SchoolContactPhoneNumberList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim4SchoolContactEmailList (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolContactLocalId] VARCHAR (111) NOT NULL
+    ,[EmailType] CHAR (2) NOT NULL
+    ,[Email] VARCHAR (255) NOT NULL
+    ,CONSTRAINT [FKRef_SchoolContactEmailList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolContactEmailList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKLocal_SchoolContactEmailList_SchoolContactInfo] FOREIGN KEY ([SchoolContactLocalId]) REFERENCES cdm_demo_gold.Dim3SchoolContactList ([SchoolContactLocalId])
+    ,CONSTRAINT [PK_SchoolContactEmailList] PRIMARY KEY ([SchoolContactLocalId],[EmailType])
+    ,CONSTRAINT [FK_SchoolContactEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim4SchoolContactEmailList';
+GO
 
 
 
