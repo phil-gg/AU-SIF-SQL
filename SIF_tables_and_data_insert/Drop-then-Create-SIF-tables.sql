@@ -3006,7 +3006,7 @@ CREATE TABLE cdm_demo_gold.Dim2PartyList (
     ,[StaffLocalId] INT NULL
     ,[StudentRefId] CHAR (36) NULL
     ,[StudentLocalId] INT NULL
-     [StudentContactRefId] CHAR (36) NULL
+    ,[StudentContactRefId] CHAR (36) NULL
     ,[StudentContactLocalId] INT NULL
     ,CONSTRAINT [RefUnique_Party] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_Party] CHECK ([RefId] LIKE '________-____-7___-____-____________')
