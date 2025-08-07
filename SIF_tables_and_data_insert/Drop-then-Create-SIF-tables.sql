@@ -1306,6 +1306,118 @@ INSERT INTO cdm_demo_gold.Dim0SchoolSystemType ([TypeKey], [TypeValue]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SchoolSystemType';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim0SchoolGeographicLocationType (
+     [TypeKey] VARCHAR (5) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_SchoolGeographicLocationType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0SchoolGeographicLocationType';
+INSERT INTO cdm_demo_gold.Dim0SchoolGeographicLocationType ([TypeKey], [TypeValue]) VALUES
+    ('1', 'Metropolitan Zone'),
+    ('1.1', 'State Capital regions - State Capitals (except Hobart, Darwin)'),
+    ('1.2', 'Major urban Statistical Districts (Pop >=100 000)'),
+    ('2', 'Provincial Zone'),
+    ('3', 'Remote Zone'),
+    ('10', 'Major Cities of Australia - New South Wales'),
+    ('11', 'Inner Regional Australia - New South Wales'),
+    ('12', 'Outer Regional Australia - New South Wales'),
+    ('13', 'Remote Australia - New South Wales'),
+    ('14', 'Very Remote Australia - New South Wales'),
+    ('15', 'Migratory - Offshore - Shipping (NSW)'),
+    ('19', 'No usual address (NSW)'),
+    ('2.1.1', 'Provincial City Statistical Districts (Pop 50 000 - 99 999)'),
+    ('2.1.2', 'Provincial City Statistical Districts (Pop 25 000 - 49 999)'),
+    ('2.2.1', 'Inner Provincial areas (CD ARIA Plus score <= 2.4)'),
+    ('2.2.2', 'Outer Provincial areas (CD ARIA Plus score > 2.4 and <= 5.92)'),
+    ('20', 'Major Cities of Australia - Victoria'),
+    ('21', 'Inner Regional Australia - Victoria'),
+    ('22', 'Outer Regional Australia - Victoria'),
+    ('23', 'Remote Australia - Victoria'),
+    ('25', 'Migratory - Offshore - Shipping (Vic.)'),
+    ('29', 'No usual address (Vic.)'),
+    ('3.1', 'Remote areas (CD ARIA Plus score > 5.92 and <= 10.53)'),
+    ('3.2', 'Very Remote areas (CD ARIA Plus score > 10.53)'),
+    ('30', 'Major Cities of Australia - Queensland'),
+    ('31', 'Inner Regional Australia - Queensland'),
+    ('32', 'Outer Regional Australia - Queensland'),
+    ('33', 'Remote Australia - Queensland'),
+    ('34', 'Very Remote Australia - Queensland'),
+    ('35', 'Migratory - Offshore - Shipping (Qld)'),
+    ('39', 'No usual address (Qld)'),
+    ('40', 'Major Cities of Australia - South Australia'),
+    ('41', 'Inner Regional Australia - South Australia'),
+    ('42', 'Outer Regional Australia - South Australia'),
+    ('43', 'Remote Australia - South Australia'),
+    ('44', 'Very Remote Australia - South Australia'),
+    ('45', 'Migratory - Offshore - Shipping (SA)'),
+    ('49', 'No usual address (SA)'),
+    ('50', 'Major Cities of Australia - Western Australia'),
+    ('51', 'Inner Regional Australia - Western Australia'),
+    ('52', 'Outer Regional Australia - Western Australia'),
+    ('53', 'Remote Australia - Western Australia'),
+    ('54', 'Very Remote Australia - Western Australia'),
+    ('55', 'Migratory - Offshore - Shipping (WA)'),
+    ('59', 'No usual address (WA)'),
+    ('61', 'Inner Regional Australia - Tasmania'),
+    ('62', 'Outer Regional Australia - Tasmania'),
+    ('63', 'Remote Australia - Tasmania'),
+    ('64', 'Very Remote Australia - Tasmania'),
+    ('65', 'Migratory - Offshore - Shipping (Tas.)'),
+    ('69', 'No usual address (Tas.)'),
+    ('72', 'Outer Regional Australia - Northern Territory'),
+    ('73', 'Remote Australia - Northern Territory'),
+    ('74', 'Very Remote Australia - Northern Territory'),
+    ('75', 'Migratory - Offshore - Shipping (NT)'),
+    ('79', 'No usual address (NT)'),
+    ('80', 'Major Cities of Australia - Australian Capital Territory'),
+    ('81', 'Inner Regional Australia - Australian Capital Territory'),
+    ('85', 'Migratory - Offshore - Shipping (ACT)'),
+    ('89', 'No usual address (ACT)'),
+    ('91', 'Inner Regional Australia'),
+    ('94', 'Very Remote Australia'),
+    ('95', 'Migratory - Offshore - Shipping (OT) Other Territories'),
+    ('99', 'No usual address (OT) Other Territories');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SchoolGeographicLocationType';
+
+CREATE TABLE cdm_demo_gold.Dim0SchoolCoEdStatus (
+     [TypeKey] CHAR (1) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_SchoolCoEdStatus] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0SchoolCoEdStatus';
+INSERT INTO cdm_demo_gold.Dim0SchoolCoEdStatus ([TypeKey], [TypeValue]) VALUES
+    ('C', 'Co-Educational'),
+    ('F', 'Female'),
+    ('M', 'Male');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SchoolCoEdStatus';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0AusTimeZoneList (
+     [TimeZoneCode] VARCHAR (5) NOT NULL,
+     [TimeZoneName] VARCHAR (63) NOT NULL,
+     [TimeOffset] VARCHAR (63) NULL,
+     [DisplayOrder] SMALLINT NULL,
+     CONSTRAINT [PK_AusTimeZoneList] PRIMARY KEY ([TimeZoneCode]),
+);
+PRINT N'Created cdm_demo_gold.Dim0AusTimeZoneList';
+INSERT INTO cdm_demo_gold.Dim0AusTimeZoneList ([TimeZoneCode],[TimeZoneName],[TimeOffset],[DisplayOrder]) VALUES
+    ('AEST','Australian Eastern Standard Time','UTC +10',1),
+    ('AET','Australian Eastern Time','UTC +10:00 / +11:00',2),
+    ('AEDT','Australian Eastern Daylight Time','UTC +11',3),
+    ('ACST','Australian Central Standard Time','UTC +9:30',4),
+    ('ACDT','Australian Central Daylight Time','UTC +10:30',5),
+    ('ACT','Australian Central Time','UTC +9:30 / +10:30',6),
+    ('AWST','Australian Western Standard Time','UTC +8',7),
+    ('ACWST','Australian Central Western Standard Time','UTC +8:45',8),
+    ('AWDT','Australian Western Daylight Time','UTC +9',9),
+    ('LHDT','Lord Howe Daylight Time','UTC +11',10),
+    ('LHST','Lord Howe Standard Time','UTC +10:30',11),
+    ('NFT','Norfolk Time','UTC +11:00 / +12:00',12),
+    ('CXT','Christmas Island Time','UTC +7',13),
+    ('Other','Other Time Zone not defined', NULL ,14);
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0AusTimeZoneList';
+GO
+
 
 
 
@@ -2822,17 +2934,20 @@ CREATE TABLE cdm_demo_gold.Dim2SchoolInfo (
     ,[IndependentSchool] CHAR (1) NULL
     ,[NonGovSystemicStatus] CHAR (1) NULL
     ,[SchoolSystem] CHAR (4) NULL
--- Working from here
-    ,[ReligiousAffiliation] VARCHAR (111) NULL
-    ,[SchoolGeographicLocation] VARCHAR (111) NULL
+    ,[ReligiousAffiliation] VARCHAR (6) NULL
+    ,[SchoolGeographicLocation] VARCHAR (5) NULL
     ,[LocalGovernmentArea] VARCHAR (111) NULL
     ,[JurisdictionLowerHouse] VARCHAR (111) NULL
     ,[SLA] VARCHAR (111) NULL
-    ,[SchoolCoEdStatus] VARCHAR (111) NULL
-    ,[BoardingSchoolStatus] VARCHAR (111) NULL
+    ,[SchoolCoEdStatus] CHAR (1) NULL
+    ,[BoardingSchoolStatus] CHAR (1) NULL
+    ,[TotalEnrolled_AllStudents] INT NULL
+    ,[TotalEnrolled_Girls] INT NULL
+    ,[TotalEnrolled_Boys] INT NULL
     ,[Entity_Open] DATETIME NULL
     ,[Entity_Close] DATETIME NULL
-    ,[SchoolTimeZone] VARCHAR (111) NULL
+-- Working from here
+    ,[SchoolTimeZone] VARCHAR (5) NULL
     ,[ee_Placeholder] VARCHAR (111) NULL
     ,CONSTRAINT [RefUnique_SchoolInfo] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_SchoolInfo] CHECK ([RefId] LIKE '________-____-7___-____-____________')
@@ -2855,6 +2970,11 @@ CREATE TABLE cdm_demo_gold.Dim2SchoolInfo (
     ,CONSTRAINT [FK_SchoolInfo_IndependentSchool] FOREIGN KEY ([IndependentSchool]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_SchoolInfo_NonGovSystemicStatus] FOREIGN KEY ([NonGovSystemicStatus]) REFERENCES cdm_demo_gold.Dim0SystemicStatus ([TypeKey])
     ,CONSTRAINT [FK_SchoolInfo_SchoolSystem] FOREIGN KEY ([SchoolSystem]) REFERENCES cdm_demo_gold.Dim0SchoolSystemType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_ReligiousAffiliation] FOREIGN KEY ([ReligiousAffiliation]) REFERENCES cdm_demo_gold.Dim0ReligionType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_SchoolGeographicLocation] FOREIGN KEY ([SchoolGeographicLocation]) REFERENCES cdm_demo_gold.Dim0SchoolGeographicLocationType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_SchoolCoEdStatus] FOREIGN KEY ([SchoolCoEdStatus]) REFERENCES cdm_demo_gold.Dim0SchoolCoEdStatus ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_BoardingSchoolStatus] FOREIGN KEY ([BoardingSchoolStatus]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_SchoolTimeZone] FOREIGN KEY ([SchoolTimeZone]) REFERENCES cdm_demo_gold.Dim0AusTimeZoneList ([TimeZoneCode])
 );
 PRINT N'Created cdm_demo_gold.Dim2SchoolInfo';
 GO
@@ -3143,6 +3263,32 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolCampus (
 PRINT N'Created cdm_demo_gold.Dim3SchoolCampus';
 GO
 
+-- While BCE does not need SIF Campus it does have geographic clusters to put into SchoolGroup
+CREATE TABLE cdm_demo_gold.Dim3SchoolGroup (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[GroupId] VARCHAR (111) NOT NULL
+    ,[GroupName] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_SchoolGroup_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolGroup_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolGroup] PRIMARY KEY ([SchoolLocalId],[GroupId])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolGroup';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim3SchoolEnrollmentByYearLevel (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[Year] VARCHAR (8) NOT NULL
+    ,[Enrollment] INT NULL
+    ,CONSTRAINT [FKRef_SchoolEnrollmentByYear_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolEnrollmentByYear_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FK_SchoolEnrollmentByYear_SchoolInfo] FOREIGN KEY ([Year]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+    ,CONSTRAINT [PK_SchoolEnrollmentByYear] PRIMARY KEY ([SchoolLocalId],[Year])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolEnrollmentByYearLevel';
+GO
+
 
 
 
@@ -3253,6 +3399,9 @@ GO
 -- --------------- --
 -- 3.10.1 Identity --
 -- --------------- --
+
+-- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html#contents:~:text=3.10%20sif%20au%20student%20baseline%20profile%20(sbp)
+-- http://specification.sifassociation.org/Implementation/AU/3.6.3/SIFAUStudentBaselineProfileSBPAndSupportingObjects.html#obj:Identity
 
 -- -------------------- --
 -- 3.10.3 PersonPicture --

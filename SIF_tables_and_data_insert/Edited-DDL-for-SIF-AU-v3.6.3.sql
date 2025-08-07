@@ -346,6 +346,4 @@ CREATE TABLE cdm_demo_gold.LocalCode ( [LocalisedCode] VARCHAR (111) NOT NULL , 
 CREATE TABLE cdm_demo_gold.SpanGap ( [StartDateTime] VARCHAR (255) NULL , [EndDateTime] VARCHAR (255) NULL ) ;
 CREATE TABLE cdm_demo_gold.SourceObject ( [SIF_RefObject] VARCHAR (111) NOT NULL ) ;
 CREATE TABLE cdm_demo_gold.TimeElement ( [StartDateTime] VARCHAR (255) NULL , [EndDateTime] VARCHAR (255) NULL , [IsCurrent] bit NOT NULL ) ;
-
-	
-      -- [/noformat]
+-- [/noformat]
