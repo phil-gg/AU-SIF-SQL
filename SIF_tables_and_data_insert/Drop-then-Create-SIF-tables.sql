@@ -1418,6 +1418,20 @@ INSERT INTO cdm_demo_gold.Dim0AusTimeZoneList ([TimeZoneCode],[TimeZoneName],[Ti
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0AusTimeZoneList';
 GO
 
+-- Identity Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0PartyType (
+     [TypeKey] VARCHAR (14) NOT NULL
+     CONSTRAINT [PK_PartyType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0PartyType';
+INSERT INTO cdm_demo_gold.Dim0PartyType ([TypeKey]) VALUES
+    ('Staff'),
+    ('Student'),
+    ('StudentContact');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0PartyType';
+GO
+
 
 
 
@@ -2979,6 +2993,35 @@ CREATE TABLE cdm_demo_gold.Dim2SchoolInfo (
 PRINT N'Created cdm_demo_gold.Dim2SchoolInfo';
 GO
 
+-- --------------- --
+-- 3.10.1 Identity --
+-- --------------- --
+
+CREATE TABLE cdm_demo_gold.Dim2PartyList (
+-- Party RefId & LocalId are just the three Dim1 party types coalesced together
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[PartyType] VARCHAR (14) NOT NULL
+    ,[StaffRefId] CHAR (36) NULL
+    ,[StaffLocalId] INT NULL
+    ,[StudentRefId] CHAR (36) NULL
+    ,[StudentLocalId] INT NULL
+     [StudentContactRefId] CHAR (36) NULL
+    ,[StudentContactLocalId] INT NULL
+    ,CONSTRAINT [RefUnique_Party] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_Party] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_Party] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FK_Party_PartyType] FOREIGN KEY ([PartyType]) REFERENCES cdm_demo_gold.Dim0PartyType ([TypeKey])
+    ,CONSTRAINT [FKRef_PartyList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_PartyList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [FKRef_PartyList_StudentPersonal] FOREIGN KEY ([StudentRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_PartyList_StudentPersonal] FOREIGN KEY ([StudentLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
+    ,CONSTRAINT [FKRef_PartyList_StudentContactPersonal] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_PartyList_StudentContactPersonal] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim2PartyList';
+GO
+
 
 
 
@@ -3289,6 +3332,14 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolEnrollmentByYearLevel (
 PRINT N'Created cdm_demo_gold.Dim3SchoolEnrollmentByYearLevel';
 GO
 
+-- --------------- --
+-- 3.10.1 Identity --
+-- --------------- --
+
+-- Continue here next with Dim3Identity referencing Dim2PartyList
+-- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html#contents:~:text=3.10%20sif%20au%20student%20baseline%20profile%20(sbp)
+-- http://specification.sifassociation.org/Implementation/AU/3.6.3/SIFAUStudentBaselineProfileSBPAndSupportingObjects.html#obj:Identity
+
 
 
 
@@ -3396,12 +3447,6 @@ GO
 
 -- Upcoming headers and order to be completed:
 
--- --------------- --
--- 3.10.1 Identity --
--- --------------- --
-
--- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html#contents:~:text=3.10%20sif%20au%20student%20baseline%20profile%20(sbp)
--- http://specification.sifassociation.org/Implementation/AU/3.6.3/SIFAUStudentBaselineProfileSBPAndSupportingObjects.html#obj:Identity
 
 -- -------------------- --
 -- 3.10.3 PersonPicture --
