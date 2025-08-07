@@ -1401,19 +1401,19 @@ CREATE TABLE cdm_demo_gold.Dim0AusTimeZoneList (
 );
 PRINT N'Created cdm_demo_gold.Dim0AusTimeZoneList';
 INSERT INTO cdm_demo_gold.Dim0AusTimeZoneList ([TimeZoneCode],[TimeZoneName],[TimeOffset],[DisplayOrder]) VALUES
-    ('AEST','Australian Eastern Standard Time','UTC +10',1),
+    ('AEST','Australian Eastern Standard Time','UTC +10:00',1),
     ('AET','Australian Eastern Time','UTC +10:00 / +11:00',2),
-    ('AEDT','Australian Eastern Daylight Time','UTC +11',3),
+    ('AEDT','Australian Eastern Daylight Time','UTC +11:)0',3),
     ('ACST','Australian Central Standard Time','UTC +9:30',4),
     ('ACDT','Australian Central Daylight Time','UTC +10:30',5),
     ('ACT','Australian Central Time','UTC +9:30 / +10:30',6),
-    ('AWST','Australian Western Standard Time','UTC +8',7),
+    ('AWST','Australian Western Standard Time','UTC +8:00',7),
     ('ACWST','Australian Central Western Standard Time','UTC +8:45',8),
-    ('AWDT','Australian Western Daylight Time','UTC +9',9),
-    ('LHDT','Lord Howe Daylight Time','UTC +11',10),
+    ('AWDT','Australian Western Daylight Time','UTC +9:00',9),
+    ('LHDT','Lord Howe Daylight Time','UTC +11:00',10),
     ('LHST','Lord Howe Standard Time','UTC +10:30',11),
     ('NFT','Norfolk Time','UTC +11:00 / +12:00',12),
-    ('CXT','Christmas Island Time','UTC +7',13),
+    ('CXT','Christmas Island Time','UTC +7:00',13),
     ('Other','Other Time Zone not defined', NULL ,14);
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0AusTimeZoneList';
 GO
@@ -1431,6 +1431,39 @@ INSERT INTO cdm_demo_gold.Dim0PartyType ([TypeKey]) VALUES
     ('StudentContact');
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0PartyType';
 GO
+
+CREATE TABLE cdm_demo_gold.Dim0AuthenticationSource (
+     [TypeKey] VARCHAR (63) NOT NULL
+     CONSTRAINT [PK_AuthenticationSource] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0AuthenticationSource';
+INSERT INTO cdm_demo_gold.Dim0AuthenticationSource ([TypeKey]) VALUES
+    ('AUAccessShibboleth'),
+    ('MSActiveDirectory'),
+    ('NovellNDS'),
+    ('OpenDirectory'),
+    ('OpenID'),
+    ('Other');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0AuthenticationSource';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0EncryptionAlgorithm (
+     [TypeKey] VARCHAR (16) NOT NULL
+     CONSTRAINT [PK_EncryptionAlgorithm] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0EncryptionAlgorithm';
+INSERT INTO cdm_demo_gold.Dim0EncryptionAlgorithm ([TypeKey]) VALUES
+    ('MD5'),
+    ('SHA1'),
+    ('DES'),
+    ('TripleDES'),
+    ('RC2'),
+    ('AES'),
+    ('RSA');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0EncryptionAlgorithm';
+GO
+
+-- PersonPicture Dim0 items from here
 
 
 
@@ -1478,6 +1511,8 @@ CREATE TABLE cdm_demo_gold.Dim1VisaSubClass (
 );
 PRINT N'Created cdm_demo_gold.Dim1VisaSubClass';
 GO
+
+
 
 
 
@@ -3250,19 +3285,6 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolPrincipalEmailList (
 PRINT N'Created cdm_demo_gold.Dim3SchoolPrincipalEmailList';
 GO
 
-CREATE TABLE cdm_demo_gold.Dim3SchoolYearLevels (
-     [SchoolRefId] CHAR (36) NOT NULL
-    ,[SchoolLocalId] INT NOT NULL
-    ,[YearLevelCode] VARCHAR (8) NOT NULL
-    ,[TotalYearEnrollment] SMALLINT NOT NULL
-    ,CONSTRAINT [FKRef_SchoolYearLevels_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
-    ,CONSTRAINT [FKLocal_SchoolYearLevels_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
-    ,CONSTRAINT [PK_SchoolYearLevels] PRIMARY KEY ([SchoolLocalId],[YearLevelCode])
-    ,CONSTRAINT [FK_SchoolYearLevels_YearLevelCode] FOREIGN KEY ([YearLevelCode]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
-);
-PRINT N'Created cdm_demo_gold.Dim3SchoolYearLevels';
-GO
-
 CREATE TABLE cdm_demo_gold.Dim3SchoolContactList (
      [SchoolRefId] CHAR (36) NOT NULL
     ,[SchoolLocalId] INT NOT NULL
@@ -3307,7 +3329,7 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolCampus (
 PRINT N'Created cdm_demo_gold.Dim3SchoolCampus';
 GO
 
--- While BCE does not need SIF Campus it does have geographic clusters to put into SchoolGroup
+-- While BCE may not need SIF Campus it does have geographic clusters to put into SchoolGroup
 CREATE TABLE cdm_demo_gold.Dim3SchoolGroup (
      [SchoolRefId] CHAR (36) NOT NULL
     ,[SchoolLocalId] INT NOT NULL
@@ -3320,6 +3342,22 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolGroup (
 PRINT N'Created cdm_demo_gold.Dim3SchoolGroup';
 GO
 
+-- This table to capture schools and the years they teach, doubles up with enrollment by year, below
+-- Both included to show complete SIF spec, but just implement enrollment by year and drop this one
+CREATE TABLE cdm_demo_gold.Dim3SchoolYearLevels (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[YearLevelCode] VARCHAR (8) NOT NULL
+    ,CONSTRAINT [FKRef_SchoolYearLevels_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolYearLevels_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolYearLevels] PRIMARY KEY ([SchoolLocalId],[YearLevelCode])
+    ,CONSTRAINT [FK_SchoolYearLevels_YearLevelCode] FOREIGN KEY ([YearLevelCode]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolYearLevels';
+GO
+
+-- This table to capture school enrollment by year, doubles up with Dim3SchoolYearLevel, above
+-- Both included to show complete SIF spec, but just implement this table & drop the one above
 CREATE TABLE cdm_demo_gold.Dim3SchoolEnrollmentByYearLevel (
      [SchoolRefId] CHAR (36) NOT NULL
     ,[SchoolLocalId] INT NOT NULL
@@ -3337,9 +3375,26 @@ GO
 -- 3.10.1 Identity --
 -- --------------- --
 
--- Continue here next with Dim3Identity referencing Dim2PartyList
--- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html#contents:~:text=3.10%20sif%20au%20student%20baseline%20profile%20(sbp)
--- http://specification.sifassociation.org/Implementation/AU/3.6.3/SIFAUStudentBaselineProfileSBPAndSupportingObjects.html#obj:Identity
+CREATE TABLE cdm_demo_gold.Dim3Identity (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[PartyRefId] CHAR (36) NOT NULL
+    ,[PartyLocalId] INT NOT NULL
+    ,[PartyType] VARCHAR (14) NOT NULL
+    ,[AuthenticationSource] VARCHAR (63) NOT NULL
+    ,[AuthenticationSourceGlobalUID] CHAR (36) NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_Identity] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_Identity] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_Identity] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FK_Identity_PartyRefId] FOREIGN KEY ([PartyRefId]) REFERENCES cdm_demo_gold.Dim2PartyList ([RefId])
+    ,CONSTRAINT [FK_Identity_PartyLocalId] FOREIGN KEY ([PartyLocalId]) REFERENCES cdm_demo_gold.Dim2PartyList ([LocalId])
+    ,CONSTRAINT [FK_Identity_PartyType] FOREIGN KEY ([PartyType]) REFERENCES cdm_demo_gold.Dim0PartyType ([TypeKey])
+    ,CONSTRAINT [FK_Identity_AuthenticationSource] FOREIGN KEY ([AuthenticationSource]) REFERENCES cdm_demo_gold.Dim0AuthenticationSource ([TypeKey])
+    ,CONSTRAINT [AuthenticationSourceGlobalUID] CHECK ([RefId] LIKE '________-____-____-____-____________')
+);
+PRINT N'Created cdm_demo_gold.Dim3Identity';
+GO
 
 
 
@@ -3442,16 +3497,48 @@ CREATE TABLE cdm_demo_gold.Dim4SchoolContactEmailList (
 PRINT N'Created cdm_demo_gold.Dim4SchoolContactEmailList';
 GO
 
+-- --------------- --
+-- 3.10.1 Identity --
+-- --------------- --
+
+CREATE TABLE cdm_demo_gold.Dim4IdentityAssertions (
+     [IdentityRefId] CHAR (36) NOT NULL
+    ,[IdentityLocalId] INT NOT NULL
+    ,[IdentityAssertionString] VARCHAR (111) NOT NULL
+    ,[SchemaName] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FK_IdentityAssertions_IdentityRefId] FOREIGN KEY ([IdentityRefId]) REFERENCES cdm_demo_gold.Dim3Identity ([RefId])
+    ,CONSTRAINT [FK_IdentityAssertions_IdentityLocalId] FOREIGN KEY ([IdentityLocalId]) REFERENCES cdm_demo_gold.Dim3Identity ([LocalId])
+    ,CONSTRAINT [PK_IdentityAssertions] PRIMARY KEY ([IdentityLocalId],[SchemaName])
+);
+PRINT N'Created cdm_demo_gold.Dim4IdentityAssertions';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim4IdentityPasswordList (
+     [IdentityRefId] CHAR (36) NOT NULL
+    ,[IdentityLocalId] INT NOT NULL
+    ,[EncryptedPassword] VARCHAR (111) NOT NULL
+    ,[EncryptionAlgorithm] VARCHAR (16) NOT NULL
+    ,[KeyName] VARCHAR (111) NULL -- Don't need a named key with all algorithm types
+    ,CONSTRAINT [FK_IdentityPasswordList_IdentityRefId] FOREIGN KEY ([IdentityRefId]) REFERENCES cdm_demo_gold.Dim3Identity ([RefId])
+    ,CONSTRAINT [FK_IdentityPasswordList_IdentityLocalId] FOREIGN KEY ([IdentityLocalId]) REFERENCES cdm_demo_gold.Dim3Identity ([LocalId])
+    ,CONSTRAINT [PK_IdentityPasswordList] PRIMARY KEY ([IdentityLocalId],[EncryptionAlgorithm])
+    ,CONSTRAINT [FK_IdentityPasswordList_EncryptionAlgorithm] FOREIGN KEY ([EncryptionAlgorithm]) REFERENCES cdm_demo_gold.Dim0EncryptionAlgorithm ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim4IdentityPasswordList';
+GO
+
 
 
 
 
 -- Upcoming headers and order to be completed:
 
-
 -- -------------------- --
 -- 3.10.3 PersonPicture --
 -- -------------------- --
+
+-- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html#contents:~:text=3.10%20sif%20au%20student%20baseline%20profile%20(sbp)
+-- http://specification.sifassociation.org/Implementation/AU/3.6.3/SIFAUStudentBaselineProfileSBPAndSupportingObjects.html#obj:PersonPicture
 
 -- -------------------------------------- --
 -- 3.10.4 PersonPrivacyObligationDocument --
