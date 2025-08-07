@@ -1094,6 +1094,218 @@ INSERT INTO cdm_demo_gold.Dim0YearLevelCode ([TypeKey], [TypeValue]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0YearLevelCode';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim0FederalElectorateList (
+     [FederalDivisionAlphabeticalId] SMALLINT NOT NULL,
+     [FederalDivisionName] VARCHAR (63) NOT NULL,
+     [StateTerritoryCode] VARCHAR (3) NOT NULL,
+     [ExtractedFromAPHDateTime] DATETIME NOT NULL,
+     [Classification] VARCHAR (63) NULL,
+     [MP_Title] VARCHAR (63) NULL,
+     [MP_GivenName] VARCHAR (63) NULL,
+     [MP_FamilyName] VARCHAR (63) NULL,
+     [MP_Party] VARCHAR (63) NULL,
+     [MP_Positions] VARCHAR (255) NULL,
+     CONSTRAINT [PK_FederalElectorateList] PRIMARY KEY ([FederalDivisionAlphabeticalId]),
+     CONSTRAINT [FK_FederalElectorateList_StateTerritoryCode] FOREIGN KEY ([StateTerritoryCode]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0FederalElectorateList';
+INSERT INTO cdm_demo_gold.Dim0FederalElectorateList ([FederalDivisionAlphabeticalId],[FederalDivisionName],[StateTerritoryCode],[ExtractedFromAPHDateTime],[Classification],[MP_Title],[MP_GivenName],[MP_FamilyName],[MP_Party],[MP_Positions]) VALUES
+    (1,'Adelaide','SA','2025-08-07T00:00:00Z','Inner-metropolitan','Mr','Steve','Georganas','Australian Labor Party','Chair of Joint Standing Committee on Migration'),
+    (2,'Aston','VIC','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Mary','Doyle','Australian Labor Party', NULL ),
+    (3,'Ballarat','VIC','2025-08-07T00:00:00Z','Provincial','Hon','Catherine','King','Australian Labor Party','Minister for Infrastructure, Transport; Regional Development and Local Government'),
+    (4,'Banks','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Mr','Zhi','Soon','Australian Labor Party', NULL ),
+    (5,'Barker','SA','2025-08-07T00:00:00Z','Rural','Mr','Tony','Pasin','Liberal Party of Australia', NULL ),
+    (6,'Barton','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Ash','Ambihaipahar','Australian Labor Party', NULL ),
+    (7,'Bass','TAS','2025-08-07T00:00:00Z','Provincial','Ms','Jess','Teesdale','Australian Labor Party', NULL ),
+    (8,'Bean','ACT','2025-08-07T00:00:00Z','Inner-metropolitan','Mr','David','Smith','Australian Labor Party','Government Whip'),
+    (9,'Bendigo','VIC','2025-08-07T00:00:00Z','Provincial','Ms','Lisa','Chesters','Australian Labor Party','Chair of Joint Standing Committee on Treaties'),
+    (10,'Bennelong','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Mr','Jerome','Laxale','Australian Labor Party','Chair of Joint Standing Committee on Electoral Matters'),
+    (11,'Berowra','NSW','2025-08-07T00:00:00Z','Outer-metropolitan','Mr','Julian','Leeser','Liberal Party of Australia', NULL ),
+    (12,'Blair','QLD','2025-08-07T00:00:00Z','Provincial','Hon','Shayne','Neumann','Australian Labor Party','Chair of Joint Standing Committee on Foreign Affairs, Defence and Trade'),
+    (13,'Blaxland','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Jason','Clare','Australian Labor Party','Minister for Education'),
+    (14,'Bonner','QLD','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Kara','Cook','Australian Labor Party', NULL ),
+    (15,'Boothby','SA','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Louise','Miller-Frost','Australian Labor Party','Chair of Standing Committee on Social Policy and Legal Affairs'),
+    (16,'Bowman','QLD','2025-08-07T00:00:00Z','Outer-metropolitan','Mr','Henry','Pike','Liberal National Party of Queensland','Opposition Whip'),
+    (17,'Braddon','TAS','2025-08-07T00:00:00Z','Rural','Ms','Anne','Urquhart','Australian Labor Party', NULL ),
+    (18,'Bradfield','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Nicolette','Boele','Independent', NULL ),
+    (19,'Brand','WA','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Madeleine','King','Australian Labor Party','Minister for Resources; Minister for Northern Australia'),
+    (20,'Brisbane','QLD','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Madonna','Jarrett','Australian Labor Party', NULL ),
+    (21,'Bruce','VIC','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Julian','Hill','Australian Labor Party','Assistant Minister for Citizenship; Customs and Multicultural Affairs; Assistant Minister for International Education'),
+    (22,'Bullwinkel','WA','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Trish','Cook','Australian Labor Party', NULL ),
+    (23,'Burt','WA','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Matt','Keogh','Australian Labor Party','Minister for Defence Personnel; Minister for Veterans'' Affairs'),
+    (24,'Calare','NSW','2025-08-07T00:00:00Z','Rural','Hon','Andrew','Gee','Independent', NULL ),
+    (25,'Calwell','VIC','2025-08-07T00:00:00Z','Outer-metropolitan','Mr','Basem','Abdo','Australian Labor Party', NULL ),
+    (26,'Canberra','ACT','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Alicia','Payne','Australian Labor Party', NULL ),
+    (27,'Canning','WA','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Andrew','Hastie','Liberal Party of Australia', NULL ),
+    (28,'Capricornia','QLD','2025-08-07T00:00:00Z','Provincial','Hon','Michelle','Landry','Liberal National Party of Queensland','Chief Nationals Whip'),
+    (29,'Casey','VIC','2025-08-07T00:00:00Z','Rural','Mr','Aaron','Violi','Liberal Party of Australia','Opposition Chief Whip'),
+    (30,'Chifley','NSW','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Ed','Husic','Australian Labor Party','Chair of Standing Committee on Economics'),
+    (31,'Chisholm','VIC','2025-08-07T00:00:00Z','Inner-metropolitan','Dr','Carina','Garland','Australian Labor Party','Chair of Standing Committee on Employment, Workplace Relations, Skills and Training'),
+    (32,'Clark','TAS','2025-08-07T00:00:00Z','Inner-metropolitan','Mr','Andrew','Wilkie','Independent', NULL ),
+    (33,'Cook','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Mr','Simon','Kennedy','Liberal Party of Australia','Deputy Chair of Standing Committee on Economics'),
+    (34,'Cooper','VIC','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Ged','Kearney','Australian Labor Party','Assistant Minister for Social Services; Assistant Minister for the Prevention of Family Violence'),
+    (35,'Corangamite','VIC','2025-08-07T00:00:00Z','Provincial','Ms','Libby','Coker','Australian Labor Party','Chair of Joint Standing Committee on the National Disability Insurance Scheme'),
+    (36,'Corio','VIC','2025-08-07T00:00:00Z','Provincial','Hon','Richard','Marles','Australian Labor Party','Deputy Prime Minister; Minister for Defence'),
+    (37,'Cowan','WA','2025-08-07T00:00:00Z','Inner-metropolitan','Hon Dr','Anne','Aly','Australian Labor Party','Minister for Small Business; Minister for International Development; Minister for Multicultural Affairs'),
+    (38,'Cowper','NSW','2025-08-07T00:00:00Z','Provincial','Mr','Pat','Conaghan','The Nationals', NULL ),
+    (39,'Cunningham','NSW','2025-08-07T00:00:00Z','Provincial','Ms','Alison','Byrnes','Australian Labor Party', NULL ),
+    (40,'Curtin','WA','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Kate','Chaney','Independent', NULL ),
+    (41,'Dawson','QLD','2025-08-07T00:00:00Z','Rural','Mr','Andrew','Willcox','Liberal National Party of Queensland','Deputy Chair of Parliamentary Standing Committee on Public Works'),
+    (42,'Deakin','VIC','2025-08-07T00:00:00Z','Outer-metropolitan','Mr','Matt','Gregg','Australian Labor Party', NULL ),
+    (43,'Dickson','QLD','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Ali','France','Australian Labor Party', NULL ),
+    (44,'Dobell','NSW','2025-08-07T00:00:00Z','Provincial','Hon','Emma','McBride','Australian Labor Party','Assistant Minister for Mental Health and Suicide Prevention; Assistant Minister for Rural and Regional Health'),
+    (45,'Dunkley','VIC','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Jodie','Belyea','Australian Labor Party', NULL ),
+    (46,'Durack','WA','2025-08-07T00:00:00Z','Rural','Hon','Melissa','Price','Liberal Party of Australia', NULL ),
+    (47,'Eden-Monaro','NSW','2025-08-07T00:00:00Z','Rural','Hon','Kristy','McBain','Australian Labor Party','Minister for Emergency Management; Minister for Regional Development; Local Government and Territories'),
+    (48,'Fadden','QLD','2025-08-07T00:00:00Z','Outer-metropolitan','Mr','Cameron','Caldwell','Liberal National Party of Queensland','Opposition Whip; Deputy Chair of Joint Standing Committee on Migration'),
+    (49,'Fairfax','QLD','2025-08-07T00:00:00Z','Rural','Mr','Ted','O''Brien','Liberal National Party of Queensland','Deputy Leader of the Opposition'),
+    (50,'Farrer','NSW','2025-08-07T00:00:00Z','Rural','Hon','Sussan','Ley','Liberal Party of Australia','Leader of the Opposition'),
+    (51,'Fenner','ACT','2025-08-07T00:00:00Z','Inner-metropolitan','Hon Dr','Andrew','Leigh','Australian Labor Party','Assistant Minister for Productivity; Competition; Charities and Treasury'),
+    (52,'Fisher','QLD','2025-08-07T00:00:00Z','Rural','Mr','Andrew','Wallace','Liberal National Party of Queensland', NULL ),
+    (53,'Flinders','VIC','2025-08-07T00:00:00Z','Rural','Ms','Zoe','McKenzie','Liberal Party of Australia','Deputy Chair of Joint Standing Committee on Treaties'),
+    (54,'Flynn','QLD','2025-08-07T00:00:00Z','Rural','Mr','Colin','Boyce','Liberal National Party of Queensland', NULL ),
+    (55,'Forde','QLD','2025-08-07T00:00:00Z','Outer-metropolitan','Mr','Rowan','Holzberger','Australian Labor Party', NULL ),
+    (56,'Forrest','WA','2025-08-07T00:00:00Z','Rural','Mr','Ben','Small','Liberal Party of Australia', NULL ),
+    (57,'Fowler','NSW','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Dai','Le','Independent', NULL ),
+    (58,'Franklin','TAS','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Julie','Collins','Australian Labor Party','Minister for Agriculture; Fisheries and Forestry'),
+    (59,'Fraser','VIC','2025-08-07T00:00:00Z','Inner-metropolitan','Hon Dr','Daniel','Mulino','Australian Labor Party','Assistant Treasurer; Minister for Financial Services'),
+    (60,'Fremantle','WA','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Josh','Wilson','Australian Labor Party','Assistant Minister for Climate Change and Energy; Assistant Minister for Emergency Management'),
+    (61,'Gellibrand','VIC','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Tim','Watts','Australian Labor Party','Chair of Standing Committee on Education'),
+    (62,'Gilmore','NSW','2025-08-07T00:00:00Z','Rural','Mrs','Fiona','Phillips','Australian Labor Party', NULL ),
+    (63,'Gippsland','VIC','2025-08-07T00:00:00Z','Rural','Hon','Darren','Chester','The Nationals', NULL ),
+    (64,'Goldstein','VIC','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Tim','Wilson','Liberal Party of Australia', NULL ),
+    (65,'Gorton','VIC','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Alice','Jordan-Baird','Australian Labor Party', NULL ),
+    (66,'Grayndler','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Anthony','Albanese','Australian Labor Party','Prime Minister'),
+    (67,'Greenway','NSW','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Michelle','Rowland','Australian Labor Party','Attorney-General'),
+    (68,'Grey','SA','2025-08-07T00:00:00Z','Rural','Mr','Tom','Venning','Liberal Party of Australia','Deputy Chair of Joint Standing Committee on Aboriginal and Torres Strait Islander Affairs'),
+    (69,'Griffith','QLD','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Renee','Coffey','Australian Labor Party', NULL ),
+    (70,'Groom','QLD','2025-08-07T00:00:00Z','Provincial','Mr','Garth','Hamilton','Liberal National Party of Queensland','Deputy Chair of Parliamentary Joint Committee on Corporations and Financial Services'),
+    (71,'Hasluck','WA','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Tania','Lawrence','Australian Labor Party', NULL ),
+    (72,'Hawke','VIC','2025-08-07T00:00:00Z','Provincial','Hon','Sam','Rae','Australian Labor Party','Minister for Aged Care and Seniors'),
+    (73,'Herbert','QLD','2025-08-07T00:00:00Z','Provincial','Mr','Phillip','Thompson','Liberal National Party of Queensland','OAM, Deputy Chair of Joint Standing Committee on Northern Australia'),
+    (74,'Hindmarsh','SA','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Mark','Butler','Australian Labor Party','Minister for Disability and the National Disability Insurance Scheme; Minister for Health and Ageing; Deputy Leader of the House'),
+    (75,'Hinkler','QLD','2025-08-07T00:00:00Z','Provincial','Mr','David','Batt','Liberal National Party of Queensland','Deputy Nationals Whip'),
+    (76,'Holt','VIC','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Cassandra','Fernando','Australian Labor Party', NULL ),
+    (77,'Hotham','VIC','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Clare','O''Neil','Australian Labor Party','Minister for Housing; Minister for Homelessness; Minister for Cities'),
+    (78,'Hughes','NSW','2025-08-07T00:00:00Z','Outer-metropolitan','Mr','David','Moncrieff','Australian Labor Party', NULL ),
+    (79,'Hume','NSW','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Angus','Taylor','Liberal Party of Australia', NULL ),
+    (80,'Hunter','NSW','2025-08-07T00:00:00Z','Rural','Mr','Dan','Repacholi','Australian Labor Party', NULL ),
+    (81,'Indi','VIC','2025-08-07T00:00:00Z','Rural','Dr','Helen','Haines','Independent', NULL ),
+    (82,'Isaacs','VIC','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Mark','Dreyfus','Australian Labor Party','KC'),
+    (83,'Jagajaga','VIC','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Kate','Thwaites','Australian Labor Party', NULL ),
+    (84,'Kennedy','QLD','2025-08-07T00:00:00Z','Rural','Hon','Bob','Katter','Katter''s Australian Party', NULL ),
+    (85,'Kingsford Smith','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Matt','Thistlethwaite','Australian Labor Party','Assistant Minister for Immigration; Assistant Minister for Foreign Affairs and Trade'),
+    (86,'Kingston','SA','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Amanda','Rishworth','Australian Labor Party','Minister for Employment and Workplace Relations'),
+    (87,'Kooyong','VIC','2025-08-07T00:00:00Z','Inner-metropolitan','Dr','Monique','Ryan','Independent', NULL ),
+    (88,'La Trobe','VIC','2025-08-07T00:00:00Z','Provincial','Hon','Jason','Wood','Liberal Party of Australia', NULL ),
+    (89,'Lalor','VIC','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Joanne','Ryan','Australian Labor Party','Chief Government Whip'),
+    (90,'Leichhardt','QLD','2025-08-07T00:00:00Z','Rural','Mr','Matt','Smith','Australian Labor Party', NULL ),
+    (91,'Lilley','QLD','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Anika','Wells','Australian Labor Party','Minister for Communications; Minister for Sport'),
+    (92,'Lindsay','NSW','2025-08-07T00:00:00Z','Outer-metropolitan','Mrs','Melissa','McIntosh','Liberal Party of Australia', NULL ),
+    (93,'Lingiari','NT','2025-08-07T00:00:00Z','Rural','Ms','Marion','Scrymgour','Australian Labor Party','Chair of Joint Standing Committee on Northern Australia'),
+    (94,'Longman','QLD','2025-08-07T00:00:00Z','Provincial','Mr','Terry','Young','Liberal National Party of Queensland','Second Deputy Speaker'),
+    (95,'Lyne','NSW','2025-08-07T00:00:00Z','Rural','Ms','Alison','Penfold','The Nationals', NULL ),
+    (96,'Lyons','TAS','2025-08-07T00:00:00Z','Rural','Hon','Rebecca','White','Australian Labor Party','Assistant Minister for Women; Assistant Minister for Indigenous Health; Assistant Minister for Health and Aged Care'),
+    (97,'Macarthur','NSW','2025-08-07T00:00:00Z','Outer-metropolitan','Dr','Mike','Freelander','Australian Labor Party','Chair of Standing Committee on Health, Aged Care and Disability'),
+    (98,'Mackellar','NSW','2025-08-07T00:00:00Z','Outer-metropolitan','Dr','Sophie','Scamps','Independent', NULL ),
+    (99,'Macnamara','VIC','2025-08-07T00:00:00Z','Inner-metropolitan','Mr','Josh','Burns','Australian Labor Party','Chair of Joint Committee of Public Accounts and Audit'),
+    (100,'Macquarie','NSW','2025-08-07T00:00:00Z','Provincial','Ms','Susan','Templeman','Australian Labor Party','Chair of House of Representatives Standing Committee on Communications, the Arts and Sport'),
+    (101,'Makin','SA','2025-08-07T00:00:00Z','Outer-metropolitan','Mr','Tony','Zappia','Australian Labor Party','Chair of Parliamentary Standing Committee on Public Works'),
+    (102,'Mallee','VIC','2025-08-07T00:00:00Z','Rural','Dr','Anne','Webster','The Nationals', NULL ),
+    (103,'Maranoa','QLD','2025-08-07T00:00:00Z','Rural','Hon','David','Littleproud','Liberal National Party of Queensland','Leader of the Nationals'),
+    (104,'Maribyrnong','VIC','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Jo','Briskey','Australian Labor Party', NULL ),
+    (105,'Mayo','SA','2025-08-07T00:00:00Z','Rural','Ms','Rebekha','Sharkie','Centre Alliance', NULL ),
+    (106,'McEwen','VIC','2025-08-07T00:00:00Z','Rural','Mr','Rob','Mitchell','Australian Labor Party','Chair of Standing Committee on Industry, Innovation and Science'),
+    (107,'McMahon','NSW','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Chris','Bowen','Australian Labor Party','Minister for Climate Change and Energy'),
+    (108,'McPherson','QLD','2025-08-07T00:00:00Z','Provincial','Mr','Leon','Rebello','Liberal National Party of Queensland','Deputy Chair of Parliamentary Joint Committee on Human Rights'),
+    (109,'Melbourne','VIC','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Sarah','Witty','Australian Labor Party', NULL ),
+    (110,'Menzies','VIC','2025-08-07T00:00:00Z','Outer-metropolitan','Mr','Gabriel','Ng','Australian Labor Party', NULL ),
+    (111,'Mitchell','NSW','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Alex','Hawke','Liberal Party of Australia','Manager of Opposition Business'),
+    (112,'Monash','VIC','2025-08-07T00:00:00Z','Rural','Ms','Mary','Aldred','Liberal Party of Australia','Deputy Chair of House of Representatives Standing Committee on Communications, the Arts and Sport'),
+    (113,'Moncrieff','QLD','2025-08-07T00:00:00Z','Provincial','Ms','Angie','Bell','Liberal National Party of Queensland', NULL ),
+    (114,'Moore','WA','2025-08-07T00:00:00Z','Outer-metropolitan','Mr','Tom','French','Australian Labor Party', NULL ),
+    (115,'Moreton','QLD','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Julie-Ann','Campbell','Australian Labor Party', NULL ),
+    (116,'New England','NSW','2025-08-07T00:00:00Z','Rural','Hon','Barnaby','Joyce','The Nationals', NULL ),
+    (117,'Newcastle','NSW','2025-08-07T00:00:00Z','Provincial','Ms','Sharon','Claydon','Australian Labor Party','Deputy Speaker'),
+    (118,'Nicholls','VIC','2025-08-07T00:00:00Z','Rural','Mr','Sam','Birrell','The Nationals','Deputy Chair of Standing Committee on Education'),
+    (119,'O''Connor','WA','2025-08-07T00:00:00Z','Rural','Mr','Rick','Wilson','Liberal Party of Australia', NULL ),
+    (120,'Oxley','QLD','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Milton','Dick','Australian Labor Party','Speaker; Chair of Joint Committee on the Broadcasting of Parliamentary Proceedings; Chair of Selection Committee; Chair of Standing Committee on Appropriations and Administration'),
+    (121,'Page','NSW','2025-08-07T00:00:00Z','Rural','Hon','Kevin','Hogan','The Nationals','Deputy Manager of Opposition Business; Deputy Leader of the National Party'),
+    (122,'Parkes','NSW','2025-08-07T00:00:00Z','Rural','Mr','Jamie','Chaffey','The Nationals','Deputy Chair of Standing Committee on Primary Industries'),
+    (123,'Parramatta','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Hon Dr','Andrew','Charlton','Australian Labor Party','Cabinet Secretary; Assistant Minister for Science, Technology and the Digital Economy'),
+    (124,'Paterson','NSW','2025-08-07T00:00:00Z','Provincial','Ms','Meryl','Swanson','Australian Labor Party','Chair of Standing Committee on Primary Industries'),
+    (125,'Pearce','WA','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Tracey','Roberts','Australian Labor Party', NULL ),
+    (126,'Perth','WA','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Patrick','Gorman','Australian Labor Party','Assistant Minister to the Prime Minister; Assistant Minister for the Public Service; Assistant Minister for Employment and Workplace Relations'),
+    (127,'Petrie','QLD','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Emma','Comer','Australian Labor Party', NULL ),
+    (128,'Rankin','QLD','2025-08-07T00:00:00Z','Outer-metropolitan','Hon Dr','Jim','Chalmers','Australian Labor Party', NULL ),
+    (129,'Reid','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Sally','Sitou','Australian Labor Party', NULL ),
+    (130,'Richmond','NSW','2025-08-07T00:00:00Z','Rural','Hon','Justine','Elliot','Australian Labor Party', NULL ),
+    (131,'Riverina','NSW','2025-08-07T00:00:00Z','Rural','Hon','Michael','McCormack','The Nationals','Deputy Chair of Standing Committee on Industry, Innovation and Science'),
+    (132,'Robertson','NSW','2025-08-07T00:00:00Z','Provincial','Dr','Gordon','Reid','Australian Labor Party', NULL ),
+    (133,'Ryan','QLD','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Elizabeth','Watson-Brown','Australian Greens', NULL ),
+    (134,'Scullin','VIC','2025-08-07T00:00:00Z','Outer-metropolitan','Hon','Andrew','Giles','Australian Labor Party','Minister for Skills and Training'),
+    (135,'Shortland','NSW','2025-08-07T00:00:00Z','Provincial','Hon','Pat','Conroy','Australian Labor Party','Minister for Defence Industry; Minister for Pacific Island Affairs'),
+    (136,'Solomon','NT','2025-08-07T00:00:00Z','Inner-metropolitan','Mr','Luke','Gosling','Australian Labor Party','OAM'),
+    (137,'Spence','SA','2025-08-07T00:00:00Z','Outer-metropolitan','Mr','Matt','Burnell','Australian Labor Party', NULL ),
+    (138,'Sturt','SA','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Claire','Clutterham','Australian Labor Party', NULL ),
+    (139,'Swan','WA','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Zaneta','Mascarenhas','Australian Labor Party','Chair of Parliamentary Joint Committee on Human Rights'),
+    (140,'Sydney','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Tanya','Plibersek','Australian Labor Party','Minister for Social Services'),
+    (141,'Tangney','WA','2025-08-07T00:00:00Z','Inner-metropolitan','Mr','Sam','Lim','Australian Labor Party', NULL ),
+    (142,'Wannon','VIC','2025-08-07T00:00:00Z','Rural','Hon','Dan','Tehan','Liberal Party of Australia', NULL ),
+    (143,'Warringah','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Zali','Steggall','Independent','OAM'),
+    (144,'Watson','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Tony','Burke','Australian Labor Party','Minister for Home Affairs; Minister for the Arts; Minister for Cyber Security; Minister for Immigration and Citizenship; Leader of the House'),
+    (145,'Wentworth','NSW','2025-08-07T00:00:00Z','Inner-metropolitan','Ms','Allegra','Spender','Independent', NULL ),
+    (146,'Werriwa','NSW','2025-08-07T00:00:00Z','Outer-metropolitan','Ms','Anne','Stanley','Australian Labor Party','Government Whip; Chair of Joint Standing Committee on the Parliamentary Library'),
+    (147,'Whitlam','NSW','2025-08-07T00:00:00Z','Provincial','Ms','Carol','Berry','Australian Labor Party', NULL ),
+    (148,'Wide Bay','QLD','2025-08-07T00:00:00Z','Rural','Mr','Llew','O''Brien','Liberal National Party of Queensland','Deputy Chair of Parliamentary Joint Committee on Law Enforcement'),
+    (149,'Wills','VIC','2025-08-07T00:00:00Z','Inner-metropolitan','Hon','Peter','Khalil','Australian Labor Party','Assistant Minister for Defence'),
+    (150,'Wright','QLD','2025-08-07T00:00:00Z','Rural','Hon','Scott','Buchholz','Liberal National Party of Queensland', NULL ),
+    (998,'Not Supplied / Unknown','XXX','2025-08-07T00:00:00Z', NULL
+    ,NULL, NULL, NULL, NULL, NULL),
+    (999,'Not Applicable','XXX','2025-08-07T00:00:00Z', NULL
+    ,NULL, NULL, NULL, NULL, NULL);
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0FederalElectorateList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0SchoolSectorCode (
+     [TypeKey] VARCHAR (3) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_SchoolSectorCode] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0SchoolSectorCode';
+INSERT INTO cdm_demo_gold.Dim0SchoolSectorCode ([TypeKey], [TypeValue]) VALUES
+    ('Gov', 'Government School'),
+    ('NG', 'Non-Government School');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SchoolSectorCode';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0SystemicStatus (
+     [TypeKey] CHAR (1) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_SystemicStatus] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0SystemicStatus';
+INSERT INTO cdm_demo_gold.Dim0SystemicStatus ([TypeKey], [TypeValue]) VALUES
+    ('N', 'Non-systemic'),
+    ('S', 'Systemic');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SystemicStatus';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0SchoolSystemType (
+     [TypeKey] CHAR (4) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_SchoolSystemType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0SchoolSystemType';
+INSERT INTO cdm_demo_gold.Dim0SchoolSystemType ([TypeKey], [TypeValue]) VALUES
+    ('0001', 'Catholic'),
+    ('0002', 'Anglican'),
+    ('0003', 'Lutheran'),
+    ('0004', 'Seventh Day Adventist'),
+    ('9999', 'Other');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SchoolSystemType';
+GO
+
 
 
 
@@ -2605,12 +2817,12 @@ CREATE TABLE cdm_demo_gold.Dim2SchoolInfo (
     ,[ARIAScore] DECIMAL (5,3) NULL -- 0.000 to 15.000
     ,[ARIAClass] SMALLINT NULL -- 1 to 5
     ,[OperationalStatus] CHAR (1) NULL
+    ,[FederalElectorate] SMALLINT NULL
+    ,[SchoolSector] VARCHAR (3) NOT NULL
+    ,[IndependentSchool] CHAR (1) NULL
+    ,[NonGovSystemicStatus] CHAR (1) NULL
+    ,[SchoolSystem] CHAR (4) NULL
 -- Working from here
-    ,[FederalElectorate] VARCHAR (111) NULL
-    ,[SchoolSector] VARCHAR (111) NOT NULL
-    ,[IndependentSchool] VARCHAR (111) NULL
-    ,[NonGovSystemicStatus] VARCHAR (111) NULL
-    ,[System] VARCHAR (111) NULL
     ,[ReligiousAffiliation] VARCHAR (111) NULL
     ,[SchoolGeographicLocation] VARCHAR (111) NULL
     ,[LocalGovernmentArea] VARCHAR (111) NULL
@@ -2638,6 +2850,11 @@ CREATE TABLE cdm_demo_gold.Dim2SchoolInfo (
     ,CONSTRAINT [FK_SchoolInfo_SessionType] FOREIGN KEY ([SessionType]) REFERENCES cdm_demo_gold.Dim0SessionType ([TypeKey])
     ,CONSTRAINT [FK_SchoolInfo_ARIAClass] FOREIGN KEY ([ARIAClass]) REFERENCES cdm_demo_gold.Dim0ARIAClass ([TypeKey])
     ,CONSTRAINT [FK_SchoolInfo_OperationalStatus] FOREIGN KEY ([OperationalStatus]) REFERENCES cdm_demo_gold.Dim0OperationalStatus ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_FederalElectorate] FOREIGN KEY ([FederalElectorate]) REFERENCES cdm_demo_gold.Dim0FederalElectorateList ([FederalDivisionAlphabeticalId])
+    ,CONSTRAINT [FK_SchoolInfo_SchoolSector] FOREIGN KEY ([SchoolSector]) REFERENCES cdm_demo_gold.Dim0SchoolSectorCode ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_IndependentSchool] FOREIGN KEY ([IndependentSchool]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_NonGovSystemicStatus] FOREIGN KEY ([NonGovSystemicStatus]) REFERENCES cdm_demo_gold.Dim0SystemicStatus ([TypeKey])
+    ,CONSTRAINT [FK_SchoolInfo_SchoolSystem] FOREIGN KEY ([SchoolSystem]) REFERENCES cdm_demo_gold.Dim0SchoolSystemType ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim2SchoolInfo';
 GO
@@ -2747,10 +2964,140 @@ GO
 -- 3.10.5 SchoolInfo --
 -- ----------------- --
 
--- Dim3SchoolOtherIdList
--- Dim3SchoolAddressList
--- Dim3SchoolPhoneNumberList
--- Dim3SchoolEmailList
+CREATE TABLE cdm_demo_gold.Dim3SchoolOtherIdList (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[OtherIdValue] VARCHAR (111) NULL
+    ,[OtherIdType] VARCHAR (111) NOT NULL -- Not a key, and no FK relationship this time, unlike electronic, above
+    ,CONSTRAINT [FKRef_SchoolOtherIdList_SchoolPersonal] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolOtherIdList_SchoolPersonal] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolOtherIdList] PRIMARY KEY ([SchoolLocalId],[OtherIdType])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolOtherIdList';
+
+CREATE TABLE cdm_demo_gold.Dim3SchoolAddressList (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[AddressLocalId] VARCHAR (111) NOT NULL
+    ,[AddressType] VARCHAR (5) NOT NULL
+    ,[AddressRole] CHAR (4) NOT NULL
+    ,[EffectiveFromDate] DATETIME NULL
+    ,[EffectiveToDate] DATETIME NULL
+    ,[AddressStreet_Line1] VARCHAR (111) NULL
+    ,[AddressStreet_Line2] VARCHAR (111) NULL
+    ,[AddressStreet_Line3] VARCHAR (111) NULL
+    ,[AddressStreet_Complex] VARCHAR (111) NULL
+    ,[AddressStreet_StreetNumber] VARCHAR (111) NULL
+    ,[AddressStreet_StreetPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_StreetName] VARCHAR (111) NULL
+    ,[AddressStreet_StreetType] VARCHAR (111) NULL
+    ,[AddressStreet_StreetSuffix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentType] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumber] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberSuffix] VARCHAR (111) NULL
+    ,[City] VARCHAR (111) NOT NULL
+    ,[StateProvince] VARCHAR (3) NULL
+    ,[Country] VARCHAR (111) NULL
+    ,[PostalCode] VARCHAR (111) NOT NULL
+-- LatLong to 5dp is accurate to about 1 metre on Earth
+    ,[GridLocation_DecimalLatitude] DECIMAL (7,5) NULL
+    ,[GridLocation_DecimalLongitude] DECIMAL (8,5) NULL
+    ,[MapReference_MapType] VARCHAR (111) NULL
+    ,[MapReference_XCoordinate] VARCHAR (111) NULL
+    ,[MapReference_YCoordinate] VARCHAR (111) NULL
+    ,[MapReference_MapNumber] VARCHAR (111) NULL
+    ,[RadioContact] VARCHAR (111) NULL
+    ,[Community] VARCHAR (111) NULL
+    ,[AddressGlobalUID] VARCHAR (111) NULL
+    ,[StatisticalAreaLevel4Code] CHAR (3) NULL
+    ,[StatisticalAreaLevel4Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel3Code] CHAR (5) NULL
+    ,[StatisticalAreaLevel3Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel2Code] CHAR (9) NULL
+    ,[StatisticalAreaLevel2Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel1] CHAR (11) NULL
+    ,[StatisticalAreaMeshBlock] CHAR (11) NULL
+    ,[LocalGovernmentAreaName] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_SchoolAddressList_SchoolPersonal] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolAddressList_SchoolPersonal] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolAddressList] PRIMARY KEY ([SchoolLocalId],[AddressLocalId])
+    ,CONSTRAINT [FK_SchoolAddressList_AddressType] FOREIGN KEY ([AddressType]) REFERENCES cdm_demo_gold.Dim0AddressType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolAddressList_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
+    ,CONSTRAINT [FK_SchoolAddressList_StateProvince] FOREIGN KEY ([StateProvince]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolAddressList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim3SchoolPhoneNumberList (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[PhoneNumberType] CHAR (4) NOT NULL
+    ,[Number] VARCHAR (111) NOT NULL
+    ,[Extension] VARCHAR (111) NULL
+    ,[ListedStatus] VARCHAR (111) NULL
+    ,[Preference] INT NULL
+    ,CONSTRAINT [FKRef_SchoolPhoneNumberList_SchoolPersonal] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolPhoneNumberList_SchoolPersonal] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolPhoneNumberList] PRIMARY KEY ([SchoolLocalId],[PhoneNumberType])
+    ,CONSTRAINT [FK_SchoolPhoneNumberList_PhoneNumberType] FOREIGN KEY ([PhoneNumberType]) REFERENCES cdm_demo_gold.Dim0PhoneNumberType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolPhoneNumberList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim3SchoolEmailList (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[EmailType] CHAR (2) NOT NULL
+    ,[Email] VARCHAR (255) NOT NULL
+    ,CONSTRAINT [FKRef_SchoolEmailList_SchoolPersonal] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolEmailList_SchoolPersonal] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolEmailList] PRIMARY KEY ([SchoolLocalId],[EmailType])
+    ,CONSTRAINT [FK_SchoolEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolEmailList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim3SchoolPrincipalPhoneNumberList (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[PhoneNumberType] CHAR (4) NOT NULL
+    ,[Number] VARCHAR (111) NOT NULL
+    ,[Extension] VARCHAR (111) NULL
+    ,[ListedStatus] VARCHAR (111) NULL
+    ,[Preference] INT NULL
+    ,CONSTRAINT [FKRef_SchoolPrincipalPhoneNumberList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolPrincipalPhoneNumberList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolPrincipalPhoneNumberList] PRIMARY KEY ([SchoolLocalId],[PhoneNumberType])
+    ,CONSTRAINT [FK_SchoolPrincipalPhoneNumberList_PhoneNumberType] FOREIGN KEY ([PhoneNumberType]) REFERENCES cdm_demo_gold.Dim0PhoneNumberType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolPrincipalPhoneNumberList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim3SchoolPrincipalEmailList (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[EmailType] CHAR (2) NOT NULL
+    ,[Email] VARCHAR (255) NOT NULL
+    ,CONSTRAINT [FKRef_SchoolPrincipalEmailList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolPrincipalEmailList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolPrincipalEmailList] PRIMARY KEY ([SchoolLocalId],[EmailType])
+    ,CONSTRAINT [FK_SchoolPrincipalEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolPrincipalEmailList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim3SchoolYearLevels (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[YearLevelCode] VARCHAR (8) NOT NULL
+    ,CONSTRAINT [FKRef_SchoolYearLevels_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolYearLevels_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolYearLevels] PRIMARY KEY ([SchoolLocalId],[YearLevelCode])
+    ,CONSTRAINT [FK_SchoolYearLevels_YearLevelCode] FOREIGN KEY ([YearLevelCode]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolYearLevels';
+GO
 
 CREATE TABLE cdm_demo_gold.Dim3SchoolContactList (
      [SchoolRefId] CHAR (36) NOT NULL
@@ -2779,10 +3126,22 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolContactList (
 PRINT N'Created cdm_demo_gold.Dim3SchoolContactInfo';
 GO
 
--- Dim3SchoolYearLevels
-
--- Dim3SchoolPrincipalPhoneNumberList
--- Dim3SchoolPrincipalEmailList
+-- For now, each BCE school (in eMinerva Campus) has a single physical location
+-- For as long as the above is true, recommend SIF Campus remains unused by BCE
+CREATE TABLE cdm_demo_gold.Dim3SchoolCampus (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolCampusId] VARCHAR (111) NOT NULL
+    ,[CampusType] VARCHAR (17) NULL
+    ,[AdminStatus] CHAR (1) NOT NULL
+    ,CONSTRAINT [FKRef_SchoolCampus_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolCampus_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolCampus] PRIMARY KEY ([SchoolCampusId])
+    ,CONSTRAINT [FK_SchoolCampus_CampusType] FOREIGN KEY ([CampusType]) REFERENCES cdm_demo_gold.Dim0SchoolLevelType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolCampus_AdminStatus] FOREIGN KEY ([AdminStatus]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolCampus';
+GO
 
 
 
