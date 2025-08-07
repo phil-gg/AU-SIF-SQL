@@ -3254,6 +3254,7 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolYearLevels (
      [SchoolRefId] CHAR (36) NOT NULL
     ,[SchoolLocalId] INT NOT NULL
     ,[YearLevelCode] VARCHAR (8) NOT NULL
+    ,[TotalYearEnrollment] SMALLINT NOT NULL
     ,CONSTRAINT [FKRef_SchoolYearLevels_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
     ,CONSTRAINT [FKLocal_SchoolYearLevels_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
     ,CONSTRAINT [PK_SchoolYearLevels] PRIMARY KEY ([SchoolLocalId],[YearLevelCode])
