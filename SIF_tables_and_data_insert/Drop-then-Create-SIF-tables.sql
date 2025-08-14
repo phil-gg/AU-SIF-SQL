@@ -918,6 +918,33 @@ INSERT INTO cdm_demo_gold.Dim0FFPOSStatusCode ([TypeKey], [TypeValue]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0FFPOSStatusCode';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim0DisabilityLevelOfAdjustment (
+     [TypeKey] VARCHAR (255) NOT NULL
+     CONSTRAINT [PK_DisabilityLevelOfAdjustment] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0DisabilityLevelOfAdjustment';
+INSERT INTO cdm_demo_gold.Dim0DisabilityLevelOfAdjustment ([TypeKey]) VALUES
+    ('None'),
+    ('QDTP (support provided within Quality Differentiated Teaching Practice)'),
+    ('DES'),
+    ('Supplementary'),
+    ('Substantial'),
+    ('Extensive');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0DisabilityLevelOfAdjustment';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0BoardingStatus (
+     [TypeKey] CHAR (1) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_BoardingStatus] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0BoardingStatus';
+INSERT INTO cdm_demo_gold.Dim0BoardingStatus ([TypeKey], [TypeValue]) VALUES
+    ('B', 'Boarding Student'),
+    ('D', 'Day Student');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0BoardingStatus';
+GO
+
 -- StudentContact (aka parents & guardians) Dim0 items from here
 
 CREATE TABLE cdm_demo_gold.Dim0EmploymentType (
@@ -1612,12 +1639,11 @@ CREATE TABLE cdm_demo_gold.Dim1StudentPersonal (
     ,[MostRecent_ReportingSchoolId] VARCHAR (111) NULL
     ,[MostRecent_OtherEnrollmentSchoolACARAId] VARCHAR (111) NULL
     ,[MostRecent_OtherSchoolName] VARCHAR (111) NULL
--- MostRecent constraints completed to here
-    ,[MostRecent_DisabilityLevelOfAdjustment] VARCHAR (111) NULL
-    ,[MostRecent_DisabilityCategory] VARCHAR (111) NULL
-    ,[MostRecent_CensusAge] VARCHAR (111) NULL
-    ,[MostRecent_DistanceEducationStudent] VARCHAR (111) NULL
-    ,[MostRecent_BoardingStatus] VARCHAR (111) NULL
+    ,[MostRecent_DisabilityLevelOfAdjustment] VARCHAR (255) NULL
+    ,[MostRecent_DisabilityCategory] VARCHAR (16) NULL
+    ,[MostRecent_CensusAge] INT NULL
+    ,[MostRecent_DistanceEducationStudent] CHAR (1) NULL
+    ,[MostRecent_BoardingStatus] CHAR (1) NULL
     ,[AcceptableUsePolicy] CHAR (1) NULL
     ,[GiftedTalented] CHAR (1) NULL
     ,[EconomicDisadvantage] CHAR (1) NULL
@@ -1653,6 +1679,10 @@ CREATE TABLE cdm_demo_gold.Dim1StudentPersonal (
     ,CONSTRAINT [FK_StudentPersonal_MostRecent_TestLevel] FOREIGN KEY ([MostRecent_TestLevel]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
     ,CONSTRAINT [FK_StudentPersonal_MostRecent_MembershipType] FOREIGN KEY ([MostRecent_MembershipType]) REFERENCES cdm_demo_gold.Dim0SchoolEnrollmentType ([TypeKey])
     ,CONSTRAINT [FK_StudentPersonal_MostRecent_FFPOS] FOREIGN KEY ([MostRecent_FFPOS]) REFERENCES cdm_demo_gold.Dim0FFPOSStatusCode ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_DisabilityLevelOfAdjustment] FOREIGN KEY ([MostRecent_DisabilityLevelOfAdjustment]) REFERENCES cdm_demo_gold.Dim0DisabilityLevelOfAdjustment ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_DisabilityCategory] FOREIGN KEY ([MostRecent_DisabilityCategory]) REFERENCES cdm_demo_gold.Dim0DisabilityNCCDCategory ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_DistanceEducationStudent] FOREIGN KEY ([MostRecent_DistanceEducationStudent]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_BoardingStatus] FOREIGN KEY ([MostRecent_BoardingStatus]) REFERENCES cdm_demo_gold.Dim0BoardingStatus ([TypeKey])
     ,CONSTRAINT [FK_StudentPersonal_AcceptableUsePolicy] FOREIGN KEY ([AcceptableUsePolicy]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_StudentPersonal_GiftedTalented] FOREIGN KEY ([GiftedTalented]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_StudentPersonal_EconomicDisadvantage] FOREIGN KEY ([EconomicDisadvantage]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
