@@ -1518,6 +1518,24 @@ GO
 
 -- PersonPicture Dim0 items from here
 
+CREATE TABLE cdm_demo_gold.Dim0PermissionCategoryCode (
+     [TypeKey] VARCHAR (32) NOT NULL
+     CONSTRAINT [PK_PermissionCategoryCode] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0PermissionCategoryCode';
+INSERT INTO cdm_demo_gold.Dim0PermissionCategoryCode ([TypeKey]) VALUES
+    ('Jurisdiction Educational'),
+    ('Jurisdiction Promotional'),
+    ('OKMediaRelease'),
+    ('OKOnlineMaterial'),
+    ('OKOnLineServices'),
+    ('OKPrintedMaterial'),
+    ('OKPublishInfo'),
+    ('School/College Newsletter'),
+    ('School/College Yearbook');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0PermissionCategoryCode';
+GO
+
 
 
 
@@ -3248,8 +3266,8 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolOtherIdList (
     ,[SchoolLocalId] INT NOT NULL
     ,[OtherIdValue] VARCHAR (111) NULL
     ,[OtherIdType] VARCHAR (111) NOT NULL
-    ,CONSTRAINT [FKRef_SchoolOtherIdList_SchoolPersonal] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
-    ,CONSTRAINT [FKLocal_SchoolOtherIdList_SchoolPersonal] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_SchoolOtherIdList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolOtherIdList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
     ,CONSTRAINT [PK_SchoolOtherIdList] PRIMARY KEY ([SchoolLocalId],[OtherIdType])
 );
 PRINT N'Created cdm_demo_gold.Dim3SchoolOtherIdList';
@@ -3258,9 +3276,9 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolFocus (
      [SchoolRefId] CHAR (36) NOT NULL
     ,[SchoolLocalId] INT NOT NULL
     ,[SchoolFocus] CHAR(2) NOT NULL
-    ,CONSTRAINT [FKRef_SchoolOtherIdList_SchoolPersonal] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
-    ,CONSTRAINT [FKLocal_SchoolOtherIdList_SchoolPersonal] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
-    ,CONSTRAINT [PK_SchoolFocus] PRIMARY KEY ([SchoolLocalId],[OtherIdType])
+    ,CONSTRAINT [FKRef_SchoolFocus_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolFocus_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolFocus] PRIMARY KEY ([SchoolLocalId],[SchoolFocus])
     ,CONSTRAINT [FK_SchoolFocus] FOREIGN KEY ([SchoolFocus]) REFERENCES cdm_demo_gold.Dim0SchoolFocusCode ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim3SchoolFocus';
@@ -3309,8 +3327,8 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolAddressList (
     ,[StatisticalAreaLevel1] CHAR (11) NULL
     ,[StatisticalAreaMeshBlock] CHAR (11) NULL
     ,[LocalGovernmentAreaName] VARCHAR (111) NULL
-    ,CONSTRAINT [FKRef_SchoolAddressList_SchoolPersonal] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
-    ,CONSTRAINT [FKLocal_SchoolAddressList_SchoolPersonal] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_SchoolAddressList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolAddressList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
     ,CONSTRAINT [PK_SchoolAddressList] PRIMARY KEY ([SchoolLocalId],[AddressLocalId])
     ,CONSTRAINT [FK_SchoolAddressList_AddressType] FOREIGN KEY ([AddressType]) REFERENCES cdm_demo_gold.Dim0AddressType ([TypeKey])
     ,CONSTRAINT [FK_SchoolAddressList_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
@@ -3327,8 +3345,8 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolPhoneNumberList (
     ,[Extension] VARCHAR (111) NULL
     ,[ListedStatus] VARCHAR (111) NULL
     ,[Preference] INT NULL
-    ,CONSTRAINT [FKRef_SchoolPhoneNumberList_SchoolPersonal] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
-    ,CONSTRAINT [FKLocal_SchoolPhoneNumberList_SchoolPersonal] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_SchoolPhoneNumberList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolPhoneNumberList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
     ,CONSTRAINT [PK_SchoolPhoneNumberList] PRIMARY KEY ([SchoolLocalId],[PhoneNumberType])
     ,CONSTRAINT [FK_SchoolPhoneNumberList_PhoneNumberType] FOREIGN KEY ([PhoneNumberType]) REFERENCES cdm_demo_gold.Dim0PhoneNumberType ([TypeKey])
 );
@@ -3340,8 +3358,8 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolEmailList (
     ,[SchoolLocalId] INT NOT NULL
     ,[EmailType] CHAR (2) NOT NULL
     ,[Email] VARCHAR (255) NOT NULL
-    ,CONSTRAINT [FKRef_SchoolEmailList_SchoolPersonal] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
-    ,CONSTRAINT [FKLocal_SchoolEmailList_SchoolPersonal] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_SchoolEmailList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolEmailList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
     ,CONSTRAINT [PK_SchoolEmailList] PRIMARY KEY ([SchoolLocalId],[EmailType])
     ,CONSTRAINT [FK_SchoolEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
 );
@@ -3490,6 +3508,32 @@ CREATE TABLE cdm_demo_gold.Dim3Identity (
 PRINT N'Created cdm_demo_gold.Dim3Identity';
 GO
 
+-- -------------------- --
+-- 3.10.3 PersonPicture --
+-- -------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim3PersonPicture (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId]VARCHAR (111) NOT NULL
+    ,[PartyRefId] CHAR (36) NOT NULL
+    ,[PartyLocalId] INT NOT NULL
+    ,[PartyType] VARCHAR (14) NOT NULL
+    ,[SchoolYear] SMALLINT NOT NULL
+    ,[URLtoPicture] VARCHAR (255) NULL
+    ,[PictureBase64] VARCHAR (max) NULL
+    ,[OKToPublish] CHAR (1) NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_PersonPic] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_PersonPic] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_PersonPic] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FKRef_PersonPic_PartyList] FOREIGN KEY ([PartyRefId]) REFERENCES cdm_demo_gold.Dim2PartyList ([RefId])
+    ,CONSTRAINT [FKLocal_PersonPic_PartyList] FOREIGN KEY ([PartyLocalId]) REFERENCES cdm_demo_gold.Dim2PartyList ([LocalId])
+    ,CONSTRAINT [FK_PersonPic_PartyType] FOREIGN KEY ([PartyType]) REFERENCES cdm_demo_gold.Dim0PartyType ([TypeKey])
+    ,CONSTRAINT [FK_PersonPic_OKToPublish] FOREIGN KEY ([OKToPublish]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3PersonPicture';
+GO
+
 
 
 
@@ -3621,22 +3665,36 @@ CREATE TABLE cdm_demo_gold.Dim4IdentityPasswordList (
 PRINT N'Created cdm_demo_gold.Dim4IdentityPasswordList';
 GO
 
+-- -------------------- --
+-- 3.10.3 PersonPicture --
+-- -------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim4PersonPicturePublishingPermissions (
+     [PersonPictureRefId] CHAR (36) NOT NULL
+    ,[PersonPictureLocalId]VARCHAR (111) NOT NULL
+    ,[PermissionCategory] VARCHAR (32) NOT NULL
+    ,[PermissionValue] CHAR (1) NOT NULL
+    ,CONSTRAINT [FKRef_PersonPicPublishingPermissions_PersonPic] FOREIGN KEY ([PersonPictureRefId]) REFERENCES cdm_demo_gold.Dim3PersonPicture ([RefId])
+    ,CONSTRAINT [FKLocal_PersonPicPublishingPermissions_PersonPic] FOREIGN KEY ([PersonPictureLocalId]) REFERENCES cdm_demo_gold.Dim3PersonPicture ([LocalId])
+    ,CONSTRAINT [PK_PersonPicPublishingPermissions] PRIMARY KEY ([PersonPictureLocalId],[PermissionCategory])
+    ,CONSTRAINT [FK_PersonPicPublishingPermissions_PermissionCategory] FOREIGN KEY ([PermissionCategory]) REFERENCES cdm_demo_gold.Dim0PermissionCategoryCode ([TypeKey])
+    ,CONSTRAINT [FK_PersonPicPublishingPermissions_PermissionValue] FOREIGN KEY ([PermissionValue]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim4PersonPicturePublishingPermissions';
+GO
+
 
 
 
 
 -- Upcoming headers and order to be completed:
 
--- -------------------- --
--- 3.10.3 PersonPicture --
--- -------------------- --
-
--- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html#contents:~:text=3.10%20sif%20au%20student%20baseline%20profile%20(sbp)
--- http://specification.sifassociation.org/Implementation/AU/3.6.3/SIFAUStudentBaselineProfileSBPAndSupportingObjects.html#obj:PersonPicture
-
 -- -------------------------------------- --
 -- 3.10.4 PersonPrivacyObligationDocument --
 -- -------------------------------------- --
+
+-- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html#contents:~:text=3.10%20sif%20au%20student%20baseline%20profile%20(sbp)
+-- http://specification.sifassociation.org/Implementation/AU/3.6.3/SIFAUStudentBaselineProfileSBPAndSupportingObjects.html#obj:PersonPrivacyObligationDocument
 
 -- --------------------------------- --
 -- 3.10.9 StudentContactRelationship --
