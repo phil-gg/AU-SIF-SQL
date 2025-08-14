@@ -892,6 +892,32 @@ INSERT INTO cdm_demo_gold.Dim0PrePrimaryEducationHours ([TypeKey], [TypeValue]) 
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0PrePrimaryEducationHours';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim0SchoolEnrollmentType (
+     [TypeKey] CHAR (2) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_SchoolEnrollmentType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0SchoolEnrollmentType';
+INSERT INTO cdm_demo_gold.Dim0SchoolEnrollmentType ([TypeKey], [TypeValue]) VALUES
+    ('01', 'Home School'),
+    ('02', 'Other School'),
+    ('03', 'Concurrent Enrolment');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SchoolEnrollmentType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0FFPOSStatusCode (
+     [TypeKey] INT NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_FFPOSStatusCode] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0FFPOSStatusCode';
+INSERT INTO cdm_demo_gold.Dim0FFPOSStatusCode ([TypeKey], [TypeValue]) VALUES
+    (1, 'FFPOS'),
+    (2, 'Non-FFPOS'),
+    (9, 'Not stated/Unknown');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0FFPOSStatusCode';
+GO
+
 -- StudentContact (aka parents & guardians) Dim0 items from here
 
 CREATE TABLE cdm_demo_gold.Dim0EmploymentType (
@@ -1565,9 +1591,33 @@ CREATE TABLE cdm_demo_gold.Dim1StudentPersonal (
     ,[OnTimeGraduationYear] SMALLINT NULL
     ,[GraduationDate] DATETIME NULL
     ,[MostRecent_SchoolLocalId] VARCHAR (111) NULL
-    ,[MostRecent_SchoolACARAId] VARCHAR (111) NULL
+    ,[MostRecent_HomeroomLocalId] VARCHAR (111) NULL
+    ,[MostRecent_YearLevel] VARCHAR (8) NULL
+    ,[MostRecent_FTE] DECIMAL (3,2) NULL
+    ,[MostRecent_Parent1Language] CHAR (4) NULL
+    ,[MostRecent_Parent2Language] CHAR (4) NULL
+    ,[MostRecent_Parent1EmploymentType] INT NULL
+    ,[MostRecent_Parent2EmploymentType] INT NULL
+    ,[MostRecent_Parent1SchoolEducationLevel] INT NULL
+    ,[MostRecent_Parent2SchoolEducationLevel] INT NULL
+    ,[MostRecent_Parent1NonSchoolEducation] INT NULL
+    ,[MostRecent_Parent2NonSchoolEducation] INT NULL
     ,[MostRecent_LocalCampusId] VARCHAR (111) NULL
-    ,[MostRecent_HomeGroup] VARCHAR (111) NULL
+    ,[MostRecent_SchoolACARAId] VARCHAR (111) NULL
+    ,[MostRecent_TestLevel] VARCHAR (8) NULL
+    ,[MostRecent_Homegroup] VARCHAR (111) NULL
+    ,[MostRecent_ClassCode] VARCHAR (111) NULL
+    ,[MostRecent_MembershipType] CHAR (2) NULL
+    ,[MostRecent_FFPOS] INT NULL
+    ,[MostRecent_ReportingSchoolId] VARCHAR (111) NULL
+    ,[MostRecent_OtherEnrollmentSchoolACARAId] VARCHAR (111) NULL
+    ,[MostRecent_OtherSchoolName] VARCHAR (111) NULL
+-- MostRecent constraints completed to here
+    ,[MostRecent_DisabilityLevelOfAdjustment] VARCHAR (111) NULL
+    ,[MostRecent_DisabilityCategory] VARCHAR (111) NULL
+    ,[MostRecent_CensusAge] VARCHAR (111) NULL
+    ,[MostRecent_DistanceEducationStudent] VARCHAR (111) NULL
+    ,[MostRecent_BoardingStatus] VARCHAR (111) NULL
     ,[AcceptableUsePolicy] CHAR (1) NULL
     ,[GiftedTalented] CHAR (1) NULL
     ,[EconomicDisadvantage] CHAR (1) NULL
@@ -1590,6 +1640,19 @@ CREATE TABLE cdm_demo_gold.Dim1StudentPersonal (
     ,CONSTRAINT [RefUnique_StudentPersonal] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_StudentPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_StudentPersonal] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_YearLevel] FOREIGN KEY ([MostRecent_YearLevel]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+    ,CONSTRAINT [Check_StudentPersonal_MostRecent_FTE_Range] CHECK (MostRecent_FTE >= 0 AND MostRecent_FTE <= 1)
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent1Language] FOREIGN KEY ([MostRecent_Parent1Language]) REFERENCES cdm_demo_gold.Dim1Languages ([LocalId])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent2Language] FOREIGN KEY ([MostRecent_Parent2Language]) REFERENCES cdm_demo_gold.Dim1Languages ([LocalId])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent1EmploymentType] FOREIGN KEY ([MostRecent_Parent1EmploymentType]) REFERENCES cdm_demo_gold.Dim0EmploymentType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent2EmploymentType] FOREIGN KEY ([MostRecent_Parent2EmploymentType]) REFERENCES cdm_demo_gold.Dim0EmploymentType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent1SchoolEducationLevel] FOREIGN KEY ([MostRecent_Parent1SchoolEducationLevel]) REFERENCES cdm_demo_gold.Dim0SchoolEducationLevelType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent2SchoolEducationLevel] FOREIGN KEY ([MostRecent_Parent2SchoolEducationLevel]) REFERENCES cdm_demo_gold.Dim0SchoolEducationLevelType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent1NonSchoolEducation] FOREIGN KEY ([MostRecent_Parent1NonSchoolEducation]) REFERENCES cdm_demo_gold.Dim0NonSchoolEducationType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent2NonSchoolEducation] FOREIGN KEY ([MostRecent_Parent2NonSchoolEducation]) REFERENCES cdm_demo_gold.Dim0NonSchoolEducationType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_TestLevel] FOREIGN KEY ([MostRecent_TestLevel]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_MembershipType] FOREIGN KEY ([MostRecent_MembershipType]) REFERENCES cdm_demo_gold.Dim0SchoolEnrollmentType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_FFPOS] FOREIGN KEY ([MostRecent_FFPOS]) REFERENCES cdm_demo_gold.Dim0FFPOSStatusCode ([TypeKey])
     ,CONSTRAINT [FK_StudentPersonal_AcceptableUsePolicy] FOREIGN KEY ([AcceptableUsePolicy]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_StudentPersonal_GiftedTalented] FOREIGN KEY ([GiftedTalented]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_StudentPersonal_EconomicDisadvantage] FOREIGN KEY ([EconomicDisadvantage]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
@@ -2468,17 +2531,6 @@ CREATE TABLE cdm_demo_gold.Dim2StudentHouseholdContactEmailList (
     ,CONSTRAINT [FK_StudentHouseholdContactEmailList_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim2StudentHouseholdContactEmailList';
-GO
-
-CREATE TABLE cdm_demo_gold.Dim2StudentMostRecentNAPLANClassList (
-     [StudentRefId] CHAR (36) NOT NULL
-    ,[StudentLocalId] INT NOT NULL
-    ,[ClassCode] VARCHAR (111) NOT NULL
-    ,CONSTRAINT [FKRef_StudentMostRecentNAPLANClassList_StudentPersonal] FOREIGN KEY ([StudentRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
-    ,CONSTRAINT [FKLocal_StudentMostRecentNAPLANClassList_StudentPersonal] FOREIGN KEY ([StudentLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
-    ,CONSTRAINT [PK_StudentMostRecentNAPLANClassList] PRIMARY KEY ([StudentLocalId],[ClassCode])
-);
-PRINT N'Created cdm_demo_gold.Dim2StudentMostRecentNAPLANClassList';
 GO
 
 -- ----------------------------------------- --
