@@ -3044,7 +3044,6 @@ CREATE TABLE cdm_demo_gold.Dim2SchoolInfo (
     ,[SchoolDistrict] VARCHAR (111) NULL
     ,[SchoolDistrictLocalId] INT NULL
     ,[SchoolType] VARCHAR (17) NULL
-    ,[SchoolFocus] CHAR(2) NULL
     ,[SchoolURL] VARCHAR (255) NULL
     ,[PrincipalName_Title] VARCHAR (111) NULL
     ,[PrincipalName_FamilyName] VARCHAR (111) NULL
@@ -3079,7 +3078,6 @@ CREATE TABLE cdm_demo_gold.Dim2SchoolInfo (
     ,[TotalEnrolled_Boys] INT NULL
     ,[Entity_Open] DATETIME NULL
     ,[Entity_Close] DATETIME NULL
--- Working from here
     ,[SchoolTimeZone] VARCHAR (5) NULL
     ,[ee_Placeholder] VARCHAR (111) NULL
     ,CONSTRAINT [RefUnique_SchoolInfo] UNIQUE ([RefId])
@@ -3091,7 +3089,6 @@ CREATE TABLE cdm_demo_gold.Dim2SchoolInfo (
     ,CONSTRAINT [FK_SchoolInfo_OtherLEALocalId] FOREIGN KEY ([OtherLEALocalId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([LocalId])
     ,CONSTRAINT [FK_SchoolInfo_SchoolDistrictLocalId] FOREIGN KEY ([SchoolDistrictLocalId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([LocalId])
     ,CONSTRAINT [FK_SchoolInfo_SchoolType] FOREIGN KEY ([SchoolType]) REFERENCES cdm_demo_gold.Dim0SchoolLevelType ([TypeKey])
-    ,CONSTRAINT [FK_SchoolInfo_SchoolFocus] FOREIGN KEY ([SchoolFocus]) REFERENCES cdm_demo_gold.Dim0SchoolFocusCode ([TypeKey])
     ,CONSTRAINT [FK_SchoolInfo_FamilyNameFirst] FOREIGN KEY ([PrincipalName_FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_SchoolInfo_PreferredFamilyNameFirst] FOREIGN KEY ([PrincipalName_PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_SchoolInfo_NameUsageType] FOREIGN KEY ([PrincipalName_NameUsageTypeKey]) REFERENCES cdm_demo_gold.Dim0NameUsageType ([TypeKey])
@@ -3250,12 +3247,23 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolOtherIdList (
      [SchoolRefId] CHAR (36) NOT NULL
     ,[SchoolLocalId] INT NOT NULL
     ,[OtherIdValue] VARCHAR (111) NULL
-    ,[OtherIdType] VARCHAR (111) NOT NULL -- Not a key, and no FK relationship this time, unlike electronic, above
+    ,[OtherIdType] VARCHAR (111) NOT NULL
     ,CONSTRAINT [FKRef_SchoolOtherIdList_SchoolPersonal] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
     ,CONSTRAINT [FKLocal_SchoolOtherIdList_SchoolPersonal] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
     ,CONSTRAINT [PK_SchoolOtherIdList] PRIMARY KEY ([SchoolLocalId],[OtherIdType])
 );
 PRINT N'Created cdm_demo_gold.Dim3SchoolOtherIdList';
+
+CREATE TABLE cdm_demo_gold.Dim3SchoolFocus (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolFocus] CHAR(2) NOT NULL
+    ,CONSTRAINT [FKRef_SchoolOtherIdList_SchoolPersonal] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolOtherIdList_SchoolPersonal] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolFocus] PRIMARY KEY ([SchoolLocalId],[OtherIdType])
+    ,CONSTRAINT [FK_SchoolFocus] FOREIGN KEY ([SchoolFocus]) REFERENCES cdm_demo_gold.Dim0SchoolFocusCode ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolFocus';
 
 CREATE TABLE cdm_demo_gold.Dim3SchoolAddressList (
      [SchoolRefId] CHAR (36) NOT NULL
