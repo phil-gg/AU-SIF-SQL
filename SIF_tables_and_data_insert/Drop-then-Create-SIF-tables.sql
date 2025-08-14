@@ -2914,6 +2914,7 @@ CREATE TABLE cdm_demo_gold.Dim2LEAContactList (
      [LEARefId] CHAR (36) NOT NULL
     ,[LEALocalId] INT NOT NULL
     ,[LEAContactLocalId] VARCHAR (111) NOT NULL
+    ,[PublishInDirectory] CHAR (1) NULL
     ,[Name_Title] VARCHAR (111) NULL
     ,[Name_FamilyName] VARCHAR (111) NULL
     ,[Name_GivenName] VARCHAR (111) NULL
@@ -2931,6 +2932,7 @@ CREATE TABLE cdm_demo_gold.Dim2LEAContactList (
     ,CONSTRAINT [FKRef_LEAContactList_LEAInfo] FOREIGN KEY ([LEARefId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([RefId])
     ,CONSTRAINT [FKLocal_LEAContactList_LEAInfo] FOREIGN KEY ([LEALocalId]) REFERENCES cdm_demo_gold.Dim1LEAInfo ([LocalId])
     ,CONSTRAINT [PK_LEAContactList] PRIMARY KEY ([LEAContactLocalId])
+    ,CONSTRAINT [FK_LEAContactList_PublishInDirectory] FOREIGN KEY ([PublishInDirectory]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_LEAContactList_FamilyNameFirst] FOREIGN KEY ([Name_FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_LEAContactList_PreferredFamilyNameFirst] FOREIGN KEY ([Name_PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
 );
@@ -3289,6 +3291,7 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolContactList (
      [SchoolRefId] CHAR (36) NOT NULL
     ,[SchoolLocalId] INT NOT NULL
     ,[SchoolContactLocalId] VARCHAR (111) NOT NULL
+    ,[PublishInDirectory] CHAR (1) NULL
     ,[Name_Title] VARCHAR (111) NULL
     ,[Name_FamilyName] VARCHAR (111) NULL
     ,[Name_GivenName] VARCHAR (111) NULL
@@ -3306,6 +3309,7 @@ CREATE TABLE cdm_demo_gold.Dim3SchoolContactList (
     ,CONSTRAINT [FKRef_SchoolContactList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
     ,CONSTRAINT [FKLocal_SchoolContactList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
     ,CONSTRAINT [PK_SchoolContactList] PRIMARY KEY ([SchoolContactLocalId])
+    ,CONSTRAINT [FK_SchoolContactList_PublishInDirectory] FOREIGN KEY ([PublishInDirectory]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_SchoolContactList_FamilyNameFirst] FOREIGN KEY ([Name_FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_SchoolContactList_PreferredFamilyNameFirst] FOREIGN KEY ([Name_PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
 );
