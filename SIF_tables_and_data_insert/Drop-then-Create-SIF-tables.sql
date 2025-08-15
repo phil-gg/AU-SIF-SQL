@@ -1536,6 +1536,21 @@ INSERT INTO cdm_demo_gold.Dim0PermissionCategoryCode ([TypeKey]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0PermissionCategoryCode';
 GO
 
+-- PersonPrivacy Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0PermissionYesNoType (
+     [TypeKey] CHAR (1) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_PermissionYesNoType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0PermissionYesNoType';
+INSERT INTO cdm_demo_gold.Dim0PermissionYesNoType ([TypeKey], [TypeValue]) VALUES
+    ('N', 'No'),
+    ('U', 'Unknown'),
+    ('Y', 'Yes');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0PermissionYesNoType';
+GO
+
 
 
 
@@ -3514,7 +3529,7 @@ GO
 
 CREATE TABLE cdm_demo_gold.Dim3PersonPicture (
      [RefId] CHAR (36) NOT NULL
-    ,[LocalId]VARCHAR (111) NOT NULL
+    ,[LocalId] VARCHAR (111) NOT NULL
     ,[PartyRefId] CHAR (36) NOT NULL
     ,[PartyLocalId] INT NOT NULL
     ,[PartyType] VARCHAR (14) NOT NULL
@@ -3532,6 +3547,36 @@ CREATE TABLE cdm_demo_gold.Dim3PersonPicture (
     ,CONSTRAINT [FK_PersonPic_OKToPublish] FOREIGN KEY ([OKToPublish]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim3PersonPicture';
+GO
+
+-- -------------------------------------- --
+-- 3.10.4 PersonPrivacyObligationDocument --
+-- -------------------------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim3PersonPrivacyObligationDocument (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] VARCHAR (111) NOT NULL
+    ,[PartyRefId] CHAR (36) NOT NULL
+    ,[PartyLocalId] INT NOT NULL
+    ,[PartyType] VARCHAR (14) NOT NULL
+    ,[SchoolYear] SMALLINT NOT NULL
+    ,[StartDate] DATETIME NULL
+    ,[EndDate] DATETIME NULL
+    ,[ContactForRequestsRefId] CHAR (36) NOT NULL
+    ,[ContactForRequestsLocalId] INT NOT NULL
+    ,[ContactForRequestsPartyType] VARCHAR (14) NOT NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_PersonPrivacy] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_PersonPrivacy] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_PersonPrivacy] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FKRef_PersonPrivacy_PartyList] FOREIGN KEY ([PartyRefId]) REFERENCES cdm_demo_gold.Dim2PartyList ([RefId])
+    ,CONSTRAINT [FKLocal_PersonPrivacy_PartyList] FOREIGN KEY ([PartyLocalId]) REFERENCES cdm_demo_gold.Dim2PartyList ([LocalId])
+    ,CONSTRAINT [FK_PersonPrivacy_PartyType] FOREIGN KEY ([PartyType]) REFERENCES cdm_demo_gold.Dim0PartyType ([TypeKey])
+    ,CONSTRAINT [FKRef_PersonPrivacy_ContactForRequestsPartyList] FOREIGN KEY ([ContactForRequestsRefId]) REFERENCES cdm_demo_gold.Dim2PartyList ([RefId])
+    ,CONSTRAINT [FKLocal_PersonPrivacy_ContactForRequestsPartyList] FOREIGN KEY ([ContactForRequestsLocalId]) REFERENCES cdm_demo_gold.Dim2PartyList ([LocalId])
+    ,CONSTRAINT [FK_PersonPrivacy_ContactForRequestsPartyType] FOREIGN KEY ([ContactForRequestsPartyType]) REFERENCES cdm_demo_gold.Dim0PartyType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3PersonPrivacyObligationDocument';
 GO
 
 
@@ -3683,22 +3728,162 @@ CREATE TABLE cdm_demo_gold.Dim4PersonPicturePublishingPermissions (
 PRINT N'Created cdm_demo_gold.Dim4PersonPicturePublishingPermissions';
 GO
 
+-- -------------------------------------- --
+-- 3.10.4 PersonPrivacyObligationDocument --
+-- -------------------------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim4PersonPrivacySettingLocation (
+     [PersonPrivacyRefId] CHAR (36) NOT NULL
+    ,[PersonPrivacyLocalId] VARCHAR (111) NOT NULL
+    ,[SettingLocationName] VARCHAR (111) NULL
+    ,[SettingLocationType] VARCHAR (111) NULL
+-- These Ids to "setting locations" may be FKs to just SchoolInfo or SchoolInfo plus others
+-- No FK relationship set for the two below fields yet
+    ,[SettingLocationRefId] CHAR (36) NULL
+    ,[SettingLocationLocalId] VARCHAR (111) NULL
+-- Not an enumerated list, to be the location equivalent of PartyType, yet
+-- Note that as this is the only other not null field to include in PK, you can only have one location of each type (e.g. SchoolInfo) per privacy record
+    ,[SettingLocationObjectTypeName] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_SettingLocation_PersonPrivacy] FOREIGN KEY ([PersonPrivacyRefId]) REFERENCES cdm_demo_gold.Dim3PersonPrivacyObligationDocument ([RefId])
+    ,CONSTRAINT [FKLocal_SettingLocation_PersonPrivacy] FOREIGN KEY ([PersonPrivacyLocalId]) REFERENCES cdm_demo_gold.Dim3PersonPrivacyObligationDocument ([LocalId])
+    ,CONSTRAINT [PK_SettingLocation] PRIMARY KEY ([PersonPrivacyLocalId],[SettingLocationObjectTypeName])
+);
+PRINT N'Created cdm_demo_gold.Dim4PersonPrivacySettingLocation';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim4PersonPrivacyDataDomain (
+     [PersonPrivacyRefId] CHAR (36) NOT NULL
+    ,[PersonPrivacyLocalId] VARCHAR (111) NOT NULL
+    ,[LocalId] VARCHAR (111) NOT NULL
+    ,[DataDomain] VARCHAR (111) NOT NULL
+    ,[DomainComments] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_DataDomain_PersonPrivacy] FOREIGN KEY ([PersonPrivacyRefId]) REFERENCES cdm_demo_gold.Dim3PersonPrivacyObligationDocument ([RefId])
+    ,CONSTRAINT [FKLocal_DataDomain_PersonPrivacy] FOREIGN KEY ([PersonPrivacyLocalId]) REFERENCES cdm_demo_gold.Dim3PersonPrivacyObligationDocument ([LocalId])
+    ,CONSTRAINT [PK_DataDomain] PRIMARY KEY ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim4PersonPrivacyDataDomain';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim4PersonPrivacyPermissionToParticipate (
+     [PersonPrivacyRefId] CHAR (36) NOT NULL
+    ,[PersonPrivacyLocalId] VARCHAR (111) NOT NULL
+    ,[LocalId] VARCHAR (111) NOT NULL
+    ,[PermissionCategory] VARCHAR (111) NOT NULL
+    ,[Permission] VARCHAR (111) NOT NULL
+    ,[PermissionValue] CHAR (1) NULL
+    ,[PermissionStartDate] DATETIME NULL
+    ,[PermissionEndDate] DATETIME NULL
+    ,[PermissionGranteeRefId] CHAR (36) NULL
+    ,[PermissionGranteeLocalId] INT NULL
+    ,[PermissionGranteePartyType] VARCHAR (14) NULL
+    ,[PermissionGranteeName] VARCHAR (111) NULL
+    ,[PermissionGranteeRelationship] VARCHAR (111) NULL
+    ,[PermissionComments] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_PermissionToParticipate_PersonPrivacy] FOREIGN KEY ([PersonPrivacyRefId]) REFERENCES cdm_demo_gold.Dim3PersonPrivacyObligationDocument ([RefId])
+    ,CONSTRAINT [FKLocal_PermissionToParticipate_PersonPrivacy] FOREIGN KEY ([PersonPrivacyLocalId]) REFERENCES cdm_demo_gold.Dim3PersonPrivacyObligationDocument ([LocalId])
+    ,CONSTRAINT [PK_PermissionToParticipate] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FK_PermissionToParticipate_PermissionValue] FOREIGN KEY ([PermissionValue]) REFERENCES cdm_demo_gold.Dim0PermissionYesNoType ([TypeKey])
+    ,CONSTRAINT [FKRef_PermissionToParticipate_PartyList] FOREIGN KEY ([PermissionGranteeRefId]) REFERENCES cdm_demo_gold.Dim2PartyList ([RefId])
+    ,CONSTRAINT [FKLocal_PermissionToParticipate_PartyList] FOREIGN KEY ([PermissionGranteeLocalId]) REFERENCES cdm_demo_gold.Dim2PartyList ([LocalId])
+    ,CONSTRAINT [FK_PermissionToParticipate_PartyType] FOREIGN KEY ([PermissionGranteePartyType]) REFERENCES cdm_demo_gold.Dim0PartyType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim4PersonPrivacyPermissionToParticipate';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim4PersonPrivacyApplicableLaw (
+     [PersonPrivacyRefId] CHAR (36) NOT NULL
+    ,[PersonPrivacyLocalId] VARCHAR (111) NOT NULL
+    ,[ApplicableCountry] VARCHAR (111) NOT NULL
+    ,[ApplicableLawName] VARCHAR (111) NOT NULL
+    ,[ApplicableLawURL] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_ApplicableLaw_PersonPrivacy] FOREIGN KEY ([PersonPrivacyRefId]) REFERENCES cdm_demo_gold.Dim3PersonPrivacyObligationDocument ([RefId])
+    ,CONSTRAINT [FKLocal_ApplicableLaw_PersonPrivacy] FOREIGN KEY ([PersonPrivacyLocalId]) REFERENCES cdm_demo_gold.Dim3PersonPrivacyObligationDocument ([LocalId])
+    ,CONSTRAINT [PK_ApplicableLaw] PRIMARY KEY ([PersonPrivacyLocalId],[ApplicableLawName])
+);
+PRINT N'Created cdm_demo_gold.Dim4PersonPrivacyApplicableLaw';
+GO
+
+
+
+
+
+-- -------------------------------------------------------------------------- --
+-- DEPENDENCY: Tables with 5 in name have FK to table(s) with 4               --
+-- -------------------------------------------------------------------------- --
+
+-- -------------------------------------- --
+-- 3.10.4 PersonPrivacyObligationDocument --
+-- -------------------------------------- --
+
+-- Note that SIF has both a "DoNotShareWith" and "NeverShareWith" duplicate data structures, that only differ in "Never" versus "DoNot" prefixes.
+-- There will never be any different data to put in "Never" versus "DoNot", so this structure has only been built here once, under "DoNot".
+-- Use the "DoNot" database data to fill both "DoNotShareWith" and "NeverShareWith" with duplicated data, as necessary in SIF messages.
+-- If you really wanted the "Never" table too, copy-paste the "DoNot" table and do the appropriate "DoNot" to "Never" find and replace.
+
+CREATE TABLE cdm_demo_gold.Dim5PersonPrivacyDataDomainShareWith (
+     [PersonPrivacyRefId] CHAR (36) NOT NULL
+    ,[PersonPrivacyLocalId] VARCHAR (111) NOT NULL
+    ,[DataDomainLocalId] VARCHAR (111) NOT NULL
+    ,[ShareWithParty] VARCHAR (111) NOT NULL
+    ,[ShareWithRefId] CHAR (36) NULL
+    ,[ShareWithLocalId] INT NULL
+    ,[ShareWithPartyType] VARCHAR (14) NULL
+    ,[ShareWithName] VARCHAR (111) NULL
+    ,[ShareWithRelationship] VARCHAR (111) NULL
+    ,[ShareWithPurpose] VARCHAR (111) NOT NULL
+    ,[ShareWithRole] VARCHAR (111) NOT NULL
+    ,[ShareWithComments] VARCHAR (111) NULL
+    ,[PermissionToOnShare] CHAR (1) NOT NULL
+    ,[ShareWithURL] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_ShareWith_PersonPrivacy] FOREIGN KEY ([PersonPrivacyRefId]) REFERENCES cdm_demo_gold.Dim3PersonPrivacyObligationDocument ([RefId])
+    ,CONSTRAINT [FKLocal_ShareWith_PersonPrivacy] FOREIGN KEY ([PersonPrivacyLocalId]) REFERENCES cdm_demo_gold.Dim3PersonPrivacyObligationDocument ([LocalId])
+    ,CONSTRAINT [FKLocal_ShareWith_DataDomain] FOREIGN KEY ([DataDomainLocalId]) REFERENCES cdm_demo_gold.Dim4PersonPrivacyDataDomain ([LocalId])
+    ,CONSTRAINT [PK_ShareWith] PRIMARY KEY ([DataDomainLocalId])
+    ,CONSTRAINT [FKRef_ShareWith_PartyList] FOREIGN KEY ([ShareWithRefId]) REFERENCES cdm_demo_gold.Dim2PartyList ([RefId])
+    ,CONSTRAINT [FKLocal_ShareWith_PartyList] FOREIGN KEY ([ShareWithLocalId]) REFERENCES cdm_demo_gold.Dim2PartyList ([LocalId])
+    ,CONSTRAINT [FK_ShareWith_PartyType] FOREIGN KEY ([ShareWithPartyType]) REFERENCES cdm_demo_gold.Dim0PartyType ([TypeKey])
+    ,CONSTRAINT [FK_ShareWith_PermissionToOnShare] FOREIGN KEY ([PermissionToOnShare]) REFERENCES cdm_demo_gold.Dim0PermissionYesNoType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim5PersonPrivacyDataDomainShareWith';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim5PersonPrivacyDataDomainDoNotShareWith (
+     [PersonPrivacyRefId] CHAR (36) NOT NULL
+    ,[PersonPrivacyLocalId] VARCHAR (111) NOT NULL
+    ,[DataDomainLocalId] VARCHAR (111) NOT NULL
+    ,[DoNotShareWithParty] VARCHAR (111) NOT NULL
+    ,[DoNotShareWithRefId] CHAR (36) NULL
+    ,[DoNotShareWithLocalId] INT NULL
+    ,[DoNotShareWithPartyType] VARCHAR (14) NULL
+    ,[DoNotShareWithName] VARCHAR (111) NULL
+    ,[DoNotShareWithRelationship] VARCHAR (111) NULL
+    ,[DoNotShareWithPurpose] VARCHAR (111) NOT NULL
+    ,[DoNotShareWithRole] VARCHAR (111) NOT NULL
+    ,[DoNotShareWithComments] VARCHAR (111) NULL
+    ,[DoNotShareWithURL] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_DoNotShareWith_PersonPrivacy] FOREIGN KEY ([PersonPrivacyRefId]) REFERENCES cdm_demo_gold.Dim3PersonPrivacyObligationDocument ([RefId])
+    ,CONSTRAINT [FKLocal_DoNotShareWith_PersonPrivacy] FOREIGN KEY ([PersonPrivacyLocalId]) REFERENCES cdm_demo_gold.Dim3PersonPrivacyObligationDocument ([LocalId])
+    ,CONSTRAINT [FKLocal_DoNotShareWith_DataDomain] FOREIGN KEY ([DataDomainLocalId]) REFERENCES cdm_demo_gold.Dim4PersonPrivacyDataDomain ([LocalId])
+    ,CONSTRAINT [PK_DoNotShareWith] PRIMARY KEY ([DataDomainLocalId])
+    ,CONSTRAINT [FKRef_DoNotShareWith_PartyList] FOREIGN KEY ([DoNotShareWithRefId]) REFERENCES cdm_demo_gold.Dim2PartyList ([RefId])
+    ,CONSTRAINT [FKLocal_DoNotShareWith_PartyList] FOREIGN KEY ([DoNotShareWithLocalId]) REFERENCES cdm_demo_gold.Dim2PartyList ([LocalId])
+    ,CONSTRAINT [FK_DoNotShareWith_PartyType] FOREIGN KEY ([DoNotShareWithPartyType]) REFERENCES cdm_demo_gold.Dim0PartyType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim5PersonPrivacyDataDomainDoNotShareWith';
+GO
+
 
 
 
 
 -- Upcoming headers and order to be completed:
 
--- -------------------------------------- --
--- 3.10.4 PersonPrivacyObligationDocument --
--- -------------------------------------- --
-
--- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html#contents:~:text=3.10%20sif%20au%20student%20baseline%20profile%20(sbp)
--- http://specification.sifassociation.org/Implementation/AU/3.6.3/SIFAUStudentBaselineProfileSBPAndSupportingObjects.html#obj:PersonPrivacyObligationDocument
-
 -- --------------------------------- --
 -- 3.10.9 StudentContactRelationship --
 -- --------------------------------- --
+
+-- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html#contents:~:text=3.10%20sif%20au%20student%20baseline%20profile%20(sbp)
+-- http://specification.sifassociation.org/Implementation/AU/3.6.3/SIFAUStudentBaselineProfileSBPAndSupportingObjects.html#obj:StudentContactRelationship
 
 -- ------------------------------- --
 -- 3.10.11 StudentSchoolEnrollment --
