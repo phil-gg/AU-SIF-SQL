@@ -1551,6 +1551,207 @@ INSERT INTO cdm_demo_gold.Dim0PermissionYesNoType ([TypeKey], [TypeValue]) VALUE
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0PermissionYesNoType';
 GO
 
+-- StaffAssignment Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0StaffActivity (
+     [TypeKey] CHAR (4) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_StaffActivity] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0StaffActivity';
+INSERT INTO cdm_demo_gold.Dim0StaffActivity ([TypeKey], [TypeValue]) VALUES
+    ('1100', 'Teacher in school n.f.d.'),
+    ('1101', 'Primary Teacher'),
+    ('1102', 'Secondary teacher'),
+    ('1103', 'Principal'),
+    ('1104', 'Special School Teacher'),
+    ('1105', 'Assistant Principal'),
+    ('1106', 'Teacher Librarian'),
+    ('1107', 'Primary/Secondary Combined Teacher'),
+    ('1199', 'Other Teacher In School'),
+    ('1200', 'Specialist support in school n.f.d.'),
+    ('1201', 'Nurse'),
+    ('1202', 'Physiotherapist'),
+    ('1203', 'Speech Therapist'),
+    ('1204', 'Guidance Officer'),
+    ('1205', 'Psychologist'),
+    ('1206', 'Social worker'),
+    ('1207', 'Student welfare worker'),
+    ('1208', 'Indigenous Education Worker'),
+    ('1299', 'Other Specialist support in school'),
+    ('1300', 'Administration and clerical in school n.f.d.'),
+    ('1301', 'Teacher Aide'),
+    ('1302', 'Librarian - in school Administration'),
+    ('1303', 'Office Manager'),
+    ('1304', 'Clerical/Administrative officer'),
+    ('1305', 'Clerical/Administrative assistant'),
+    ('1306', 'Laboratory assistant'),
+    ('1307', 'ICT Officer'),
+    ('1399', 'Other Administration and clerical in school'),
+    ('1400', 'Building Operations in school n.f.d.'),
+    ('1401', 'Building maintenance worker - in school'),
+    ('1402', 'Gardener - in school'),
+    ('1403', 'Canteen assistant - in school'),
+    ('1404', 'Farm Worker - in school'),
+    ('1405', 'Bus Driver - in school'),
+    ('1406', 'Caretaker - in school'),
+    ('1499', 'Other Building Operations and general maintenance - In school'),
+    ('1999', 'In School Staff out of scope'),
+    ('2100', 'Executive n.f.d.'),
+    ('2101', 'Chief Executive'),
+    ('2102', 'Deputy Chief Executive'),
+    ('2103', 'General Manager'),
+    ('2198', 'Principal and other School Executive out of school'),
+    ('2199', 'Other Executive'),
+    ('2200', 'Specialist support out of scope n.f.d.'),
+    ('2201', 'Community Participation Officer'),
+    ('2202', 'Computer Support Officer'),
+    ('2203', 'Coordinator - out of school Specialist Support'),
+    ('2204', 'Curriculum Officer'),
+    ('2205', 'Curriculum Program Manager'),
+    ('2206', 'Education Officer - out of school Specialist Support'),
+    ('2207', 'Education Program Manager'),
+    ('2208', 'Home Liaison Officer'),
+    ('2209', 'Learning Support Leader'),
+    ('2210', 'Librarian - out of school Specialist Support'),
+    ('2211', 'Moderator'),
+    ('2212', 'Occupational Therapist'),
+    ('2213', 'On-line Education Officer'),
+    ('2214', 'Policy Officer - out of school Specialist Support'),
+    ('2215', 'Principal Education Officer'),
+    ('2216', 'Professional Services Officer'),
+    ('2217', 'Project Coordinator'),
+    ('2218', 'Registered Nurse'),
+    ('2219', 'Senior Education Officer'),
+    ('2220', 'Social Welfare Officer'),
+    ('2221', 'Speech Language Pathologist'),
+    ('2222', 'Sports Coordinator'),
+    ('2223', 'Staff Development Officer'),
+    ('2224', 'Training Officer - out of school Specialist Support'),
+    ('2298', 'Teachers - out of school Specialist Support'),
+    ('2299', 'Other specialist support out of school'),
+    ('2300', 'Administration and clerical out of school n.f.d.'),
+    ('2301', 'Accounts Certifying Officer'),
+    ('2302', 'Administrative and Clerical officer'),
+    ('2303', 'Administrative Assistant'),
+    ('2304', 'Administrative Officer'),
+    ('2305', 'Budget Officer'),
+    ('2306', 'Clerk'),
+    ('2307', 'Finance and Administration Officer'),
+    ('2308', 'Finance Officer'),
+    ('2309', 'General Ledger Officer'),
+    ('2310', 'Receptionist'),
+    ('2311', 'Senior Auditor'),
+    ('2312', 'Services Clerk'),
+    ('2313', 'Aboriginal Education Coordinator'),
+    ('2314', 'Aboriginal Education Worker'),
+    ('2315', 'Assistant Manager'),
+    ('2316', 'Client Services Officer'),
+    ('2317', 'Coordinator - out of school Administration'),
+    ('2318', 'District Officer'),
+    ('2319', 'Education Officer - out of school Administration'),
+    ('2320', 'Enrolment Officer'),
+    ('2321', 'Examiner'),
+    ('2322', 'Liaison Officer'),
+    ('2323', 'Librarian - out of school Administration'),
+    ('2324', 'Library Technician'),
+    ('2325', 'Manager'),
+    ('2326', 'Operational Services Officer'),
+    ('2327', 'Professional Officers'),
+    ('2328', 'Program Coordinator'),
+    ('2329', 'Project Manager'),
+    ('2330', 'Project Officer'),
+    ('2331', 'Project Support Officer'),
+    ('2332', 'Public Servant'),
+    ('2333', 'School Services Officer'),
+    ('2334', 'School Support Officer'),
+    ('2335', 'Senior Investigator'),
+    ('2336', 'Senior Professional Officers'),
+    ('2337', 'Senior Project Officer/Project Officer'),
+    ('2338', 'Student Services co ordinator'),
+    ('2339', 'Student Support Officer'),
+    ('2340', 'Assistant Editor'),
+    ('2341', 'Communications Officer'),
+    ('2342', 'Corporate Services Officer'),
+    ('2343', 'Designer'),
+    ('2344', 'Desktop Publisher'),
+    ('2345', 'Editor'),
+    ('2346', 'Graphic Designer'),
+    ('2347', 'Journalist/Media and Marketing'),
+    ('2348', 'Photographer'),
+    ('2349', 'Printer'),
+    ('2350', 'Production Officer/Coordinator'),
+    ('2351', 'Public Relations Officer'),
+    ('2352', 'Advisor'),
+    ('2353', 'Executive Assistant'),
+    ('2354', 'Executive Officer'),
+    ('2355', 'Executive Secretary'),
+    ('2356', 'Personal Assistant'),
+    ('2357', 'Secretary'),
+    ('2358', 'Human Resources Services Officer'),
+    ('2359', 'Personnel (and Payroll) Officer'),
+    ('2360', 'Personnel Officer'),
+    ('2361', 'Recruitment Officer'),
+    ('2362', 'Training Officer - out of school Administration'),
+    ('2363', 'Workers Compensation Officer'),
+    ('2364', 'Workforce Management Officer'),
+    ('2365', 'Audio Visual Communications Program Officer'),
+    ('2366', 'Business Systems Analyst'),
+    ('2367', 'Computer Systems Officer'),
+    ('2368', 'Computer Technician'),
+    ('2369', 'Data Management Officer'),
+    ('2370', 'Information Analyst'),
+    ('2371', 'Information Manager'),
+    ('2372', 'Information Officer'),
+    ('2373', 'Information Technology Officers'),
+    ('2374', 'Network Administrator'),
+    ('2375', 'Policy Officer n.f.d.'),
+    ('2376', 'Performance Measurement Officer'),
+    ('2377', 'Policy Officer - out of school Administration'),
+    ('2378', 'Research Officer'),
+    ('2379', 'Review Officer'),
+    ('2380', 'Senior Research Officer/Research Officer'),
+    ('2381', 'Other policy officer'),
+    ('2382', 'Despatch Officer'),
+    ('2383', 'Driver'),
+    ('2384', 'Facilities Services Officer'),
+    ('2385', 'Housing and Transport Officer'),
+    ('2386', 'Indexer'),
+    ('2387', 'Legal Officer'),
+    ('2388', 'Store Person'),
+    ('2389', 'Store Supervisor'),
+    ('2390', 'Supply Officer'),
+    ('2391', 'Team Leader'),
+    ('2392', 'Technical Officer - out of school Administration'),
+    ('2393', 'Technician'),
+    ('2394', 'Transport Officer'),
+    ('2397', 'Public service officers n.f.d.'),
+    ('2398', 'Teachers - Out of School Administration'),
+    ('2399', 'Other Administration and clerical out of school'),
+    ('2400', 'Building Operations out of school n.f.d.'),
+    ('2401', 'Building maintenance worker - out of school'),
+    ('2402', 'Bus Driver - out of school'),
+    ('2403', 'Canteen assistant - out of school'),
+    ('2404', 'Caretaker - out of school'),
+    ('2405', 'Cook'),
+    ('2406', 'Courier'),
+    ('2407', 'Farm Worker - out of school'),
+    ('2408', 'Gardener - out of school'),
+    ('2409', 'Greenkeeper'),
+    ('2410', 'Groundsman'),
+    ('2411', 'Handyman'),
+    ('2412', 'House Officer'),
+    ('2413', 'Janitor'),
+    ('2414', 'Kitchen Hand'),
+    ('2415', 'Maintenance Officer'),
+    ('2416', 'School Attendant'),
+    ('2417', 'Security Officer'),
+    ('2418', 'Technical Officer - out of school Building Operations'),
+    ('2499', 'Other Building Operations and general maintenance out of school'),
+    ('2999', 'Out of School Staff out of scope');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0StaffActivity';
+GO
+
 
 
 
@@ -3579,6 +3780,46 @@ CREATE TABLE cdm_demo_gold.Dim3PersonPrivacyObligationDocument (
 PRINT N'Created cdm_demo_gold.Dim3PersonPrivacyObligationDocument';
 GO
 
+-- ---------------------- --
+-- 3.10.6 StaffAssignment --
+-- ---------------------- --
+
+CREATE TABLE cdm_demo_gold.Fact3StaffAssignment (
+     [RefId] CHAR (36) NOT NULL
+    ,[SchoolInfoRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoLocalId] INT NOT NULL
+    ,[SchoolYear] SMALLINT NULL
+    ,[StaffPersonalRefId] CHAR (36) NOT NULL
+    ,[StaffPersonalLocalId] INT NOT NULL
+    ,[Description] VARCHAR (111) NULL
+    ,[PrimaryAssignment] CHAR (1) NOT NULL
+    ,[JobStartDate] DATETIME NULL
+    ,[JobEndDate] DATETIME NULL
+    ,[JobFTE] DECIMAL (3,2) NULL
+    ,[JobFunction] VARCHAR (111) NULL
+    ,[EmploymentStatus] CHAR (1) NULL
+    ,[CasualReliefTeacher] CHAR (1) NULL
+    ,[Homegroup] VARCHAR (111) NULL
+    ,[House] VARCHAR (111) NULL
+    ,[PreviousSchoolName] VARCHAR (111) NULL
+    ,[AvailableForTimetable] CHAR (1) NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_StaffAssignment] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_StaffAssignment] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_StaffAssignment] PRIMARY KEY ([RefId])
+    ,CONSTRAINT [FKRef_StaffAssignment_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignment_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_StaffAssignment_StaffPersonal] FOREIGN KEY ([StaffPersonalRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignment_StaffPersonal] FOREIGN KEY ([StaffPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [FK_StaffAssignment_PrimaryAssignment] FOREIGN KEY ([PrimaryAssignment]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [Check_StaffAssignment_JobFTE] CHECK (JobFTE >= 0 AND JobFTE <= 1)
+    ,CONSTRAINT [FK_StaffAssignment_EmploymentStatus] FOREIGN KEY ([EmploymentStatus]) REFERENCES cdm_demo_gold.Dim0StaffEmploymentStatus ([TypeKey])
+    ,CONSTRAINT [FK_StaffAssignment_CasualReliefTeacher] FOREIGN KEY ([CasualReliefTeacher]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StaffAssignment_AvailableForTimetable] FOREIGN KEY ([AvailableForTimetable]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Fact3StaffAssignment';
+GO
+
 
 
 
@@ -3803,6 +4044,85 @@ CREATE TABLE cdm_demo_gold.Dim4PersonPrivacyApplicableLaw (
 PRINT N'Created cdm_demo_gold.Dim4PersonPrivacyApplicableLaw';
 GO
 
+-- ---------------------- --
+-- 3.10.6 StaffAssignment --
+-- ---------------------- --
+
+-- TO-DO: Constrain SubjectLocalId and TimeTableSubjectRefId with FKs when reach that phase of SIF Spec target data structure implementation
+CREATE TABLE cdm_demo_gold.Fact4StaffAssignmentSubjectList (
+     [StaffAssignmentRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoLocalId] INT NOT NULL
+    ,[StaffPersonalRefId] CHAR (36) NOT NULL
+    ,[StaffPersonalLocalId] INT NOT NULL
+    ,[PreferenceNumber] INT NOT NULL
+    ,[SubjectLocalId] VARCHAR (111) NULL
+    ,[TimeTableSubjectRefId] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_StaffAssignmentSubjectList_StaffAssignment] FOREIGN KEY ([StaffAssignmentRefId]) REFERENCES cdm_demo_gold.Fact3StaffAssignment ([RefId])
+    ,CONSTRAINT [FKRef_StaffAssignmentSubjectList_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignmentSubjectList_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_StaffAssignmentSubjectList_StaffPersonal] FOREIGN KEY ([StaffPersonalRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignmentSubjectList_StaffPersonal] FOREIGN KEY ([StaffPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffAssignmentSubjectList] PRIMARY KEY ([StaffAssignmentRefId],[PreferenceNumber])
+);
+PRINT N'Created cdm_demo_gold.Fact4StaffAssignmentSubjectList';
+GO
+
+CREATE TABLE cdm_demo_gold.Fact4StaffAssignmentActivityExtension (
+     [StaffAssignmentRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoLocalId] INT NOT NULL
+    ,[StaffPersonalRefId] CHAR (36) NOT NULL
+    ,[StaffPersonalLocalId] INT NOT NULL
+    ,[ActivityCode] CHAR (4) NOT NULL
+    ,CONSTRAINT [FKRef_StaffAssignmentActivityExtension_StaffAssignment] FOREIGN KEY ([StaffAssignmentRefId]) REFERENCES cdm_demo_gold.Fact3StaffAssignment ([RefId])
+    ,CONSTRAINT [FKRef_StaffAssignmentActivityExtension_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignmentActivityExtension_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_StaffAssignmentActivityExtension_StaffPersonal] FOREIGN KEY ([StaffPersonalRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignmentActivityExtension_StaffPersonal] FOREIGN KEY ([StaffPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [FK_StaffAssignmentActivityExtension_ActivityCode] FOREIGN KEY ([ActivityCode]) REFERENCES cdm_demo_gold.Dim0StaffActivity ([TypeKey])
+    ,CONSTRAINT [PK_StaffAssignmentActivityExtension] PRIMARY KEY ([StaffAssignmentRefId],[ActivityCode])
+);
+PRINT N'Created cdm_demo_gold.Fact4StaffAssignmentActivityExtension';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim3StaffAssignmentYearLevels (
+     [StaffAssignmentRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoLocalId] INT NOT NULL
+    ,[StaffPersonalRefId] CHAR (36) NOT NULL
+    ,[StaffPersonalLocalId] INT NOT NULL
+    ,[YearLevelCode] VARCHAR (8) NOT NULL
+    ,CONSTRAINT [FKRef_StaffAssignmentYearLevels_StaffAssignment] FOREIGN KEY ([StaffAssignmentRefId]) REFERENCES cdm_demo_gold.Fact3StaffAssignment ([RefId])
+    ,CONSTRAINT [FKRef_StaffAssignmentYearLevels_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignmentYearLevels_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_StaffAssignmentYearLevels_StaffPersonal] FOREIGN KEY ([StaffPersonalRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignmentYearLevels_StaffPersonal] FOREIGN KEY ([StaffPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [FK_StaffAssignmentYearLevels_YearLevelCode] FOREIGN KEY ([YearLevelCode]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+    ,CONSTRAINT [PK_StaffAssignmentYearLevels] PRIMARY KEY ([StaffAssignmentRefId],[YearLevelCode])
+);
+PRINT N'Created cdm_demo_gold.Dim3StaffAssignmentYearLevels';
+GO
+
+
+-- TO-DO: Constrain CalendarSummaryRefId with FK when reach that phase of SIF Spec target data structure implementation
+CREATE TABLE cdm_demo_gold.Fact4StaffAssignmentCalendarSummaryList (
+     [StaffAssignmentRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoLocalId] INT NOT NULL
+    ,[StaffPersonalRefId] CHAR (36) NOT NULL
+    ,[StaffPersonalLocalId] INT NOT NULL
+    ,[CalendarSummaryRefId] CHAR (36) NOT NULL
+    ,CONSTRAINT [FKRef_StaffAssignmentCalendarSummaryList_StaffAssignment] FOREIGN KEY ([StaffAssignmentRefId]) REFERENCES cdm_demo_gold.Fact3StaffAssignment ([RefId])
+    ,CONSTRAINT [FKRef_StaffAssignmentCalendarSummaryList_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignmentCalendarSummaryList_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_StaffAssignmentCalendarSummaryList_StaffPersonal] FOREIGN KEY ([StaffPersonalRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignmentCalendarSummaryList_StaffPersonal] FOREIGN KEY ([StaffPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffAssignmentCalendarSummaryList] PRIMARY KEY ([StaffAssignmentRefId],[CalendarSummaryRefId])
+);
+PRINT N'Created cdm_demo_gold.Fact4StaffAssignmentCalendarSummaryList';
+GO
+
 
 
 
@@ -3888,7 +4208,3 @@ GO
 -- ------------------------------- --
 -- 3.10.11 StudentSchoolEnrollment --
 -- ------------------------------- --
-
--- ---------------------- --
--- 3.10.6 StaffAssignment --
--- ---------------------- --
