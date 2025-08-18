@@ -1,15 +1,20 @@
+-- This relational data structure implements AU SIF v3.6.3 as per link below:
+-- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html#contents:~:text=3.10%20sif%20au%20student%20baseline%20profile%20(sbp)
+
+/* ************************************************************************** */
+/* SECTION: Dynamically drop all constraints & user tables before (re-)build  */
+/* ************************************************************************** */
+
 -- Need Azure SQL Database or Azure SQL Managed Instance for this demo.
 -- Enforcement of Primary Keys, Foreign Keys, and unique constraints test our mapping is correct.
--- Such instance types can switch database with 'USE' command
+-- Such instance types can switch database with 'USE' command:
 USE [demo_integration_gold];
 PRINT N'Using database [demo_integration_gold]';
 GO
 
-/* ************************************************************************** */
-/* SECTION: Dynamically drop all constraints & user tables in cdm_demo_gold   */
-/* ************************************************************************** */
-
+-- Set schema within which to build the SIF relational data structure
 DECLARE @schemaName SYSNAME = 'cdm_demo_gold';
+-- Variable for dynamic SQL to execute
 DECLARE @sql NVARCHAR(MAX) = N'';
 
 -- Drop all Foreign Key Constraints
@@ -1750,6 +1755,81 @@ INSERT INTO cdm_demo_gold.Dim0StaffActivity ([TypeKey], [TypeValue]) VALUES
     ('2499', 'Other Building Operations and general maintenance out of school'),
     ('2999', 'Out of School Staff out of scope');
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0StaffActivity';
+GO
+
+-- StudentContactRelationship Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0RelationshipToStudentType (
+     [TypeKey] CHAR (2) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_RelationshipToStudentType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0RelationshipToStudentType';
+INSERT INTO cdm_demo_gold.Dim0RelationshipToStudentType ([TypeKey], [TypeValue]) VALUES
+    ('00', 'Spouse/Partner (expected to be rare)'),
+    ('01', 'Parent'),
+    ('02', 'Step-Parent'),
+    ('03', 'Adoptive Parent (DEPRECATED: 01 Parent is preferred)'),
+    ('04', 'Foster Parent'),
+    ('05', 'Host Family'),
+    ('06', 'Relative'),
+    ('07', 'Friend'),
+    ('08', 'Self'),
+    ('09', 'Other'),
+    ('10', 'Sibling'),
+    ('11', 'Grandparent'),
+    ('12', 'Aunt/Uncle'),
+    ('13', 'Nephew/Niece'),
+    ('14', 'Step-Sibling'),
+    ('20', 'Guardian'),
+    ('30', 'Case Worker'),
+    ('31', 'Supervisor'),
+    ('32', 'Duty Manager'),
+    ('40', 'Medical Contact'),
+    ('99', 'Not provided');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0RelationshipToStudentType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0ParentRelationshipStatus (
+     [TypeKey] VARCHAR (15) NOT NULL
+     CONSTRAINT [PK_ParentRelationshipStatus] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0ParentRelationshipStatus';
+INSERT INTO cdm_demo_gold.Dim0ParentRelationshipStatus ([TypeKey]) VALUES
+    ('Parent1'),
+    ('Parent2'),
+    ('NotForReporting');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0ParentRelationshipStatus';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0ContactSourceType (
+     [TypeKey] CHAR (1) NOT NULL
+    ,[TypeValue] VARCHAR (255) NULL
+    ,CONSTRAINT [PK_ContactSourceType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0ContactSourceType';
+INSERT INTO cdm_demo_gold.Dim0ContactSourceType ([TypeKey], [TypeValue]) VALUES
+    ('C', 'Provided by the child (ie pupil)'),
+    ('O', 'Other'),
+    ('P', 'Provided by the parent'),
+    ('S', 'Ascribed by the current school'),
+    ('T', 'Ascribed by a previous school');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0ContactSourceType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0ContactMethod (
+     [TypeKey] VARCHAR (12) NOT NULL
+    ,[TypeValue] VARCHAR (255) NULL
+    ,CONSTRAINT [PK_ContactMethod] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0ContactMethod';
+INSERT INTO cdm_demo_gold.Dim0ContactMethod ([TypeKey], [TypeValue]) VALUES
+    ('AltMailing', 'Postal, using alternate mailing address on file'),
+    ('Email', 'Email'),
+    ('Mailing', 'Postal, using main mailing address on file'),
+    ('ParentPortal', 'Contact via Parent Portal'),
+    ('Phone', 'Phone');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0ContactMethod';
 GO
 
 
@@ -3820,6 +3900,75 @@ CREATE TABLE cdm_demo_gold.Fact3StaffAssignment (
 PRINT N'Created cdm_demo_gold.Fact3StaffAssignment';
 GO
 
+-- --------------------------------- --
+-- 3.10.9 StudentContactRelationship --
+-- --------------------------------- --
+
+CREATE TABLE cdm_demo_gold.Fact3StudentContactRelationship (
+     [RefId] CHAR (36) NOT NULL
+    ,[StudentRefId] CHAR (36) NOT NULL
+    ,[StudentLocalId] INT NOT NULL
+    ,[StudentContactRefId] CHAR (36) NOT NULL
+    ,[StudentContactLocalId] INT NOT NULL
+    ,[RelationshipToStudent] CHAR (2) NOT NULL
+    ,[ParentRelationshipStatus] VARCHAR (15) NULL
+    ,[MainlySpeaksEnglishAtHome] CHAR (1) NULL
+    ,[ContactSequence] INT NULL
+    ,[ContactSequenceSource] CHAR (1) NULL
+    ,[ContactMethod] VARCHAR (12) NULL
+    ,[FeePercentage_Curriculum] DECIMAL (6,3) NULL
+    ,[FeePercentage_Other] DECIMAL (6,3) NULL
+    ,[SchoolInfoRefId] CHAR (36) NULL
+    ,[SchoolInfoLocalId] INT NULL
+    ,[ContactFlag_ParentLegalGuardian] CHAR (1) NULL
+    ,[ContactFlag_PickupRights] CHAR (1) NULL
+    ,[ContactFlag_LivesWith] CHAR (1) NULL
+    ,[ContactFlag_AccessToRecords] CHAR (1) NULL
+    ,[ContactFlag_ReceivesAssessmentReport] CHAR (1) NULL
+    ,[ContactFlag_EmergencyContact] CHAR (1) NULL
+    ,[ContactFlag_HasCustody] CHAR (1) NULL
+    ,[ContactFlag_DisciplinaryContact] CHAR (1) NULL
+    ,[ContactFlag_AttendanceContact] CHAR (1) NULL
+    ,[ContactFlag_PrimaryCareProvider] CHAR (1) NULL
+    ,[ContactFlag_FeesBilling] CHAR (1) NULL
+    ,[ContactFlag_FeesAccess] CHAR (1) NULL
+    ,[ContactFlag_FamilyMail] CHAR (1) NULL
+    ,[ContactFlag_InterventionOrder] CHAR (1) NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_StudentContactRelationship] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_StudentContactRelationship] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_StudentContactRelationship] PRIMARY KEY ([RefId])
+    ,CONSTRAINT [FKRef_StudentContactRelationship_Student] FOREIGN KEY ([StudentRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactRelationship_Student] FOREIGN KEY ([StudentLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
+    ,CONSTRAINT [FKRef_StudentContactRelationship_Contact] FOREIGN KEY ([StudentContactRefId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactRelationship_Contact] FOREIGN KEY ([StudentContactLocalId]) REFERENCES cdm_demo_gold.Dim1StudentContactPersonal ([LocalId])
+    ,CONSTRAINT [FK_StudentContactRelationship_RelationshipToStudent] FOREIGN KEY ([RelationshipToStudent]) REFERENCES cdm_demo_gold.Dim0RelationshipToStudentType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ParentRelationshipStatus] FOREIGN KEY ([ParentRelationshipStatus]) REFERENCES cdm_demo_gold.Dim0ParentRelationshipStatus ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_MainlySpeaksEnglishAtHome] FOREIGN KEY ([MainlySpeaksEnglishAtHome]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactSequenceSource] FOREIGN KEY ([ContactSequenceSource]) REFERENCES cdm_demo_gold.Dim0ContactSourceType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactMethod] FOREIGN KEY ([ContactMethod]) REFERENCES cdm_demo_gold.Dim0ContactMethod ([TypeKey])
+    ,CONSTRAINT [Check_StudentContactRelationship_FeePercentage_Curriculum] CHECK (FeePercentage_Curriculum >= 0 AND FeePercentage_Curriculum <= 100)
+    ,CONSTRAINT [Check_StudentContactRelationship_FeePercentage_Other] CHECK (FeePercentage_Other >= 0 AND FeePercentage_Other <= 100)
+    ,CONSTRAINT [FKRef_StudentContactRelationship_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StudentContactRelationship_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_ParentLegalGuardian] FOREIGN KEY ([ContactFlag_ParentLegalGuardian]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_PickupRights] FOREIGN KEY ([ContactFlag_PickupRights]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_LivesWith] FOREIGN KEY ([ContactFlag_LivesWith]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_AccessToRecords] FOREIGN KEY ([ContactFlag_AccessToRecords]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_ReceivesAssessmentReport] FOREIGN KEY ([ContactFlag_ReceivesAssessmentReport]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_EmergencyContact] FOREIGN KEY ([ContactFlag_EmergencyContact]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_HasCustody] FOREIGN KEY ([ContactFlag_HasCustody]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_DisciplinaryContact] FOREIGN KEY ([ContactFlag_DisciplinaryContact]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_AttendanceContact] FOREIGN KEY ([ContactFlag_AttendanceContact]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_PrimaryCareProvider] FOREIGN KEY ([ContactFlag_PrimaryCareProvider]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_FeesBilling] FOREIGN KEY ([ContactFlag_FeesBilling]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_FeesAccess] FOREIGN KEY ([ContactFlag_FeesAccess]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_FamilyMail] FOREIGN KEY ([ContactFlag_FamilyMail]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentContactRelationship_ContactFlag_InterventionOrder] FOREIGN KEY ([ContactFlag_InterventionOrder]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Fact3StudentContactRelationship';
+GO
+
 
 
 
@@ -4086,7 +4235,7 @@ CREATE TABLE cdm_demo_gold.Fact4StaffAssignmentActivityExtension (
 PRINT N'Created cdm_demo_gold.Fact4StaffAssignmentActivityExtension';
 GO
 
-CREATE TABLE cdm_demo_gold.Dim3StaffAssignmentYearLevels (
+CREATE TABLE cdm_demo_gold.Fact4StaffAssignmentYearLevels (
      [StaffAssignmentRefId] CHAR (36) NOT NULL
     ,[SchoolInfoRefId] CHAR (36) NOT NULL
     ,[SchoolInfoLocalId] INT NOT NULL
@@ -4101,7 +4250,7 @@ CREATE TABLE cdm_demo_gold.Dim3StaffAssignmentYearLevels (
     ,CONSTRAINT [FK_StaffAssignmentYearLevels_YearLevelCode] FOREIGN KEY ([YearLevelCode]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
     ,CONSTRAINT [PK_StaffAssignmentYearLevels] PRIMARY KEY ([StaffAssignmentRefId],[YearLevelCode])
 );
-PRINT N'Created cdm_demo_gold.Dim3StaffAssignmentYearLevels';
+PRINT N'Created cdm_demo_gold.Fact4StaffAssignmentYearLevels';
 GO
 
 
@@ -4121,6 +4270,26 @@ CREATE TABLE cdm_demo_gold.Fact4StaffAssignmentCalendarSummaryList (
     ,CONSTRAINT [PK_StaffAssignmentCalendarSummaryList] PRIMARY KEY ([StaffAssignmentRefId],[CalendarSummaryRefId])
 );
 PRINT N'Created cdm_demo_gold.Fact4StaffAssignmentCalendarSummaryList';
+GO
+
+-- --------------------------------- --
+-- 3.10.9 StudentContactRelationship --
+-- --------------------------------- --
+
+CREATE TABLE cdm_demo_gold.Fact4StudentContactRelationshipHouseholdList (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[PartyRefId] CHAR (36) NOT NULL
+    ,[PartyLocalId] INT NOT NULL
+    ,[PartyType] VARCHAR (14) NOT NULL
+    ,CONSTRAINT [RefUnique_StudentHouseholdList] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_StudentHouseholdList] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_StudentHouseholdList] PRIMARY KEY ([LocalId],[PartyLocalId])
+    ,CONSTRAINT [FK_StudentHouseholdList_PartyRefId] FOREIGN KEY ([PartyRefId]) REFERENCES cdm_demo_gold.Dim2PartyList ([RefId])
+    ,CONSTRAINT [FK_StudentHouseholdList_PartyLocalId] FOREIGN KEY ([PartyLocalId]) REFERENCES cdm_demo_gold.Dim2PartyList ([LocalId])
+    ,CONSTRAINT [FK_StudentHouseholdList_PartyType] FOREIGN KEY ([PartyType]) REFERENCES cdm_demo_gold.Dim0PartyType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Fact4StudentContactRelationshipHouseholdList';
 GO
 
 
@@ -4198,13 +4367,8 @@ GO
 
 -- Upcoming headers and order to be completed:
 
--- --------------------------------- --
--- 3.10.9 StudentContactRelationship --
--- --------------------------------- --
-
--- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html#contents:~:text=3.10%20sif%20au%20student%20baseline%20profile%20(sbp)
--- http://specification.sifassociation.org/Implementation/AU/3.6.3/SIFAUStudentBaselineProfileSBPAndSupportingObjects.html#obj:StudentContactRelationship
-
 -- ------------------------------- --
 -- 3.10.11 StudentSchoolEnrollment --
 -- ------------------------------- --
+
+-- http://specification.sifassociation.org/Implementation/AU/3.6.3/SIFAUStudentBaselineProfileSBPAndSupportingObjects.html#obj:StudentSchoolEnrollment
