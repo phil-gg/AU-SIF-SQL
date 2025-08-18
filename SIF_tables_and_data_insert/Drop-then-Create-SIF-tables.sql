@@ -1832,6 +1832,19 @@ INSERT INTO cdm_demo_gold.Dim0ContactMethod ([TypeKey], [TypeValue]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0ContactMethod';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim0CodesetForOtherCodeListType (
+     [TypeKey] VARCHAR (13) NOT NULL
+     CONSTRAINT [PK_CodesetForOtherCodeListType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0CodesetForOtherCodeListType';
+INSERT INTO cdm_demo_gold.Dim0CodesetForOtherCodeListType ([TypeKey]) VALUES
+    ('StateProvince'),
+    ('Local'),
+    ('Other'),
+    ('Text');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0CodesetForOtherCodeListType';
+GO
+
 
 
 
@@ -4233,6 +4246,25 @@ CREATE TABLE cdm_demo_gold.Fact4StaffAssignmentActivityExtension (
     ,CONSTRAINT [PK_StaffAssignmentActivityExtension] PRIMARY KEY ([StaffAssignmentRefId],[ActivityCode])
 );
 PRINT N'Created cdm_demo_gold.Fact4StaffAssignmentActivityExtension';
+GO
+
+CREATE TABLE cdm_demo_gold.Fact4StaffAssignmentActivityExtensionOtherCode (
+     [StaffAssignmentRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoLocalId] INT NOT NULL
+    ,[StaffPersonalRefId] CHAR (36) NOT NULL
+    ,[StaffPersonalLocalId] INT NOT NULL
+    ,[Codeset] VARCHAR (13) NOT NULL
+    ,[OtherCode] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_StaffAssignmentActivityExtensionOtherCode_StaffAssignment] FOREIGN KEY ([StaffAssignmentRefId]) REFERENCES cdm_demo_gold.Fact3StaffAssignment ([RefId])
+    ,CONSTRAINT [FKRef_StaffAssignmentActivityExtensionOtherCode_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignmentActivityExtensionOtherCode_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_StaffAssignmentActivityExtensionOtherCode_StaffPersonal] FOREIGN KEY ([StaffPersonalRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignmentActivityExtensionOtherCode_StaffPersonal] FOREIGN KEY ([StaffPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [FK_StaffAssignmentActivityExtensionOtherCode_Codeset] FOREIGN KEY ([Codeset]) REFERENCES cdm_demo_gold.Dim0CodesetForOtherCodeListType ([TypeKey])
+    ,CONSTRAINT [PK_StaffAssignmentActivityExtensionOtherCode] PRIMARY KEY ([StaffAssignmentRefId],[CodeSet])
+);
+PRINT N'Created cdm_demo_gold.Fact4StaffAssignmentActivityExtensionOtherCode';
 GO
 
 CREATE TABLE cdm_demo_gold.Fact4StaffAssignmentYearLevels (
