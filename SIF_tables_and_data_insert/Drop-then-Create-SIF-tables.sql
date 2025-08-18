@@ -1845,6 +1845,136 @@ INSERT INTO cdm_demo_gold.Dim0CodesetForOtherCodeListType ([TypeKey]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0CodesetForOtherCodeListType';
 GO
 
+-- StudentSchoolEnrollment Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0EnrollmentTimeFrame (
+     [TypeKey] CHAR (1) NOT NULL
+    ,[TypeValue] VARCHAR (255) NULL
+    ,CONSTRAINT [PK_EnrollmentTimeFrame] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0EnrollmentTimeFrame';
+INSERT INTO cdm_demo_gold.Dim0EnrollmentTimeFrame ([TypeKey], [TypeValue]) VALUES
+    ('C', 'Current'),
+    ('F', 'Future'),
+    ('H', 'Historic');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0EnrollmentTimeFrame';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0EnrollmentEntryType (
+     [TypeKey] CHAR (4) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_EnrollmentEntryType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0EnrollmentEntryType';
+INSERT INTO cdm_demo_gold.Dim0EnrollmentEntryType ([TypeKey], [TypeValue]) VALUES
+    ('0997', 'Transfer from a different campus of the same school'),
+    ('0998', 'Temporary enrolment'),
+    ('1821', 'Transfer from a public school in the same district'),
+    ('1822', 'Transfer from a public school in a different district in the same jurisdiction'),
+    ('1823', 'Transfer from a public school in a different jurisdiction'),
+    ('1824', 'Transfer from a private, non-religiously-affiliated school in the same district'),
+    ('1825', 'Transfer from a private, non-religiously-affiliated school in a different district'),
+    ('1826', 'Transfer from a private, non-religiously-affiliated school in a different jurisdiction'),
+    ('1827', 'Transfer from a private, religiously-affiliated school in the same district'),
+    ('1828', 'Transfer from a private, religiously-affiliated school in a different district in the same jurisdiction'),
+    ('1829', 'Transfer from a private, religiously-affiliated school in a different jurisdiction'),
+    ('1830', 'Transfer from a school outside of the country'),
+    ('1831', 'Transfer from an institution'),
+    ('1833', 'Transfer from home schooling'),
+    ('1835', 'Re-entry from the same school with no interruption of schooling'),
+    ('1836', 'Re-entry after a voluntary withdrawal'),
+    ('1837', 'Re-entry after an involuntary withdrawal'),
+    ('1838', 'Original entry into an Australian school'),
+    ('1839', 'Original entry into an Australian school from a foreign country with no interruption in schooling'),
+    ('1840', 'Original entry into an Australian school from a foreign country with an interruption in schooling'),
+    ('1841', 'Entry into Intensive English Centre'),
+    ('9999', 'Other');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0EnrollmentEntryType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0EnrollmentExitWithdrawalType (
+     [TypeKey] CHAR (4) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_EnrollmentExitWithdrawalType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0EnrollmentExitWithdrawalType';
+INSERT INTO cdm_demo_gold.Dim0EnrollmentExitWithdrawalType ([TypeKey], [TypeValue]) VALUES
+    ('1907', 'Student is in a different public school in the same district'),
+    ('1908', 'Transferred to a public school in a different local education agency in the same jurisdiction'),
+    ('1909', 'Transferred to a public school in a different jurisdiction'),
+    ('1910', 'Transferred to a private, non-religiously-affiliated school in the district'),
+    ('1911', 'Transferred to a private, non-religiously-affiliated school in a different district in the same jurisdiction'),
+    ('1912', 'Transferred to a private, non-religiously-affiliated school in a different jurisdiction'),
+    ('1913', 'Transferred to a private, religiously-affiliated school in the same district'),
+    ('1914', 'Transferred to a private, religiously-affiliated school in a different district in the same jurisdiction'),
+    ('1915', 'Transferred to a private, religiously-affiliated school in a different jurisdiction'),
+    ('1916', 'Transferred to a school outside of the country'),
+    ('1917', 'Transferred to an institution'),
+    ('1918', 'Transferred to home schooling'),
+    ('1919', 'Transferred to a charter school'),
+    ('1921', 'Graduated with regular, advanced, International Baccalaureate, or other type of diploma'),
+    ('1922', 'Completed school with other credentials'),
+    ('1923', 'Died or is permanently incapacitated'),
+    ('1924', 'Withdrawn due to illness'),
+    ('1925', 'Expelled, Excluded or involuntarily withdrawn'),
+    ('1926', 'Reached maximum age for services'),
+    ('1927', 'Discontinued schooling'),
+    ('1928', 'Completed grade 12, but did not meet all graduation requirements'),
+    ('1930', 'Enrolled in a postsecondary early admission program, eligible to return'),
+    ('1931', 'Not enrolled, unknown status'),
+    ('1940', 'Deceased'),
+    ('1941', 'Permanently incapacitated'),
+    ('3499', 'Student is in the same local education agency and receiving education services, but is not assigned'),
+    ('3500', 'Enrolled in an adult education or training program'),
+    ('3501', 'Completed a state-recognized vocational education program'),
+    ('3502', 'Not enrolled, eligible to return'),
+    ('3503', 'Enrolled in a foreign exchange program, eligible to return'),
+    ('3504', 'Withdrawn from school, under the age for compulsory attendance; eligible to return'),
+    ('3505', 'Exited'),
+    ('3509', 'Completed with a state-recognized equivalency certificate'),
+    ('9998', 'Transferred to a different campus of the same school'),
+    ('9999', 'Other');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0EnrollmentExitWithdrawalType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0EnrollmentExitWithdrawalStatus (
+     [TypeKey] CHAR (4) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_EnrollmentExitWithdrawalStatus] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0EnrollmentExitWithdrawalStatus';
+INSERT INTO cdm_demo_gold.Dim0EnrollmentExitWithdrawalStatus ([TypeKey], [TypeValue]) VALUES
+    ('1905', 'Permanent exit/withdrawal'),
+    ('1906', 'Temporary exit/withdrawal'),
+    ('9999', 'Unknown');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0EnrollmentExitWithdrawalStatus';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0StudentSchoolEnrollmentOtherCodeField (
+     [TypeKey] VARCHAR (10) NOT NULL
+    ,CONSTRAINT [PK_StudentSchoolEnrollmentOtherCodeField] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0StudentSchoolEnrollmentOtherCodeField';
+INSERT INTO cdm_demo_gold.Dim0StudentSchoolEnrollmentOtherCodeField ([TypeKey]) VALUES
+    ('EntryCode'),
+    ('ExitCode'),
+    ('ExitStatus');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0StudentSchoolEnrollmentOtherCodeField';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0FullTimePartTimeStatusCode (
+     [TypeKey] VARCHAR (2) NOT NULL,
+     [TypeValue] VARCHAR (255) NULL,
+     CONSTRAINT [PK_FullTimePartTimeStatusCode] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0FullTimePartTimeStatusCode';
+INSERT INTO cdm_demo_gold.Dim0FullTimePartTimeStatusCode ([TypeKey], [TypeValue]) VALUES
+    ('01', 'Full Time'),
+    ('02', 'Part Time'),
+    ('9', 'Not stated/inadequately described');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0FullTimePartTimeStatusCode';
+GO
+
 
 
 
@@ -1945,6 +2075,7 @@ CREATE TABLE cdm_demo_gold.Dim1StudentPersonal (
     ,[OnTimeGraduationYear] SMALLINT NULL
     ,[GraduationDate] DATETIME NULL
     ,[MostRecent_SchoolLocalId] VARCHAR (111) NULL
+    ,[MostRecent_HomeroomRefId] CHAR (36) NULL
     ,[MostRecent_HomeroomLocalId] VARCHAR (111) NULL
     ,[MostRecent_YearLevel] VARCHAR (8) NULL
     ,[MostRecent_FTE] DECIMAL (3,2) NULL
@@ -3982,6 +4113,88 @@ CREATE TABLE cdm_demo_gold.Fact3StudentContactRelationship (
 PRINT N'Created cdm_demo_gold.Fact3StudentContactRelationship';
 GO
 
+-- ------------------------------- --
+-- 3.10.11 StudentSchoolEnrollment --
+-- ------------------------------- --
+
+CREATE TABLE cdm_demo_gold.Fact3StudentSchoolEnrollment (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[StudentRefId] CHAR (36) NOT NULL
+    ,[StudentLocalId] INT NOT NULL
+    ,[SchoolInfoRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoLocalId] INT NOT NULL
+    ,[MembershipType] CHAR (2) NOT NULL
+    ,[TimeFrame] CHAR (1) NOT NULL
+    ,[SchoolYear] SMALLINT NOT NULL
+    ,[IntendedEntryDate] DATETIME NULL
+    ,[EntryDate] DATETIME NOT NULL
+    ,[EntryCode] CHAR (4) NULL
+    ,[YearLevel] VARCHAR (8) NULL
+-- No entity to become FK for Homeroom (yet) in Phase 1 implementation:
+    ,[HomeroomRefId] CHAR (36) NULL
+    ,[HomeroomLocalId] VARCHAR (111) NULL
+-- FKs to staff for Advisor & Councelor:
+    ,[AdvisorRefId] CHAR (36) NULL
+    ,[AdvisorLocalId] INT NULL
+    ,[CouncelorRefId] CHAR (36) NULL
+    ,[CouncelorLocalId] INT NULL
+    ,[Homegroup] VARCHAR (111) NULL
+    ,[ACARASchoolId] VARCHAR (111) NULL
+    ,[ClassCode] VARCHAR (111) NULL
+-- FK to Dim0YearLevelCode:
+    ,[TestLevel] VARCHAR (8) NULL
+    ,[ReportingSchool] CHAR (1) NULL
+    ,[House] VARCHAR (111) NULL
+-- No entity to become FK for Calendar (yet) in Phase 1 implementation:
+    ,[CalendarRefId] CHAR (36) NULL
+    ,[CalendarLocalId] VARCHAR (111) NULL
+    ,[IndividualLearningPlan] CHAR (1) NULL
+    ,[ExitDate] DATETIME NULL
+    ,[ExitCode] CHAR (4) NULL
+    ,[ExitStatus] CHAR (4) NULL
+    ,[FTE] DECIMAL (3,2) NULL
+    ,[FTPTStatus] VARCHAR (2) NULL
+-- Continue from here:
+    ,[FFPOS] VARCHAR (111) NULL
+    ,[RecordClosureReason] VARCHAR (111) NULL
+    ,[PreviousSchool] VARCHAR (111) NULL
+    ,[PreviousSchoolName] VARCHAR (111) NULL
+    ,[DestinationSchool] VARCHAR (111) NULL
+    ,[DestinationSchoolName] VARCHAR (111) NULL
+    ,[StartedAtSchoolDate] DATETIME NULL
+    ,[DisabilityLevelOfAdjustment] VARCHAR (111) NULL
+    ,[DisabilityCategory] VARCHAR (111) NULL
+    ,[CensusAge] bigint NULL
+    ,[DistanceEducationStudent] VARCHAR (111) NULL
+    ,[BoardingStatus] VARCHAR (111) NULL
+    ,[InternationalStudent] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_StudentSchoolEnrollment] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_StudentSchoolEnrollment] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_StudentSchoolEnrollment] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FKRef_StudentSchoolEnrollment_Student] FOREIGN KEY ([StudentRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSchoolEnrollment_Student] FOREIGN KEY ([StudentLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
+    ,CONSTRAINT [FKRef_StudentSchoolEnrollment_School] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSchoolEnrollment_School] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FK_StudentSchoolEnrollment_MembershipType] FOREIGN KEY ([MembershipType]) REFERENCES cdm_demo_gold.Dim0SchoolEnrollmentType ([TypeKey])
+    ,CONSTRAINT [FK_StudentSchoolEnrollment_TimeFrame] FOREIGN KEY ([TimeFrame]) REFERENCES cdm_demo_gold.Dim0EnrollmentTimeFrame ([TypeKey])
+    ,CONSTRAINT [FK_StudentSchoolEnrollment_EntryCode] FOREIGN KEY ([EntryCode]) REFERENCES cdm_demo_gold.Dim0EnrollmentEntryType ([TypeKey])
+    ,CONSTRAINT [FK_StudentSchoolEnrollment_YearLevel] FOREIGN KEY ([YearLevel]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+    ,CONSTRAINT [FKRef_StudentSchoolEnrollment_AdvisorStaff] FOREIGN KEY ([AdvisorRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSchoolEnrollment_AdvisorStaff] FOREIGN KEY ([AdvisorLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [FKRef_StudentSchoolEnrollment_CouncelorStaff] FOREIGN KEY ([CouncelorRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSchoolEnrollment_CouncelorStaff] FOREIGN KEY ([CouncelorLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [FK_StudentSchoolEnrollment_TestLevel] FOREIGN KEY ([TestLevel]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+    ,CONSTRAINT [FK_StudentSchoolEnrollment_ReportingSchool] FOREIGN KEY ([ReportingSchool]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentSchoolEnrollment_IndividualLearningPlan] FOREIGN KEY ([IndividualLearningPlan]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentSchoolEnrollment_ExitCode] FOREIGN KEY ([ExitCode]) REFERENCES cdm_demo_gold.Dim0EnrollmentExitWithdrawalType ([TypeKey])
+    ,CONSTRAINT [FK_StudentSchoolEnrollment_ExitStatus] FOREIGN KEY ([ExitStatus]) REFERENCES cdm_demo_gold.Dim0EnrollmentExitWithdrawalStatus ([TypeKey])
+    ,CONSTRAINT [Check_StudentSchoolEnrollment_FTE] CHECK (FTE >= 0 AND FTE <= 1)
+    ,CONSTRAINT [FK_StudentSchoolEnrollment_FTPTStatus] FOREIGN KEY ([FTPTStatus]) REFERENCES cdm_demo_gold.Dim0FullTimePartTimeStatusCode ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Fact3StudentSchoolEnrollment';
+GO
+
 
 
 
@@ -4324,6 +4537,31 @@ CREATE TABLE cdm_demo_gold.Fact4StudentContactRelationshipHouseholdList (
 PRINT N'Created cdm_demo_gold.Fact4StudentContactRelationshipHouseholdList';
 GO
 
+-- ------------------------------- --
+-- 3.10.11 StudentSchoolEnrollment --
+-- ------------------------------- --
+
+CREATE TABLE cdm_demo_gold.Fact4StudentSchoolEnrollmentOtherCodes (
+     [StudentSchoolEnrollmentRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoLocalId] INT NOT NULL
+    ,[StudentPersonalRefId] CHAR (36) NOT NULL
+    ,[StudentPersonalLocalId] INT NOT NULL
+    ,[OtherCodeField] VARCHAR (10) NOT NULL
+    ,[Codeset] VARCHAR (13) NOT NULL
+    ,[OtherCodeValue] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_StudentSchoolEnrollmentOtherCodes_StaffAssignment] FOREIGN KEY ([StudentSchoolEnrollmentRefId]) REFERENCES cdm_demo_gold.Fact3StudentSchoolEnrollment ([RefId])
+    ,CONSTRAINT [FKRef_StudentSchoolEnrollmentOtherCodes_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSchoolEnrollmentOtherCodes_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_StudentSchoolEnrollmentOtherCodes_StudentPersonal] FOREIGN KEY ([StudentPersonalRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSchoolEnrollmentOtherCodes_StudentPersonal] FOREIGN KEY ([StudentPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
+    ,CONSTRAINT [FK_StudentSchoolEnrollmentOtherCodes_OtherCodeField] FOREIGN KEY ([OtherCodeField]) REFERENCES cdm_demo_gold.Dim0StudentSchoolEnrollmentOtherCodeField ([TypeKey])
+    ,CONSTRAINT [FK_StudentSchoolEnrollmentOtherCodes_Codeset] FOREIGN KEY ([Codeset]) REFERENCES cdm_demo_gold.Dim0CodesetForOtherCodeListType ([TypeKey])
+    ,CONSTRAINT [PK_StudentSchoolEnrollmentOtherCodes] PRIMARY KEY ([StudentSchoolEnrollmentRefId],[OtherCodeField],[CodeSet])
+);
+PRINT N'Created cdm_demo_gold.Fact4StudentSchoolEnrollmentOtherCodes';
+GO
+
 
 
 
@@ -4397,10 +4635,3 @@ GO
 
 
 
--- Upcoming headers and order to be completed:
-
--- ------------------------------- --
--- 3.10.11 StudentSchoolEnrollment --
--- ------------------------------- --
-
--- http://specification.sifassociation.org/Implementation/AU/3.6.3/SIFAUStudentBaselineProfileSBPAndSupportingObjects.html#obj:StudentSchoolEnrollment
