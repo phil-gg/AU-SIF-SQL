@@ -2458,7 +2458,7 @@ CREATE TABLE cdm_demo_gold.Dim1EquipmentInfo (
     ,CONSTRAINT [FK_LEquipmentInfo_EquipmentType] FOREIGN KEY ([EquipmentType]) REFERENCES cdm_demo_gold.Dim0EquipmentType ([TypeKey])
     ,CONSTRAINT [FK_LEquipmentInfo_OwnerOrLocationSIF_RefObject] FOREIGN KEY ([OwnerOrLocationSIF_RefObject]) REFERENCES cdm_demo_gold.Dim0OwnerOrLocationSIF_RefObject ([TypeKey])
 );
-PRINT N'Created cdm_demo_gold.Dim1EquipmentInfoPackage';
+PRINT N'Created cdm_demo_gold.Dim1EquipmentInfo';
 GO
 
 
@@ -4574,39 +4574,56 @@ CREATE TABLE cdm_demo_gold.Dim3LearningResourceComponents (
 PRINT N'Created cdm_demo_gold.Dim3LearningResourceComponents';
 GO
 
-CREATE TABLE cdm_demo_gold.Dim4LearningResourceComponentTeachingLearningStrategies (
-     [LearningResourceRefId] CHAR (36) NOT NULL
-    ,[LearningResourceLocalId] INT NOT NULL
-    ,[ComponentName] VARCHAR (111) NOT NULL
-    ,[TeachingLearningStrategy] VARCHAR (111) NOT NULL
-    ,CONSTRAINT [FKRef_LearningResourceComponentTeachingLearningStrategies_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
-    ,CONSTRAINT [FKLocal_LearningResourceComponentTeachingLearningStrategies_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
-    ,CONSTRAINT [PK_LearningResourceComponentTeachingLearningStrategies] PRIMARY KEY ([LearningResourceLocalId],[ComponentName],[TeachingLearningStrategy])
-);
-PRINT N'Created cdm_demo_gold.Dim4LearningResourceComponentTeachingLearningStrategies';
-GO
-
-CREATE TABLE cdm_demo_gold.Dim4LearningResourceComponentAssociatedObjects (
-     [LearningResourceRefId] CHAR (36) NOT NULL
-    ,[LearningResourceLocalId] INT NOT NULL
-    ,[ComponentName] VARCHAR (111) NOT NULL
-    ,[AssociatedObjectRefId] CHAR (36) NOT NULL
-    ,[SIF_RefObject] VARCHAR (111) NOT NULL
-    ,CONSTRAINT [FKRef_LearningResourceComponentAssociatedObjects_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
-    ,CONSTRAINT [FKLocal_LearningResourceComponentAssociatedObjects_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
-    ,CONSTRAINT [RefUUID_LearningResourceComponentAssociatedObjects] CHECK ([AssociatedObjectRefId] LIKE '________-____-7___-____-____________')
-    ,CONSTRAINT [PK_LearningResourceComponentAssociatedObjects] PRIMARY KEY ([LearningResourceLocalId],[ComponentName],[AssociatedObjectRefId])
-);
-PRINT N'Created cdm_demo_gold.Dim4LearningResourceComponentAssociatedObjects';
-GO
-
 -- TO-DO: Bridge3LearningResourcesLearningStandardItems = links relevant learning standard items to each learning resource
 
 -- -------------------------------------- --
 -- SUBSECTION: 3.11.2 LibraryPatronStatus --
 -- -------------------------------------- --
 
--- CREATE TABLE cdm_demo_gold.Dim3LibraryPatronStatus ( [RefId] VARCHAR (111) NOT NULL , [LibraryType] VARCHAR (111) NOT NULL , [PatronRefId] VARCHAR (111) NULL , [PatronLocalId] VARCHAR (111) NULL , [PatronRefObject] VARCHAR (111) NOT NULL , [NumberOfCheckouts] bigint NOT NULL , [NumberOfHoldItems] bigint NULL , [NumberOfOverdues] bigint NULL , [NumberOfFines] bigint NULL , [NumberOfRefunds] bigint NULL , CONSTRAINT [LibraryPatronStatusKey1] PRIMARY KEY ( [RefId] ) ) ;
+CREATE TABLE cdm_demo_gold.Dim3LibraryPatronStatus (
+     [RefId] CHAR (36) NOT NULL
+    ,[LibraryType] VARCHAR (111) NOT NULL
+    ,[PatronRefId] CHAR (36) NOT NULL
+    ,[PatronLocalId] INT NOT NULL
+    ,[PatronRefObject] VARCHAR (14) NOT NULL
+    ,[PatronName_Title] VARCHAR (111) NULL
+    ,[PatronName_FamilyName] VARCHAR (111) NULL
+    ,[PatronName_GivenName] VARCHAR (111) NULL
+    ,[PatronName_MiddleName] VARCHAR (111) NULL
+    ,[PatronName_FamilyNameFirst] CHAR (1) NULL
+    ,[PatronName_PreferredFamilyName] VARCHAR (111) NULL
+    ,[PatronName_PreferredFamilyNameFirst] CHAR (1) NULL
+    ,[PatronName_PreferredGivenName] VARCHAR (111) NULL
+    ,[PatronName_Suffix] VARCHAR (111) NULL
+    ,[PatronName_FullName] VARCHAR (111) NULL
+    ,[PatronName_UsageTypeKey] CHAR (3) NOT NULL
+    ,[NumberOfCheckouts] INT NOT NULL
+    ,[NumberOfHoldItems] INT NULL
+    ,[NumberOfOverdues] INT NULL
+    ,[NumberOfFines] INT NULL
+    ,[NumberOfRefunds] INT NULL
+-- Not fining/refunding more than AUD 9,999.99
+    ,[FineAmount] DECIMAL (6,4) NULL
+    ,[RefundAmount] DECIMAL (6,4) NULL
+    ,CONSTRAINT [RefUnique_LibraryPatronStatus] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_LibraryPatronStatus] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_LibraryPatronStatus] PRIMARY KEY ([PatronLocalId])
+    ,CONSTRAINT [FKRef_LibraryPatronStatus_PartyList] FOREIGN KEY ([PatronRefId]) REFERENCES cdm_demo_gold.Dim2PartyList ([RefId])
+    ,CONSTRAINT [FKLocal_LibraryPatronStatus_PartyList] FOREIGN KEY ([PatronLocalId]) REFERENCES cdm_demo_gold.Dim2PartyList ([LocalId])
+    ,CONSTRAINT [FK_LibraryPatronStatus_PartyType] FOREIGN KEY ([PatronRefObject]) REFERENCES cdm_demo_gold.Dim0PartyType ([TypeKey])
+    ,CONSTRAINT [FK_LibraryPatronStatus_FamilyNameFirst] FOREIGN KEY ([PatronName_FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_LibraryPatronStatus_PreferredFamilyNameFirst] FOREIGN KEY ([PatronName_PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_LibraryPatronStatus_NameUsageTypeKey] FOREIGN KEY ([PatronName_UsageTypeKey]) REFERENCES cdm_demo_gold.Dim0NameUsageType ([TypeKey])
+    ,CONSTRAINT [Check_LibraryPatronStatus_NumberOfCheckouts] CHECK ([NumberOfCheckouts]>=0)
+    ,CONSTRAINT [Check_LibraryPatronStatus_NumberOfHoldItems] CHECK ([NumberOfHoldItems]>=0)
+    ,CONSTRAINT [Check_LibraryPatronStatus_NumberOfOverdues] CHECK ([NumberOfOverdues]>=0)
+    ,CONSTRAINT [Check_LibraryPatronStatus_NumberOfFines] CHECK ([NumberOfFines]>=0)
+    ,CONSTRAINT [Check_LibraryPatronStatus_NumberOfRefunds] CHECK ([NumberOfRefunds]>=0)
+    ,CONSTRAINT [Check_LibraryPatronStatus_FineAmount] CHECK ([FineAmount]>=0)
+    ,CONSTRAINT [Check_LibraryPatronStatus_RefundAmount] CHECK ([RefundAmount]>=0)
+);
+PRINT N'Created cdm_demo_gold.Dim3LibraryPatronStatus';
+GO
 
 
 
@@ -5174,6 +5191,40 @@ CREATE TABLE cdm_demo_gold.Dim4LearningResourceSubjectAreaOtherCodes (
 );
 PRINT N'Created cdm_demo_gold.Dim4LearningResourceSubjectAreaOtherCodes';
 GO
+
+CREATE TABLE cdm_demo_gold.Dim4LearningResourceComponentTeachingLearningStrategies (
+     [LearningResourceRefId] CHAR (36) NOT NULL
+    ,[LearningResourceLocalId] INT NOT NULL
+    ,[ComponentName] VARCHAR (111) NOT NULL
+    ,[TeachingLearningStrategy] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_LearningResourceComponentTeachingLearningStrategies_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
+    ,CONSTRAINT [FKLocal_LearningResourceComponentTeachingLearningStrategies_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
+    ,CONSTRAINT [PK_LearningResourceComponentTeachingLearningStrategies] PRIMARY KEY ([LearningResourceLocalId],[ComponentName],[TeachingLearningStrategy])
+);
+PRINT N'Created cdm_demo_gold.Dim4LearningResourceComponentTeachingLearningStrategies';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim4LearningResourceComponentAssociatedObjects (
+     [LearningResourceRefId] CHAR (36) NOT NULL
+    ,[LearningResourceLocalId] INT NOT NULL
+    ,[ComponentName] VARCHAR (111) NOT NULL
+    ,[AssociatedObjectRefId] CHAR (36) NOT NULL
+    ,[SIF_RefObject] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_LearningResourceComponentAssociatedObjects_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
+    ,CONSTRAINT [FKLocal_LearningResourceComponentAssociatedObjects_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
+    ,CONSTRAINT [RefUUID_LearningResourceComponentAssociatedObjects] CHECK ([AssociatedObjectRefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_LearningResourceComponentAssociatedObjects] PRIMARY KEY ([LearningResourceLocalId],[ComponentName],[AssociatedObjectRefId])
+);
+PRINT N'Created cdm_demo_gold.Dim4LearningResourceComponentAssociatedObjects';
+GO
+
+-- -------------------------------------- --
+-- SUBSECTION: 3.11.2 LibraryPatronStatus --
+-- -------------------------------------- --
+
+--Dim4LibraryPatronElectronicIdList
+--Dim4LibraryPatronTransactionList
+--Dim4LibraryPatronMessageList
 
 
 
