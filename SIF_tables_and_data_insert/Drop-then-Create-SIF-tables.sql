@@ -4627,6 +4627,36 @@ CREATE TABLE cdm_demo_gold.Dim3LibraryPatronStatus (
 PRINT N'Created cdm_demo_gold.Dim3LibraryPatronStatus';
 GO
 
+-- --------------- --
+-- 3.10.5 RoomInfo --
+-- --------------- --
+
+CREATE TABLE cdm_demo_gold.Dim3RoomInfo (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[RoomNumber] VARCHAR (111) NOT NULL
+    ,[Description] VARCHAR (111) NULL
+    ,[Building] VARCHAR (111) NULL
+    ,[HomeroomNumber] VARCHAR (111) NULL
+    ,[Size] DECIMAL (9,6) NULL
+    ,[Capacity] INT NULL
+    ,[RoomPhone_Number] VARCHAR (111) NULL
+    ,[RoomPhone_Extension] VARCHAR (111) NULL
+    ,[RoomType] VARCHAR (111) NULL
+    ,[AvailableForTimetable] CHAR (1) NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_RoomInfo] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_RoomInfo] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_RoomInfo] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FKRef_RoomInfo_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_RoomInfo_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKLocal_RoomInfo_AvailableForTimetable] FOREIGN KEY ([AvailableForTimetable]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3RoomInfo';
+GO
+
 
 
 
@@ -5283,6 +5313,28 @@ CREATE TABLE cdm_demo_gold.Dim4LibraryPatronMessageList (
     ,CONSTRAINT [PK_LibraryPatronMessageList] PRIMARY KEY ([LibraryPatronLocalId],[SentDateTime],[Text])
 );
 PRINT N'Created cdm_demo_gold.Dim4LibraryPatronMessageList';
+GO
+
+-- --------------- --
+-- 3.10.5 RoomInfo --
+-- --------------- --
+
+CREATE TABLE cdm_demo_gold.Bridge4RoomInfoStaffList (
+     [RoomRefId] CHAR (36) NOT NULL
+    ,[RoomLocalId] INT NOT NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,CONSTRAINT [PK_RoomInfoStaffList] PRIMARY KEY ([RoomLocalId],[SchoolLocalId],[StaffLocalId])
+    ,CONSTRAINT [FKRef_RoomInfoStaffList_RoomInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim3RoomInfo ([RefId])
+    ,CONSTRAINT [FKLocal_RoomInfoStaffList_RoomInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim3RoomInfo ([LocalId])
+    ,CONSTRAINT [FKRef_RoomInfoStaffList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_RoomInfoStaffList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_RoomInfoStaffList_StaffPersonal] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_RoomInfoStaffList_StaffPersonal] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim4RoomInfoStaffList';
 GO
 
 
