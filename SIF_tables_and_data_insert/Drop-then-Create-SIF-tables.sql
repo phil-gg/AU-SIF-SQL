@@ -2451,6 +2451,7 @@ CREATE TABLE cdm_demo_gold.Dim1EquipmentInfo (
     ,[OwnerOrLocationRefId] CHAR (36) NULL
     ,[OwnerOrLocationLocalId] INT NULL
     ,[OwnerOrLocationSIF_RefObject] VARCHAR (16) NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
     ,CONSTRAINT [RefUnique_EquipmentInfo] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_EquipmentInfo] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_EquipmentInfo] PRIMARY KEY ([LocalId])
@@ -4605,6 +4606,7 @@ CREATE TABLE cdm_demo_gold.Dim3LibraryPatronStatus (
 -- Not fining/refunding more than AUD 9,999.99
     ,[FineAmount] DECIMAL (6,4) NULL
     ,[RefundAmount] DECIMAL (6,4) NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
     ,CONSTRAINT [RefUnique_LibraryPatronStatus] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_LibraryPatronStatus] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_LibraryPatronStatus] PRIMARY KEY ([PatronLocalId])
@@ -5222,9 +5224,66 @@ GO
 -- SUBSECTION: 3.11.2 LibraryPatronStatus --
 -- -------------------------------------- --
 
---Dim4LibraryPatronElectronicIdList
---Dim4LibraryPatronTransactionList
---Dim4LibraryPatronMessageList
+CREATE TABLE cdm_demo_gold.Dim4LibraryPatronElectronicIdList (
+     [LibraryPatronRefId] CHAR (36) NOT NULL
+    ,[LibraryPatronLocalId] INT NOT NULL
+    ,[ElectronicIdValue] VARCHAR (111) NULL
+    ,[ElectronicIdTypeKey] CHAR (2) NOT NULL
+    ,CONSTRAINT [FKRef_LibraryPatronElectronicIdList_StaffPersonal] FOREIGN KEY ([LibraryPatronRefId]) REFERENCES cdm_demo_gold.Dim3LibraryPatronStatus ([RefId])
+    ,CONSTRAINT [FKLocal_LibraryPatronElectronicIdList_StaffPersonal] FOREIGN KEY ([LibraryPatronLocalId]) REFERENCES cdm_demo_gold.Dim3LibraryPatronStatus ([PatronLocalId])
+    ,CONSTRAINT [PK_LibraryPatronElectronicIdList] PRIMARY KEY ([LibraryPatronLocalId],[ElectronicIdTypeKey])
+    ,CONSTRAINT [FK_LibraryPatronElectronicIdList_ElectronicIdListType] FOREIGN KEY ([ElectronicIdTypeKey]) REFERENCES cdm_demo_gold.Dim0ElectronicIdType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim4LibraryPatronElectronicIdList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim4LibraryPatronTransactionList (
+     [LibraryPatronRefId] CHAR (36) NOT NULL
+    ,[LibraryPatronLocalId] INT NOT NULL
+    ,[LibraryTransactionLocalId] VARCHAR(111) NOT NULL
+    ,[ItemInfo_Type] VARCHAR (111) NOT NULL
+    ,[ItemInfo_Title] VARCHAR (111) NULL
+    ,[ItemInfo_Author] VARCHAR (111) NULL
+    ,[ItemInfo_CallNumber] VARCHAR (111) NULL
+    ,[ItemInfo_ISBN] VARCHAR (111) NULL
+-- Will any library item be worth more than AUD 9,999.99 ?
+-- Data types below currently set assuming no, nothing more valuable:
+    ,[ItemInfo_Cost] DECIMAL (6,4) NULL
+    ,[ItemInfo_ReplacementCost] DECIMAL (6,4) NULL
+    ,[Checkout_CheckedOutOn] DATETIME NULL
+    ,[Checkout_ReturnBy] DATETIME NULL
+    ,[Checkout_RenewalCount] INT NULL
+    ,[Fine_Type] VARCHAR (111) NULL
+    ,[Fine_AppliedOn] DATETIME NULL
+    ,[Fine_Description] VARCHAR (111) NULL
+    ,[Fine_Amount] DECIMAL (6,4) NULL
+    ,[Fine_Reference] VARCHAR (111) NULL
+    ,[Hold_Type] VARCHAR (111) NULL
+    ,[Hold_DatePlaced] DATETIME NULL
+    ,[Hold_DateNeeded] DATETIME NULL
+    ,[Hold_ReservationExpiry] DATETIME NULL
+    ,[Hold_MadeAvailable] DATETIME NULL
+    ,[Hold_Expires] DATETIME NULL
+    ,CONSTRAINT [FKRef_LibraryPatronTransactionList_StaffPersonal] FOREIGN KEY ([LibraryPatronRefId]) REFERENCES cdm_demo_gold.Dim3LibraryPatronStatus ([RefId])
+    ,CONSTRAINT [FKLocal_LibraryPatronTransactionList_StaffPersonal] FOREIGN KEY ([LibraryPatronLocalId]) REFERENCES cdm_demo_gold.Dim3LibraryPatronStatus ([PatronLocalId])
+    ,CONSTRAINT [PK_LibraryPatronTransactionList] PRIMARY KEY ([LibraryTransactionLocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim4LibraryPatronTransactionList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim4LibraryPatronMessageList (
+     [LibraryPatronRefId] CHAR (36) NOT NULL
+    ,[LibraryPatronLocalId] INT NOT NULL
+    ,[Priority] VARCHAR (111) NOT NULL
+    ,[PriorityCodeset] VARCHAR (111) NULL
+    ,[SentDateTime] DATETIME NOT NULL
+    ,[Text] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_LibraryPatronMessageList_StaffPersonal] FOREIGN KEY ([LibraryPatronRefId]) REFERENCES cdm_demo_gold.Dim3LibraryPatronStatus ([RefId])
+    ,CONSTRAINT [FKLocal_LibraryPatronMessageList_StaffPersonal] FOREIGN KEY ([LibraryPatronLocalId]) REFERENCES cdm_demo_gold.Dim3LibraryPatronStatus ([PatronLocalId])
+    ,CONSTRAINT [PK_LibraryPatronMessageList] PRIMARY KEY ([LibraryPatronLocalId],[SentDateTime],[Text])
+);
+PRINT N'Created cdm_demo_gold.Dim4LibraryPatronMessageList';
+GO
 
 
 
@@ -5319,6 +5378,21 @@ CREATE TABLE cdm_demo_gold.Fact5StudentSubjectChoiceOtherCode (
     ,CONSTRAINT [PK_StudentSubjectChoiceOtherCode] PRIMARY KEY ([StudentSchoolEnrollmentRefId],[SubjectChoiceLocalId],[Codeset])
 );
 PRINT N'Created cdm_demo_gold.Fact5StudentSubjectChoiceOtherCode';
+GO
+
+-- -------------------------------------- --
+-- SUBSECTION: 3.11.2 LibraryPatronStatus --
+-- -------------------------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim5LibraryItemElectronicIdList (
+     [LibraryTransactionLocalId] VARCHAR (111) NOT NULL
+    ,[ElectronicIdValue] VARCHAR (111) NULL
+    ,[ElectronicIdTypeKey] CHAR (2) NOT NULL
+    ,CONSTRAINT [FKRef_LibraryItemElectronicIdList_StaffPersonal] FOREIGN KEY ([LibraryTransactionLocalId]) REFERENCES cdm_demo_gold.Dim4LibraryPatronTransactionList ([LibraryTransactionLocalId])
+    ,CONSTRAINT [PK_LibraryItemElectronicIdList] PRIMARY KEY ([LibraryTransactionLocalId],[ElectronicIdTypeKey])
+    ,CONSTRAINT [FK_LibraryItemElectronicIdList_ElectronicIdListType] FOREIGN KEY ([ElectronicIdTypeKey]) REFERENCES cdm_demo_gold.Dim0ElectronicIdType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim5LibraryItemElectronicIdList';
 GO
 
 
