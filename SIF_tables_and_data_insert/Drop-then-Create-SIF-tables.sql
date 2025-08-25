@@ -1,5 +1,5 @@
 -- This relational data structure implements AU SIF v3.6.3 as per link below:
--- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html
+-- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html#contents:~:text=Highlighted%20Additions/Changes-,3%20Data%20Model,-3.1%20Introduction
 
 -- Elements are built in this numbered order:
 --  (1) 3.10 SIF AU Student Baseline Profile (SBP) and supporting objects
@@ -2108,6 +2108,39 @@ INSERT INTO cdm_demo_gold.Dim0AustralianCurriculumStrand ([TypeKey], [TypeValue]
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0AustralianCurriculumStrand';
 GO
 
+-- EquipmentInfo Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0EquipmentType (
+     [TypeKey] VARCHAR (17) NOT NULL
+    ,[TypeValue] VARCHAR (255) NULL
+    ,CONSTRAINT [PK_EquipmentType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0EquipmentType';
+INSERT INTO cdm_demo_gold.Dim0EquipmentType ([TypeKey], [TypeValue]) VALUES
+    ('DesktopComputer', 'Desktop Computer'),
+    ('LaptopComputer', 'Laptop Computer'),
+    ('Other', 'Other'),
+    ('OverheadProjector', 'Overhead Projector'),
+    ('SlideProjector', 'Slide Projector'),
+    ('Tablet', 'Tablet'),
+    ('Vehicle', 'Vehicle');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0EquipmentType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0OwnerOrLocationSIF_RefObject (
+     [TypeKey] VARCHAR (16) NOT NULL
+    ,CONSTRAINT [PK_OwnerOrLocationSIF_RefObject] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0OwnerOrLocationSIF_RefObject';
+INSERT INTO cdm_demo_gold.Dim0OwnerOrLocationSIF_RefObject ([TypeKey]) VALUES
+    ('SchoolInfo'),
+    ('RoomInfo'),
+    ('LEAInfo'),
+    ('StaffPersonal'),
+    ('Other');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0OwnerOrLocationSIF_RefObject';
+GO
+
 
 
 
@@ -2401,7 +2434,34 @@ GO
 -- SUBSECTION: 3.11.1 EquipmentInfo --
 -- -------------------------------- --
 
--- Continue here
+CREATE TABLE cdm_demo_gold.Dim1EquipmentInfo (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[Name] VARCHAR (111) NOT NULL
+    ,[Description] VARCHAR (111) NULL
+    ,[AssetNumber] VARCHAR (111) NULL
+-- TO-DO: Add FK constraint once a table for Invoice is added to the data model:
+    ,[InvoiceRefId] CHAR (36) NULL
+-- TO-DO: Add FK constraint once a table for Purchase Order is added to the data model:
+    ,[PurchaseOrderRefId] CHAR (36) NULL
+-- Field doubled up to split enumerated equipment type from free-text equipment type:
+    ,[EquipmentType] VARCHAR (17) NULL
+    ,[OtherEquipmentType] VARCHAR (111) NULL
+-- Not currently restricted with a FK constraint (no union of all these different RefIds built - for now):
+    ,[OwnerOrLocationRefId] CHAR (36) NULL
+    ,[OwnerOrLocationLocalId] INT NULL
+    ,[OwnerOrLocationSIF_RefObject] VARCHAR (16) NULL
+    ,CONSTRAINT [RefUnique_EquipmentInfo] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_EquipmentInfo] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_EquipmentInfo] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [Unique_EquipmentInfo_AssetNumber] UNIQUE ([AssetNumber])
+    ,CONSTRAINT [FK_LEquipmentInfo_EquipmentType] FOREIGN KEY ([EquipmentType]) REFERENCES cdm_demo_gold.Dim0EquipmentType ([TypeKey])
+    ,CONSTRAINT [FK_LEquipmentInfo_OwnerOrLocationSIF_RefObject] FOREIGN KEY ([OwnerOrLocationSIF_RefObject]) REFERENCES cdm_demo_gold.Dim0OwnerOrLocationSIF_RefObject ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim1EquipmentInfoPackage';
+GO
+
+
 
 
 
@@ -4541,6 +4601,12 @@ PRINT N'Created cdm_demo_gold.Dim4LearningResourceComponentAssociatedObjects';
 GO
 
 -- TO-DO: Bridge3LearningResourcesLearningStandardItems = links relevant learning standard items to each learning resource
+
+-- -------------------------------------- --
+-- SUBSECTION: 3.11.2 LibraryPatronStatus --
+-- -------------------------------------- --
+
+-- CREATE TABLE cdm_demo_gold.Dim3LibraryPatronStatus ( [RefId] VARCHAR (111) NOT NULL , [LibraryType] VARCHAR (111) NOT NULL , [PatronRefId] VARCHAR (111) NULL , [PatronLocalId] VARCHAR (111) NULL , [PatronRefObject] VARCHAR (111) NOT NULL , [NumberOfCheckouts] bigint NOT NULL , [NumberOfHoldItems] bigint NULL , [NumberOfOverdues] bigint NULL , [NumberOfFines] bigint NULL , [NumberOfRefunds] bigint NULL , CONSTRAINT [LibraryPatronStatusKey1] PRIMARY KEY ( [RefId] ) ) ;
 
 
 
