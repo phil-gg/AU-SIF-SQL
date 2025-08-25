@@ -2141,6 +2141,18 @@ INSERT INTO cdm_demo_gold.Dim0OwnerOrLocationSIF_RefObject ([TypeKey]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0OwnerOrLocationSIF_RefObject';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim0ResourceType (
+     [TypeKey] VARCHAR (16) NOT NULL
+     CONSTRAINT [PK_ResourceType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0ResourceType';
+INSERT INTO cdm_demo_gold.Dim0ResourceType ([TypeKey]) VALUES
+    ('EquipmentInfo'),
+    ('LearningResource'),
+    ('RoomInfo');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0ResourceType';
+GO
+
 
 
 
@@ -5335,6 +5347,31 @@ CREATE TABLE cdm_demo_gold.Bridge4RoomInfoStaffList (
     ,CONSTRAINT [FKLocal_RoomInfoStaffList_StaffPersonal] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
 );
 PRINT N'Created cdm_demo_gold.Dim4RoomInfoStaffList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim4ResourceList (
+-- Resource RefId & LocalId are just the three other Dim keys coalesced together
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[ResourceType] VARCHAR (16) NOT NULL
+    ,[EquipmentInfoRefId] CHAR (36) NULL
+    ,[EquipmentInfoLocalId] INT NULL
+    ,[LearningResourceRefId] CHAR (36) NULL
+    ,[LearningResourceLocalId] INT NULL
+    ,[RoomInfoContactRefId] CHAR (36) NULL
+    ,[RoomInfoContactLocalId] INT NULL
+    ,CONSTRAINT [RefUnique_Resource] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_Resource] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_Resource] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FK_Resource_ResourceType] FOREIGN KEY ([ResourceType]) REFERENCES cdm_demo_gold.Dim0ResourceType ([TypeKey])
+    ,CONSTRAINT [FKRef_ResourceList_EquipmentInfo] FOREIGN KEY ([EquipmentInfoRefId]) REFERENCES cdm_demo_gold.Dim1EquipmentInfo ([RefId])
+    ,CONSTRAINT [FKLocal_ResourceList_EquipmentInfo] FOREIGN KEY ([EquipmentInfoLocalId]) REFERENCES cdm_demo_gold.Dim1EquipmentInfo ([LocalId])
+    ,CONSTRAINT [FKRef_ResourceList_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
+    ,CONSTRAINT [FKLocal_ResourceList_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
+    ,CONSTRAINT [FKRef_ResourceList_RoomInfo] FOREIGN KEY ([RoomInfoContactRefId]) REFERENCES cdm_demo_gold.Dim3RoomInfo ([RefId])
+    ,CONSTRAINT [FKLocal_ResourceList_RoomInfo] FOREIGN KEY ([RoomInfoContactLocalId]) REFERENCES cdm_demo_gold.Dim3RoomInfo ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim2ResourceList';
 GO
 
 
