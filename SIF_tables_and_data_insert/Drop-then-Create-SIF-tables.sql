@@ -4760,26 +4760,6 @@ CREATE TABLE cdm_demo_gold.Dim3TimeTable (
 PRINT N'Created cdm_demo_gold.Dim3TimeTable';
 GO
 
--- ----------------------- --
--- 3.11.6 SchoolCourseInfo --
--- ----------------------- --
-
-CREATE TABLE cdm_demo_gold.Dim3SchoolCourseInfo (
-     [RefId] CHAR (36) NOT NULL
--- Equivalent of LocalId for this element:
-    ,[CourseCode] VARCHAR(111) NOT NULL
-    ,[SchoolRefId] CHAR (36) NOT NULL
-    ,[SchoolLocalId] INT NOT NULL
-    ,[SchoolYear] SMALLINT NOT NULL
-    ,CONSTRAINT [RefUnique_SchoolCourseInfo] UNIQUE ([RefId])
-    ,CONSTRAINT [RefUUID_SchoolCourseInfo] CHECK ([RefId] LIKE '________-____-7___-____-____________')
-    ,CONSTRAINT [PK_SchoolCourseInfo] PRIMARY KEY ([SchoolLocalId],[CourseCode])
-    ,CONSTRAINT [FKRef_SchoolCourseInfo_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
-    ,CONSTRAINT [FKLocal_SchoolCourseInfo_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
-);
-PRINT N'Created cdm_demo_gold.Dim3SchoolCourseInfo';
-GO
-
 
 
 
@@ -5501,6 +5481,43 @@ CREATE TABLE cdm_demo_gold.Dim4TimeTableDay (
 PRINT N'Created cdm_demo_gold.Dim4TimeTableDay';
 GO
 
+-- ----------------------- --
+-- 3.11.6 SchoolCourseInfo --
+-- ----------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim4SchoolCourseInfo (
+     [RefId] CHAR (36) NOT NULL
+-- Equivalent of LocalId for this element:
+    ,[CourseCode] VARCHAR(111) NOT NULL
+    ,[DistrictCourseCode] VARCHAR (111) NULL
+    ,[StateCourseCode] VARCHAR (111) NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolYear] SMALLINT NULL
+    ,[TermInfoRefId] CHAR (36) NULL
+    ,[TermInfoLocalId] INT NULL
+    ,[CourseTitle] VARCHAR (111) NOT NULL
+    ,[Description] VARCHAR (111) NULL
+    ,[InstructionalLevel] VARCHAR (111) NULL
+    ,[CourseCredits] VARCHAR (111) NULL
+    ,[CoreAcademicCourse] CHAR (1) NULL
+    ,[GraduationRequirement] CHAR (1) NULL
+    ,[Department] VARCHAR (111) NULL
+    ,[CourseContent] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_SchoolCourseInfo] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_SchoolCourseInfo] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_SchoolCourseInfo] PRIMARY KEY ([SchoolLocalId],[CourseCode])
+    ,CONSTRAINT [FKRef_SchoolCourseInfo_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolCourseInfo_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_SchoolCourseInfo_TermInfo] FOREIGN KEY ([TermInfoRefId]) REFERENCES cdm_demo_gold.Dim3TermInfo ([RefId])
+-- You may need to remove the following constraint in order to fill SchoolLocalId and SchoolYear, but not TermInfoLocalId, as per the SIF spec:
+    ,CONSTRAINT [FKMulti_SchoolCourseInfo_TermInfo] FOREIGN KEY ([TermInfoLocalId],[SchoolLocalId],[SchoolYear]) REFERENCES cdm_demo_gold.Dim3TermInfo ([LocalId],[SchoolLocalId],[SchoolYear])
+    ,CONSTRAINT [FK_SchoolCourseInfo_CoreAcademicCourse] FOREIGN KEY ([CoreAcademicCourse]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_SchoolCourseInfo_GraduationRequirement] FOREIGN KEY ([GraduationRequirement]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim4SchoolCourseInfo';
+GO
+
 
 
 
@@ -5639,6 +5656,63 @@ CREATE TABLE cdm_demo_gold.Dim5TimeTablePeriod (
     ,CONSTRAINT [FK_TimeTablePeriod_UseInAttendanceCalculations] FOREIGN KEY ([UseInAttendanceCalculations]) REFERENCES cdm_demo_gold.Dim0YesNoOnly ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim5TimeTablePeriod';
+GO
+
+-- ----------------------- --
+-- 3.11.6 SchoolCourseInfo --
+-- ----------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim5SchoolCourseSubjectAreaList (
+     [SchoolCourseRefId] CHAR (36) NOT NULL
+    ,[CourseCode] VARCHAR(111) NOT NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolYear] SMALLINT NULL
+    ,[TermInfoRefId] CHAR (36) NULL
+    ,[TermInfoLocalId] INT NULL
+    ,[SubjectAreaCode] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_SchoolCourseSubjectAreaList_SchoolCourseInfo] FOREIGN KEY ([SchoolCourseRefId]) REFERENCES cdm_demo_gold.Dim4SchoolCourseInfo ([RefId])
+    ,CONSTRAINT [FKMulti_SchoolCourseSubjectAreaList_SchoolCourseInfo] FOREIGN KEY ([SchoolLocalId],[CourseCode]) REFERENCES cdm_demo_gold.Dim4SchoolCourseInfo ([SchoolLocalId],[CourseCode])
+    ,CONSTRAINT [PK_SchoolCourseSubjectAreaList] PRIMARY KEY ([SchoolLocalId],[CourseCode],[SubjectAreaCode])
+    ,CONSTRAINT [FKRef_SchoolCourseSubjectAreaList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolCourseSubjectAreaList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_SchoolCourseSubjectAreaList_TermInfo] FOREIGN KEY ([TermInfoRefId]) REFERENCES cdm_demo_gold.Dim3TermInfo ([RefId])
+);
+PRINT N'Created cdm_demo_gold.Dim5SchoolCourseSubjectAreaList';
+GO
+
+
+
+
+
+-- -------------------------------------------------------------------------- --
+-- DEPENDENCY: Tables with 6 in name have FK to table(s) with 5               --
+-- -------------------------------------------------------------------------- --
+
+-- ----------------------- --
+-- 3.11.6 SchoolCourseInfo --
+-- ----------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim6SchoolCourseSubjectAreaOtherCodes (
+     [SchoolCourseRefId] CHAR (36) NOT NULL
+    ,[CourseCode] VARCHAR(111) NOT NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolYear] SMALLINT NULL
+    ,[TermInfoRefId] CHAR (36) NULL
+    ,[TermInfoLocalId] INT NULL
+    ,[SubjectAreaCode] VARCHAR (111) NOT NULL
+    ,[Codeset] VARCHAR (13) NOT NULL
+    ,[OtherCodeValue] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_SchoolCourseSubjectAreaOtherCodes_SchoolCourseInfo] FOREIGN KEY ([SchoolCourseRefId]) REFERENCES cdm_demo_gold.Dim4SchoolCourseInfo ([RefId])
+    ,CONSTRAINT [FKMulti_SchoolCourseSubjectAreaOtherCodes_SchoolCourseSubjectAreaList] FOREIGN KEY ([SchoolLocalId],[CourseCode],[SubjectAreaCode]) REFERENCES cdm_demo_gold.Dim5SchoolCourseSubjectAreaList ([SchoolLocalId],[CourseCode],[SubjectAreaCode])
+    ,CONSTRAINT [PK_SchoolCourseSubjectAreaOtherCodes] PRIMARY KEY ([SchoolLocalId],[CourseCode],[SubjectAreaCode],[Codeset])
+    ,CONSTRAINT [FKRef_SchoolCourseSubjectAreaOtherCodes_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolCourseSubjectAreaOtherCodes_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_SchoolCourseSubjectAreaOtherCodes_TermInfo] FOREIGN KEY ([TermInfoRefId]) REFERENCES cdm_demo_gold.Dim3TermInfo ([RefId])
+    ,CONSTRAINT [FK_SchoolCourseSubjectAreaOtherCodes_Codeset] FOREIGN KEY ([Codeset]) REFERENCES cdm_demo_gold.Dim0CodesetForOtherCodeListType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim6SchoolCourseSubjectAreaOtherCodes';
 GO
 
 
