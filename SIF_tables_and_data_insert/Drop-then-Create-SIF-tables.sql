@@ -4,7 +4,8 @@
 -- Elements are built in this numbered order:
 --  (1) 3.10 SIF AU Student Baseline Profile (SBP) and supporting objects
 --  (2) 3.8.1 LearningResource + 3.8.2 LearningResourcePackage
---  (3) 3.11 Timetabling and Resource Scheduling
+--  (3) 3.6.6 TermInfo
+--  (4) 3.11 Timetabling and Resource Scheduling
 
 /* ************************************************************************** */
 /* SECTION: Dynamically drop all constraints & user tables before (re-)build  */
@@ -2081,6 +2082,8 @@ INSERT INTO cdm_demo_gold.Dim0AbstractContentType ([TypeKey]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0AbstractContentType';
 GO
 
+-- LearningResource Dim0 items from here
+
 CREATE TABLE cdm_demo_gold.Dim0AustralianCurriculumStrand (
      [TypeKey] CHAR (1) NOT NULL
     ,[TypeValue] VARCHAR (255) NULL
@@ -2106,6 +2109,26 @@ INSERT INTO cdm_demo_gold.Dim0AustralianCurriculumStrand ([TypeKey], [TypeValue]
     ('R', 'Religious Studies'), -- Added value not part of http://vocabulary.esa.edu.au/framework/
     ('O', 'Other'); -- Added value not part of http://vocabulary.esa.edu.au/framework/
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0AustralianCurriculumStrand';
+GO
+
+-- TermInfo Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0TermInfoSessionType (
+     [TypeKey] CHAR (4) NOT NULL
+    ,[TypeValue] VARCHAR (255) NULL
+    ,CONSTRAINT [PK_TermInfoSessionType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0TermInfoSessionType';
+INSERT INTO cdm_demo_gold.Dim0TermInfoSessionType ([TypeKey], [TypeValue]) VALUES
+    ('0827', 'Full school year'),
+    ('0828', 'Semester'),
+    ('0829', 'Trimester'),
+    ('0830', 'Quarter'),
+    ('0832', 'Mini-term'),
+    ('0833', 'Summer term'),
+    ('0837', 'Twelve month'),
+    ('9999', 'Other');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0TermInfoSessionType';
 GO
 
 -- EquipmentInfo Dim0 items from here
@@ -2217,9 +2240,9 @@ GO
 
 
 
--- -------------------------------- --
--- SUBSECTION: 3.10.7 StaffPersonal --
--- -------------------------------- --
+-- -------------------- --
+-- 3.10.7 StaffPersonal --
+-- -------------------- --
 
 -- TO-DO: May want SchoolLocalId and SchoolACARAId and LocalCampusId to be FKs.
 CREATE TABLE cdm_demo_gold.Dim1StaffPersonal (
@@ -2252,9 +2275,9 @@ CREATE TABLE cdm_demo_gold.Dim1StaffHouseholdContactInfo (
 PRINT N'Created cdm_demo_gold.Dim1StaffHouseholdContactInfo';
 GO
 
--- ----------------------------------- --
--- SUBSECTION: 3.10.10 StudentPersonal --
--- ----------------------------------- --
+-- ----------------------- --
+-- 3.10.10 StudentPersonal --
+-- ----------------------- --
 
 -- TO-DO: May want SchoolLocalId and SchoolACARAId and LocalCampusId to be FKs.
 CREATE TABLE cdm_demo_gold.Dim1StudentPersonal (
@@ -2362,9 +2385,9 @@ CREATE TABLE cdm_demo_gold.Dim1StudentHouseholdContactInfo (
 PRINT N'Created cdm_demo_gold.Dim1StudentHouseholdContactInfo';
 GO
 
--- ----------------------------------------- --
--- SUBSECTION: 3.10.8 StudentContactPersonal --
--- ----------------------------------------- --
+-- ----------------------------- --
+-- 3.10.8 StudentContactPersonal --
+-- ----------------------------- --
 
 CREATE TABLE cdm_demo_gold.Dim1StudentContactPersonal (
      [RefId] CHAR (36) NOT NULL
@@ -2431,9 +2454,9 @@ CREATE TABLE cdm_demo_gold.Dim1LEAInfo (
 PRINT N'Created cdm_demo_gold.Dim1LEAInfo';
 GO
 
--- ----------------------------------------- --
--- SUBSECTION: 3.8.2 LearningResourcePackage --
--- ----------------------------------------- --
+-- ----------------------------- --
+-- 3.8.2 LearningResourcePackage --
+-- ----------------------------- --
 
 CREATE TABLE cdm_demo_gold.Dim1LearningResourcePackage (
      [RefId] CHAR (36) NOT NULL
@@ -2455,9 +2478,9 @@ GO
 
 -- TO-DO: Dim1LearningStandardItem = a hierarchy of individual curriculum standards or benchmarks
 
--- -------------------------------- --
--- SUBSECTION: 3.11.1 EquipmentInfo --
--- -------------------------------- --
+-- -------------------- --
+-- 3.11.1 EquipmentInfo --
+-- -------------------- --
 
 CREATE TABLE cdm_demo_gold.Dim1EquipmentInfo (
      [RefId] CHAR (36) NOT NULL
@@ -2495,9 +2518,9 @@ GO
 -- DEPENDENCY: Tables with 2 in name have FK to table(s) with 1 (& maybe 0)   --
 -- -------------------------------------------------------------------------- --
 
--- -------------------------------- --
--- SUBSECTION: 3.10.7 StaffPersonal --
--- -------------------------------- --
+-- -------------------- --
+-- 3.10.7 StaffPersonal --
+-- -------------------- --
 
 -- Not needed, duplicate of Dim1StaffPersonal, and Dim2PartyList
 -- Therefore recommend this table be removed for production.
@@ -2874,9 +2897,9 @@ CREATE TABLE cdm_demo_gold.Dim2StaffMostRecentNAPLANClassList (
 PRINT N'Created cdm_demo_gold.Dim2StaffMostRecentNAPLANClassList';
 GO
 
--- ----------------------------------- --
--- SUBSECTION: 3.10.10 StudentPersonal --
--- ----------------------------------- --
+-- ----------------------- --
+-- 3.10.10 StudentPersonal --
+-- ----------------------- --
 
 -- Not needed, duplicate of Dim1StudentPersonal, and Dim2PartyList
 -- Therefore recommend this table be removed for production.
@@ -3268,9 +3291,9 @@ CREATE TABLE cdm_demo_gold.Dim2StudentHouseholdContactEmailList (
 PRINT N'Created cdm_demo_gold.Dim2StudentHouseholdContactEmailList';
 GO
 
--- ----------------------------------------- --
--- SUBSECTION: 3.10.8 StudentContactPersonal --
--- ----------------------------------------- --
+-- ----------------------------- --
+-- 3.10.8 StudentContactPersonal --
+-- ----------------------------- --
 
 -- Not needed, duplicate of Dim1StudentContactPersonal, and Dim2PartyList
 -- Therefore recommend this table be removed for production.
@@ -3843,9 +3866,9 @@ CREATE TABLE cdm_demo_gold.Dim2PartyList (
 PRINT N'Created cdm_demo_gold.Dim2PartyList';
 GO
 
--- ---------------------------------- --
--- SUBSECTION: 3.8.1 LearningResource --
--- ---------------------------------- --
+-- ---------------------- --
+-- 3.8.1 LearningResource --
+-- ---------------------- --
 
 CREATE TABLE cdm_demo_gold.Dim2LearningResource (
      [RefId] CHAR (36) NOT NULL
@@ -3865,13 +3888,6 @@ CREATE TABLE cdm_demo_gold.Dim2LearningResource (
     ,CONSTRAINT [FKRef_LearningResource_LearningResourcePackage] FOREIGN KEY ([LearningResourcePackageRefId]) REFERENCES cdm_demo_gold.Dim1LearningResourcePackage ([RefId])
 );
 PRINT N'Created cdm_demo_gold.Dim2LearningResource';
-GO
-
-CREATE TABLE cdm_demo_gold.Dim2LearningResourceContactList (
-     [LocalId] INT NOT NULL
-    ,CONSTRAINT [PK_LearningResourceContactList] PRIMARY KEY ([LocalId])
-);
-PRINT N'Created cdm_demo_gold.Dim2LearningResourceContactList';
 GO
 
 -- TO-DO: Dim2LearningStandardDocument = a catalogue of learning standards documentation
@@ -4495,20 +4511,19 @@ CREATE TABLE cdm_demo_gold.Fact3StudentSchoolEnrollment (
 PRINT N'Created cdm_demo_gold.Fact3StudentSchoolEnrollment';
 GO
 
--- ---------------------------------- --
--- SUBSECTION: 3.8.1 LearningResource --
--- ---------------------------------- --
+-- ---------------------- --
+-- 3.8.1 LearningResource --
+-- ---------------------- --
 
-CREATE TABLE cdm_demo_gold.Bridge3LearningResourceContacts (
+CREATE TABLE cdm_demo_gold.Dim3LearningResourceContacts (
      [LearningResourceRefId] CHAR (36) NOT NULL
     ,[LearningResourceLocalId] INT NOT NULL
     ,[ContactLocalId] INT NOT NULL
     ,CONSTRAINT [FKRef_LearningResourceContacts_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
     ,CONSTRAINT [FKLocal_LearningResourceContacts_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
-    ,CONSTRAINT [FKLocal_LearningResourceContacts_ContactLocalId] FOREIGN KEY ([ContactLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResourceContactList ([LocalId])
     ,CONSTRAINT [PK_LearningResourceContacts] PRIMARY KEY ([LearningResourceLocalId],[ContactLocalId])
 );
-PRINT N'Created cdm_demo_gold.Bridge3LearningResourceContacts';
+PRINT N'Created cdm_demo_gold.Dim3LearningResourceContacts';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim3LearningResourceYearLevels (
@@ -4602,9 +4617,44 @@ GO
 
 -- TO-DO: Bridge3LearningResourcesLearningStandardItems = links relevant learning standard items to each learning resource
 
--- -------------------------------------- --
--- SUBSECTION: 3.11.2 LibraryPatronStatus --
--- -------------------------------------- --
+-- -------------- --
+-- 3.6.6 TermInfo --
+-- -------------- --
+
+CREATE TABLE cdm_demo_gold.Dim3TermInfo (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolYear] SMALLINT NOT NULL
+    ,[StartDate] DATE NOT NULL
+    ,[EndDate] DATE NOT NULL
+    ,[Description] VARCHAR (111) NULL
+    ,[RelativeDuration] DECIMAL (5,4) NULL
+    ,[TermCode] VARCHAR (111) NULL
+    ,[Track] VARCHAR (111) NULL
+    ,[TermSpan] CHAR (4) NULL
+    ,[MarkingTerm] CHAR (1) NULL
+    ,[SchedulingTerm] CHAR (1) NULL
+    ,[AttendanceTerm] CHAR (1) NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_TermInfo] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_TermInfo] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_TermInfo] PRIMARY KEY ([LocalId],[SchoolLocalId],[SchoolYear])
+    ,CONSTRAINT [FKRef_TermInfo_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_TermInfo_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [Check_TermInfo_RelativeDuration] CHECK (RelativeDuration >= 0 AND RelativeDuration <= 1)
+    ,CONSTRAINT [FK_TermInfo_TermSpan] FOREIGN KEY ([TermSpan]) REFERENCES cdm_demo_gold.Dim0TermInfoSessionType ([TypeKey])
+    ,CONSTRAINT [FK_TermInfo_MarkingTerm] FOREIGN KEY ([MarkingTerm]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_TermInfo_SchedulingTerm] FOREIGN KEY ([SchedulingTerm]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_TermInfo_AttendanceTerm] FOREIGN KEY ([AttendanceTerm]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim3TermInfo';
+GO
+
+-- -------------------------- --
+-- 3.11.2 LibraryPatronStatus --
+-- -------------------------- --
 
 CREATE TABLE cdm_demo_gold.Dim3LibraryPatronStatus (
      [RefId] CHAR (36) NOT NULL
@@ -4708,6 +4758,26 @@ CREATE TABLE cdm_demo_gold.Dim3TimeTable (
     ,CONSTRAINT [FKLocal_TimeTable_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
 );
 PRINT N'Created cdm_demo_gold.Dim3TimeTable';
+GO
+
+-- ----------------------- --
+-- 3.11.6 SchoolCourseInfo --
+-- ----------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim3SchoolCourseInfo (
+     [RefId] CHAR (36) NOT NULL
+-- Equivalent of LocalId for this element:
+    ,[CourseCode] VARCHAR(111) NOT NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolYear] SMALLINT NOT NULL
+    ,CONSTRAINT [RefUnique_SchoolCourseInfo] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_SchoolCourseInfo] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_SchoolCourseInfo] PRIMARY KEY ([SchoolLocalId],[CourseCode])
+    ,CONSTRAINT [FKRef_SchoolCourseInfo_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolCourseInfo_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolCourseInfo';
 GO
 
 
@@ -5138,9 +5208,9 @@ CREATE TABLE cdm_demo_gold.Fact4StudentSchoolEnrollmentPublishingPermissions (
 PRINT N'Created cdm_demo_gold.Fact4StudentSchoolEnrollmentPublishingPermissions';
 GO
 
--- ---------------------------------- --
--- SUBSECTION: 3.8.1 LearningResource --
--- ---------------------------------- --
+-- ---------------------- --
+-- 3.8.1 LearningResource --
+-- ---------------------- --
 
 CREATE TABLE cdm_demo_gold.Dim4LearningResourceContactNames (
      [LearningResourceRefId] CHAR (36) NOT NULL
@@ -5158,8 +5228,7 @@ CREATE TABLE cdm_demo_gold.Dim4LearningResourceContactNames (
     ,[FullName] VARCHAR (111) NULL
     ,[NameUsageTypeKey] CHAR (3) NOT NULL
     ,CONSTRAINT [FKRef_LearningResourceContactNames_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
-    ,CONSTRAINT [FKLocal_LearningResourceContactNames_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
-    ,CONSTRAINT [FKLocal_LearningResourceContactNames_LearningResourceContact] FOREIGN KEY ([ContactLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResourceContactList ([LocalId])
+    ,CONSTRAINT [FKMulti_LearningResourceContactNames_LearningResourceContact] FOREIGN KEY ([LearningResourceLocalId],[ContactLocalId]) REFERENCES cdm_demo_gold.Dim3LearningResourceContacts ([LearningResourceLocalId],[ContactLocalId])
     ,CONSTRAINT [PK_LearningResourceContactNames] PRIMARY KEY ([LearningResourceLocalId],[ContactLocalId],[NameUsageTypeKey])
     ,CONSTRAINT [FK_LearningResourceContactNames_FamilyNameFirst] FOREIGN KEY ([FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_LearningResourceContactNames_PreferredFamilyNameFirst] FOREIGN KEY ([PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
@@ -5214,8 +5283,7 @@ CREATE TABLE cdm_demo_gold.Dim4LearningResourceContactAddresses (
     ,[StatisticalAreaMeshBlock] CHAR (11) NULL
     ,[LocalGovernmentAreaName] VARCHAR (111) NULL
     ,CONSTRAINT [FKRef_LearningResourceContactAddresses_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
-    ,CONSTRAINT [FKLocal_LearningResourceContactAddresses_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
-    ,CONSTRAINT [FKLocal_LearningResourceContactAddresses_LearningResourceContact] FOREIGN KEY ([ContactLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResourceContactList ([LocalId])
+    ,CONSTRAINT [FKMulti_LearningResourceContactAddresses_LearningResourceContact] FOREIGN KEY ([LearningResourceLocalId],[ContactLocalId]) REFERENCES cdm_demo_gold.Dim3LearningResourceContacts ([LearningResourceLocalId],[ContactLocalId])
     ,CONSTRAINT [PK_LearningResourceContactAddresses] PRIMARY KEY ([LearningResourceLocalId],[ContactLocalId],[AddressLocalId])
     ,CONSTRAINT [FK_LearningResourceContactAddresses_AddressType] FOREIGN KEY ([AddressType]) REFERENCES cdm_demo_gold.Dim0AddressType ([TypeKey])
     ,CONSTRAINT [FK_LearningResourceContactAddresses_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
@@ -5234,8 +5302,7 @@ CREATE TABLE cdm_demo_gold.Dim4LearningResourceContactPhoneNumbers (
     ,[ListedStatus] VARCHAR (111) NULL
     ,[Preference] INT NULL
     ,CONSTRAINT [FKRef_LearningResourceContactPhoneNumbers_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
-    ,CONSTRAINT [FKLocal_LearningResourceContactPhoneNumbers_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
-    ,CONSTRAINT [FKLocal_LearningResourceContactPhoneNumbers_LearningResourceContact] FOREIGN KEY ([ContactLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResourceContactList ([LocalId])
+    ,CONSTRAINT [FKMulti_LearningResourceContactPhoneNumbers_LearningResourceContact] FOREIGN KEY ([LearningResourceLocalId],[ContactLocalId]) REFERENCES cdm_demo_gold.Dim3LearningResourceContacts ([LearningResourceLocalId],[ContactLocalId])
     ,CONSTRAINT [FK_LearningResourceContactPhoneNumbers_PhoneNumberType] FOREIGN KEY ([PhoneNumberType]) REFERENCES cdm_demo_gold.Dim0PhoneNumberType ([TypeKey])
     ,CONSTRAINT [PK_LearningResourceContactPhoneNumbers] PRIMARY KEY ([LearningResourceLocalId],[ContactLocalId],[PhoneNumberType])
 );
@@ -5249,17 +5316,16 @@ CREATE TABLE cdm_demo_gold.Dim4LearningResourceContactEmails (
     ,[EmailType] CHAR (2) NOT NULL
     ,[Email] VARCHAR (255) NOT NULL
     ,CONSTRAINT [FKRef_LearningResourceContactEmails_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
-    ,CONSTRAINT [FKLocal_LearningResourceContactEmails_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
-    ,CONSTRAINT [FKLocal_LearningResourceContactEmails_LearningResourceContact] FOREIGN KEY ([ContactLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResourceContactList ([LocalId])
+    ,CONSTRAINT [FKMulti_LearningResourceContactEmails_LearningResourceContact] FOREIGN KEY ([LearningResourceLocalId],[ContactLocalId]) REFERENCES cdm_demo_gold.Dim3LearningResourceContacts ([LearningResourceLocalId],[ContactLocalId])
     ,CONSTRAINT [FK_LearningResourceContactEmails_EmailType] FOREIGN KEY ([EmailType]) REFERENCES cdm_demo_gold.Dim0EmailType ([TypeKey])
     ,CONSTRAINT [PK_LearningResourceContactEmails] PRIMARY KEY ([LearningResourceLocalId],[ContactLocalId],[EmailType])
 );
 PRINT N'Created cdm_demo_gold.Dim4LearningResourceContactEmails';
 GO
 
--- ---------------------------------- --
--- SUBSECTION: 3.8.1 LearningResource --
--- ---------------------------------- --
+-- ---------------------- --
+-- 3.8.1 LearningResource --
+-- ---------------------- --
 
 CREATE TABLE cdm_demo_gold.Dim4LearningResourceSubjectAreaOtherCodes (
      [LearningResourceRefId] CHAR (36) NOT NULL
@@ -5303,9 +5369,9 @@ CREATE TABLE cdm_demo_gold.Dim4LearningResourceComponentAssociatedObjects (
 PRINT N'Created cdm_demo_gold.Dim4LearningResourceComponentAssociatedObjects';
 GO
 
--- -------------------------------------- --
--- SUBSECTION: 3.11.2 LibraryPatronStatus --
--- -------------------------------------- --
+-- -------------------------- --
+-- 3.11.2 LibraryPatronStatus --
+-- -------------------------- --
 
 CREATE TABLE cdm_demo_gold.Dim4LibraryPatronElectronicIdList (
      [LibraryPatronRefId] CHAR (36) NOT NULL
@@ -5530,9 +5596,9 @@ CREATE TABLE cdm_demo_gold.Fact5StudentSubjectChoiceOtherCode (
 PRINT N'Created cdm_demo_gold.Fact5StudentSubjectChoiceOtherCode';
 GO
 
--- -------------------------------------- --
--- SUBSECTION: 3.11.2 LibraryPatronStatus --
--- -------------------------------------- --
+-- -------------------------- --
+-- 3.11.2 LibraryPatronStatus --
+-- -------------------------- --
 
 CREATE TABLE cdm_demo_gold.Dim5LibraryItemElectronicIdList (
      [LibraryTransactionLocalId] VARCHAR (111) NOT NULL
