@@ -2189,6 +2189,19 @@ INSERT INTO cdm_demo_gold.Dim0YesNoOnly ([TypeKey]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0YesNoOnly';
 GO
 
+-- TimeTableSubject Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0AcademicYearEntryType (
+     [TypeKey] VARCHAR (6) NOT NULL
+     CONSTRAINT [PK_AcademicYearEntryType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0AcademicYearEntryType';
+INSERT INTO cdm_demo_gold.Dim0AcademicYearEntryType ([TypeKey]) VALUES
+    ('Single'),
+    ('Range');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0AcademicYearEntryType';
+GO
+
 
 
 
@@ -5504,6 +5517,7 @@ CREATE TABLE cdm_demo_gold.Dim4SchoolCourseInfo (
     ,[GraduationRequirement] CHAR (1) NULL
     ,[Department] VARCHAR (111) NULL
     ,[CourseContent] VARCHAR (111) NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
     ,CONSTRAINT [RefUnique_SchoolCourseInfo] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_SchoolCourseInfo] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_SchoolCourseInfo] PRIMARY KEY ([SchoolLocalId],[CourseCode])
@@ -5679,6 +5693,46 @@ CREATE TABLE cdm_demo_gold.Dim5SchoolCourseSubjectAreaList (
     ,CONSTRAINT [FKRef_SchoolCourseSubjectAreaList_TermInfo] FOREIGN KEY ([TermInfoRefId]) REFERENCES cdm_demo_gold.Dim3TermInfo ([RefId])
 );
 PRINT N'Created cdm_demo_gold.Dim5SchoolCourseSubjectAreaList';
+GO
+
+-- ------------------------ --
+-- 3.11.13 TimeTableSubject --
+-- ------------------------ --
+
+CREATE TABLE cdm_demo_gold.Dim5TimeTableSubject (
+     [RefId] CHAR (36) NOT NULL
+    ,[SubjectLocalId] INT NOT NULL
+    ,[AcademicYear_EntryType] VARCHAR (6) NOT NULL
+    ,[AcademicYear_SingleYear] VARCHAR (8) NOT NULL
+    ,[AcademicYear_RangeStart] VARCHAR (8) NOT NULL
+    ,[AcademicYear_RangeEnd] VARCHAR (8) NOT NULL
+    ,[SchoolCourseRefId] CHAR (36) NOT NULL
+    ,[SchoolCourseLocalId] VARCHAR(111) NOT NULL -- FK to Dim4SchoolCourseInfo.CourseCode
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[Faculty] VARCHAR (111) NULL
+    ,[SubjectShortName] VARCHAR (111) NULL
+    ,[SubjectLongName] VARCHAR (111) NOT NULL
+    ,[SubjectType] VARCHAR (111) NULL
+    ,[ProposedMaxClassSize] SMALLINT NULL
+    ,[ProposedMinClassSize] SMALLINT NULL
+    ,[Semester] SMALLINT NULL
+    ,[SchoolYear] SMALLINT NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_TimeTableSubject] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_TimeTableSubject] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_TimeTableSubject] PRIMARY KEY ([SubjectLocalId])
+    ,CONSTRAINT [FK_TimeTableSubject_AcademicYear_EntryType] FOREIGN KEY ([AcademicYear_EntryType]) REFERENCES cdm_demo_gold.Dim0AcademicYearEntryType ([TypeKey])
+    ,CONSTRAINT [FK_TimeTableSubject_AcademicYear_SingleYear] FOREIGN KEY ([AcademicYear_SingleYear]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+    ,CONSTRAINT [FK_TimeTableSubject_AcademicYear_RangeStart] FOREIGN KEY ([AcademicYear_RangeStart]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+    ,CONSTRAINT [Check_TimeTableSubject_AcademicYear_Logic] CHECK ( ([AcademicYear_EntryType] = 'Single' AND [AcademicYear_SingleYear] IS NOT NULL AND [AcademicYear_RangeStart] IS NULL AND [AcademicYear_RangeEnd] IS NULL) OR  ([AcademicYear_EntryType] = 'Range' AND [AcademicYear_SingleYear] IS NULL AND [AcademicYear_RangeStart] IS NOT NULL AND [AcademicYear_RangeEnd] IS NOT NULL) )
+    ,CONSTRAINT [FK_TimeTableSubject_AcademicYear_RangeEnd] FOREIGN KEY ([AcademicYear_RangeEnd]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+    ,CONSTRAINT [FKRef_TimeTableSubject_SchoolCourseInfo] FOREIGN KEY ([SchoolCourseRefId]) REFERENCES cdm_demo_gold.Dim4SchoolCourseInfo ([RefId])
+    ,CONSTRAINT [FKMulti_TimeTableSubject_SchoolCourseInfo] FOREIGN KEY ([SchoolLocalId],[SchoolCourseLocalId]) REFERENCES cdm_demo_gold.Dim4SchoolCourseInfo ([SchoolLocalId],[CourseCode])
+    ,CONSTRAINT [FKRef_TimeTableSubject_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableSubject_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim5TimeTableSubject';
 GO
 
 
