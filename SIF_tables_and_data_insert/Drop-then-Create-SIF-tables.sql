@@ -2153,6 +2153,19 @@ INSERT INTO cdm_demo_gold.Dim0ResourceType ([TypeKey]) VALUES
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0ResourceType';
 GO
 
+-- TimeTable Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0YesNoOnly (
+     [TypeKey] VARCHAR (3) NOT NULL
+     CONSTRAINT [PK_YesNoOnly] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0YesNoOnly';
+INSERT INTO cdm_demo_gold.Dim0YesNoOnly ([TypeKey]) VALUES
+    ('Yes'),
+    ('No');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0YesNoOnly';
+GO
+
 
 
 
@@ -4669,6 +4682,34 @@ CREATE TABLE cdm_demo_gold.Dim3RoomInfo (
 PRINT N'Created cdm_demo_gold.Dim3RoomInfo';
 GO
 
+-- ----------------- --
+-- 3.11.10 TimeTable --
+-- ----------------- --
+
+CREATE TABLE cdm_demo_gold.Dim3TimeTable (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolYear] SMALLINT NOT NULL
+    ,[Title] VARCHAR (111) NOT NULL
+    ,[DaysPerCycle] SMALLINT NOT NULL
+    ,[PeriodsPerDay] SMALLINT NOT NULL
+    ,[TeachingPeriodsPerDay] SMALLINT NULL
+    ,[SchoolName] VARCHAR (111) NULL
+    ,[TimeTableCreationDate] DATETIME NULL
+    ,[StartDate] DATE NULL
+    ,[EndDate] DATE NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_TimeTable] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_TimeTable] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_TimeTable] PRIMARY KEY ([LocalId],[SchoolLocalId],[SchoolYear])
+    ,CONSTRAINT [FKRef_TimeTable_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTable_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim3TimeTable';
+GO
+
 
 
 
@@ -5374,6 +5415,26 @@ CREATE TABLE cdm_demo_gold.Dim4ResourceList (
 PRINT N'Created cdm_demo_gold.Dim2ResourceList';
 GO
 
+-- ----------------- --
+-- 3.11.10 TimeTable --
+-- ----------------- --
+
+CREATE TABLE cdm_demo_gold.Dim4TimeTableDay (
+     [TimeTableRefId] CHAR (36) NOT NULL
+    ,[TimeTableLocalId] INT NOT NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolYear] SMALLINT NOT NULL
+    ,[DayId] VARCHAR (111) NOT NULL
+    ,[DayTitle] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_TimeTableDay_TimeTable] FOREIGN KEY ([TimeTableRefId]) REFERENCES cdm_demo_gold.Dim3TimeTable ([RefId])
+    ,CONSTRAINT [FKRef_TimeTableDay_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKMulti_TimeTableDay_TimeTable] FOREIGN KEY ([TimeTableLocalId],[SchoolLocalId],[SchoolYear]) REFERENCES cdm_demo_gold.Dim3TimeTable ([LocalId],[SchoolLocalId],[SchoolYear])
+    ,CONSTRAINT [PK_TimeTableDay] PRIMARY KEY ([TimeTableLocalId],[SchoolLocalId],[SchoolYear],[DayId])
+);
+PRINT N'Created cdm_demo_gold.Dim4TimeTableDay';
+GO
+
 
 
 
@@ -5482,6 +5543,36 @@ CREATE TABLE cdm_demo_gold.Dim5LibraryItemElectronicIdList (
     ,CONSTRAINT [FK_LibraryItemElectronicIdList_ElectronicIdListType] FOREIGN KEY ([ElectronicIdTypeKey]) REFERENCES cdm_demo_gold.Dim0ElectronicIdType ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim5LibraryItemElectronicIdList';
+GO
+
+-- ----------------- --
+-- 3.11.10 TimeTable --
+-- ----------------- --
+
+CREATE TABLE cdm_demo_gold.Dim5TimeTablePeriod (
+     [TimeTableRefId] CHAR (36) NOT NULL
+    ,[TimeTableLocalId] INT NOT NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolYear] SMALLINT NOT NULL
+    ,[DayId] VARCHAR (111) NOT NULL
+    ,[PeriodId] VARCHAR (111) NOT NULL
+    ,[PeriodTitle] VARCHAR (111) NOT NULL
+    ,[BellPeriod] VARCHAR (3) NULL
+    ,[StartTime] TIME NULL
+    ,[EndTime] TIME NULL
+    ,[RegularSchoolPeriod] VARCHAR (3) NULL
+    ,[InstructionalMinutes] SMALLINT NULL
+    ,[UseInAttendanceCalculations] VARCHAR (3) NULL
+    ,CONSTRAINT [FKRef_TimeTablePeriod_TimeTable] FOREIGN KEY ([TimeTableRefId]) REFERENCES cdm_demo_gold.Dim3TimeTable ([RefId])
+    ,CONSTRAINT [FKRef_TimeTablePeriod_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKMulti_TimeTablePeriod_TimeTableDay] FOREIGN KEY ([TimeTableLocalId],[SchoolLocalId],[SchoolYear],[DayId]) REFERENCES cdm_demo_gold.Dim4TimeTableDay ([TimeTableLocalId],[SchoolLocalId],[SchoolYear],[DayId])
+    ,CONSTRAINT [PK_TimeTablePeriod] PRIMARY KEY ([TimeTableLocalId],[SchoolLocalId],[SchoolYear],[DayId],[PeriodId])
+    ,CONSTRAINT [FK_TimeTablePeriod_BellPeriod] FOREIGN KEY ([BellPeriod]) REFERENCES cdm_demo_gold.Dim0YesNoOnly ([TypeKey])
+    ,CONSTRAINT [FK_TimeTablePeriod_RegularSchoolPeriod] FOREIGN KEY ([RegularSchoolPeriod]) REFERENCES cdm_demo_gold.Dim0YesNoOnly ([TypeKey])
+    ,CONSTRAINT [FK_TimeTablePeriod_UseInAttendanceCalculations] FOREIGN KEY ([UseInAttendanceCalculations]) REFERENCES cdm_demo_gold.Dim0YesNoOnly ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim5TimeTablePeriod';
 GO
 
 
