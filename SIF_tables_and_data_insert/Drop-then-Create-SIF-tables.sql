@@ -5010,7 +5010,7 @@ CREATE TABLE cdm_demo_gold.Fact4StaffAssignmentSubjectList (
     ,[StaffPersonalLocalId] INT NOT NULL
     ,[PreferenceNumber] INT NOT NULL
     ,[SubjectLocalId] VARCHAR (111) NULL
-    ,[TimeTableSubjectRefId] VARCHAR (111) NULL
+    ,[TimeTableSubjectRefId] CHAR (36) NULL
     ,CONSTRAINT [FKRef_StaffAssignmentSubjectList_StaffAssignment] FOREIGN KEY ([StaffAssignmentRefId]) REFERENCES cdm_demo_gold.Fact3StaffAssignment ([RefId])
     ,CONSTRAINT [FKRef_StaffAssignmentSubjectList_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
     ,CONSTRAINT [FKLocal_StaffAssignmentSubjectList_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
@@ -5791,6 +5791,137 @@ CREATE TABLE cdm_demo_gold.Dim6TimeTableSubjectOtherCodes (
     ,CONSTRAINT [FK_TimeTableSubjectOtherCodes_Codeset] FOREIGN KEY ([Codeset]) REFERENCES cdm_demo_gold.Dim0CodesetForOtherCodeListType ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim6TimeTableSubjectOtherCodes';
+GO
+
+-- -------------------- --
+-- 3.11.9 TeachingGroup --
+-- -------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim6TeachingGroup (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] VARCHAR (111) NOT NULL
+    ,[SchoolYear] SMALLINT NOT NULL
+    ,[ShortName] VARCHAR (111) NOT NULL
+    ,[LongName] VARCHAR (111) NULL
+    ,[GroupType] VARCHAR (111) NULL
+    ,[Set] VARCHAR (111) NULL
+    ,[Block] VARCHAR (111) NULL
+    ,[CurriculumLevel] VARCHAR (111) NULL
+    ,[SchoolRefId] CHAR (36) NULL
+    ,[SchoolLocalId] INT NULL
+    ,[SchoolCourseRefId] CHAR (36) NULL
+    ,[SchoolCourseLocalId] VARCHAR (111) NULL
+    ,[TimeTableSubjectRefId] CHAR (36) NULL
+    ,[TimeTableSubjectLocalId] INT NULL
+    ,[KeyLearningArea] CHAR (1) NULL
+    ,[Semester] SMALLINT NULL
+    ,[MinClassSize] SMALLINT NULL
+    ,[MaxClassSize] SMALLINT NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_TeachingGroup] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_TeachingGroup] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_TeachingGroup] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FKRef_TeachingGroup_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_TeachingGroup_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_TeachingGroup_SchoolCourseInfo] FOREIGN KEY ([SchoolCourseRefId]) REFERENCES cdm_demo_gold.Dim4SchoolCourseInfo ([RefId])
+    ,CONSTRAINT [FKMulti_TeachingGroup_SchoolCourseInfo] FOREIGN KEY ([SchoolLocalId],[SchoolCourseLocalId]) REFERENCES cdm_demo_gold.Dim4SchoolCourseInfo ([SchoolLocalId],[CourseCode])
+    ,CONSTRAINT [FKRef_TeachingGroup_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectRefId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([RefId])
+    ,CONSTRAINT [FKLocal_TeachingGroup_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectLocalId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([SubjectLocalId])
+    ,CONSTRAINT [FK_TeachingGroup_KeyLearningArea] FOREIGN KEY ([KeyLearningArea]) REFERENCES cdm_demo_gold.Dim0AustralianCurriculumStrand ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim6TeachingGroup';
+GO
+
+
+
+
+
+-- -------------------------------------------------------------------------- --
+-- DEPENDENCY: Tables with 7 in name have FK to table(s) with 6               --
+-- -------------------------------------------------------------------------- --
+
+-- -------------------- --
+-- 3.11.9 TeachingGroup --
+-- -------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim7TeachingGroupStudentList (
+     [TeachingGroupRefId] CHAR (36) NOT NULL
+    ,[TeachingGroupLocalId] VARCHAR (111) NOT NULL
+    ,[TeachingGroupSchoolYear] SMALLINT NOT NULL
+    ,[StudentRefId] CHAR (36) NOT NULL
+    ,[StudentLocalId] INT NOT NULL
+    ,[Name_FamilyName] VARCHAR (111) NULL
+    ,[Name_GivenName] VARCHAR (111) NULL
+    ,[Name_MiddleName] VARCHAR (111) NULL
+    ,[Name_FamilyNameFirst] CHAR (1) NULL
+    ,[Name_PreferredFamilyName] VARCHAR (111) NULL
+    ,[Name_PreferredFamilyNameFirst] CHAR (1) NULL
+    ,[Name_PreferredGivenName] VARCHAR (111) NULL
+    ,[Name_Suffix] VARCHAR (111) NULL
+    ,[Name_FullName] VARCHAR (111) NULL
+    ,[Name_UsageTypeKey] CHAR (3) NULL
+    ,CONSTRAINT [FKRef_TeachingGroupStudentList_TeachingGroup] FOREIGN KEY ([TeachingGroupRefId]) REFERENCES cdm_demo_gold.Dim6TeachingGroup ([RefId])
+    ,CONSTRAINT [FKLocal_TeachingGroupStudentList_TeachingGroup] FOREIGN KEY ([TeachingGroupLocalId]) REFERENCES cdm_demo_gold.Dim6TeachingGroup ([LocalId])
+    ,CONSTRAINT [PK_TeachingGroupStudentList] PRIMARY KEY ([TeachingGroupLocalId],[StudentLocalId])
+    ,CONSTRAINT [FKRef_TeachingGroupStudentList_StudentPersonal] FOREIGN KEY ([StudentRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_TeachingGroupStudentList_StudentPersonal] FOREIGN KEY ([StudentLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
+    ,CONSTRAINT [FK_TeachingGroupStudentList_FamilyNameFirst] FOREIGN KEY ([Name_FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_TeachingGroupStudentList_PreferredFamilyNameFirst] FOREIGN KEY ([Name_PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_TeachingGroupStudentList_NameUsageTypeKey] FOREIGN KEY ([Name_UsageTypeKey]) REFERENCES cdm_demo_gold.Dim0NameUsageType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim7TeachingGroupStudentList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim7TeachingGroupTeacherList (
+     [TeachingGroupRefId] CHAR (36) NOT NULL
+    ,[TeachingGroupLocalId] VARCHAR (111) NOT NULL
+    ,[TeachingGroupSchoolYear] SMALLINT NOT NULL
+    ,[StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[Name_FamilyName] VARCHAR (111) NULL
+    ,[Name_GivenName] VARCHAR (111) NULL
+    ,[Name_MiddleName] VARCHAR (111) NULL
+    ,[Name_FamilyNameFirst] CHAR (1) NULL
+    ,[Name_PreferredFamilyName] VARCHAR (111) NULL
+    ,[Name_PreferredFamilyNameFirst] CHAR (1) NULL
+    ,[Name_PreferredGivenName] VARCHAR (111) NULL
+    ,[Name_Suffix] VARCHAR (111) NULL
+    ,[Name_FullName] VARCHAR (111) NULL
+    ,[Name_UsageTypeKey] CHAR (3) NULL
+    ,[Association] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_TeachingGroupTeacherList_TeachingGroup] FOREIGN KEY ([TeachingGroupRefId]) REFERENCES cdm_demo_gold.Dim6TeachingGroup ([RefId])
+    ,CONSTRAINT [FKLocal_TeachingGroupTeacherList_TeachingGroup] FOREIGN KEY ([TeachingGroupLocalId]) REFERENCES cdm_demo_gold.Dim6TeachingGroup ([LocalId])
+    ,CONSTRAINT [PK_TeachingGroupTeacherList] PRIMARY KEY ([TeachingGroupLocalId],[StaffLocalId])
+    ,CONSTRAINT [FKRef_TeachingGroupTeacherList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_TeachingGroupTeacherList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [FK_TeachingGroupTeacherList_FamilyNameFirst] FOREIGN KEY ([Name_FamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_TeachingGroupTeacherList_PreferredFamilyNameFirst] FOREIGN KEY ([Name_PreferredFamilyNameFirst]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_TeachingGroupTeacherList_NameUsageTypeKey] FOREIGN KEY ([Name_UsageTypeKey]) REFERENCES cdm_demo_gold.Dim0NameUsageType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim7TeachingGroupTeacherList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim7TeachingGroupPeriodList (
+     [TeachingGroupRefId] CHAR (36) NOT NULL
+    ,[TeachingGroupLocalId] VARCHAR (111) NOT NULL
+    ,[TeachingGroupSchoolYear] SMALLINT NOT NULL
+-- TO-DO: add FKs below:
+    ,[TimeTableCellRefId] CHAR (36) NOT NULL
+    ,[TimeTableCellLocalId] INT NOT NULL
+    ,[StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[RoomNumber] VARCHAR (111) NULL
+    ,[DayId] VARCHAR (111) NOT NULL
+    ,[PeriodId] VARCHAR (111) NULL
+    ,[StartTime] DATETIME NULL
+    ,[CellType] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_TeachingGroupPeriodList_TeachingGroup] FOREIGN KEY ([TeachingGroupRefId]) REFERENCES cdm_demo_gold.Dim6TeachingGroup ([RefId])
+    ,CONSTRAINT [FKLocal_TeachingGroupPeriodList_TeachingGroup] FOREIGN KEY ([TeachingGroupLocalId]) REFERENCES cdm_demo_gold.Dim6TeachingGroup ([LocalId])
+    ,CONSTRAINT [PK_TeachingGroupPeriodList] PRIMARY KEY ([TeachingGroupLocalId],[TimeTableCellLocalId])
+    ,CONSTRAINT [FKRef_TeachingGroupPeriodList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_TeachingGroupPeriodList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim7TeachingGroupPeriodList';
 GO
 
 
