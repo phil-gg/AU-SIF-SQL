@@ -1,7 +1,8 @@
 -- This relational data structure implements AU SIF v3.6.3 as per link below:
 -- http://specification.sifassociation.org/Implementation/AU/3.6.3/index.html#contents:~:text=Highlighted%20Additions/Changes-,3%20Data%20Model,-3.1%20Introduction
+-- Hard-coded Dim0 tables are defined, together with target data model tables, in this single script, because they are all defined together in SIF, at the link above.
 
--- Elements are built in this numbered order:
+-- Elements are built in this numbered order, but then in tiers that respect reference dependencies:
 --  (1) 3.10 SIF AU Student Baseline Profile (SBP) and supporting objects
 --  (2) 3.8.1 LearningResource + 3.8.2 LearningResourcePackage
 --  (3) 3.6.6 TermInfo
@@ -2286,17 +2287,12 @@ GO
 -- 3.10.7 StaffPersonal --
 -- -------------------- --
 
--- TO-DO: May want SchoolLocalId and SchoolACARAId and LocalCampusId to be FKs.
 CREATE TABLE cdm_demo_gold.Dim1StaffPersonal (
      [RefId] CHAR (36) NOT NULL
     ,[LocalId] INT NOT NULL
     ,[StateProvinceId] VARCHAR (111) NULL
     ,[Title] VARCHAR (111) NULL
     ,[EmploymentStatus] CHAR (1) NULL
-    ,[MostRecent_SchoolLocalId] INT NULL
-    ,[MostRecent_SchoolACARAId] VARCHAR (111) NULL
-    ,[MostRecent_LocalCampusId] VARCHAR (111) NULL
-    ,[MostRecent_HomeGroup] VARCHAR (111) NULL
     ,[ee_Placeholder] VARCHAR (111) NULL
     ,CONSTRAINT [RefUnique_StaffPersonal] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_StaffPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
@@ -2321,7 +2317,6 @@ GO
 -- 3.10.10 StudentPersonal --
 -- ----------------------- --
 
--- TO-DO: May want SchoolLocalId and SchoolACARAId and LocalCampusId to be FKs.
 CREATE TABLE cdm_demo_gold.Dim1StudentPersonal (
      [RefId] CHAR (36) NOT NULL
     ,[LocalId] INT NOT NULL
@@ -2330,34 +2325,6 @@ CREATE TABLE cdm_demo_gold.Dim1StudentPersonal (
     ,[ProjectedGraduationYear] SMALLINT NULL
     ,[OnTimeGraduationYear] SMALLINT NULL
     ,[GraduationDate] DATETIME NULL
-    ,[MostRecent_SchoolLocalId] INT NULL
-    ,[MostRecent_HomeroomRefId] CHAR (36) NULL
-    ,[MostRecent_HomeroomLocalId] VARCHAR (111) NULL
-    ,[MostRecent_YearLevel] VARCHAR (8) NULL
-    ,[MostRecent_FTE] DECIMAL (3,2) NULL
-    ,[MostRecent_Parent1Language] CHAR (4) NULL
-    ,[MostRecent_Parent2Language] CHAR (4) NULL
-    ,[MostRecent_Parent1EmploymentType] INT NULL
-    ,[MostRecent_Parent2EmploymentType] INT NULL
-    ,[MostRecent_Parent1SchoolEducationLevel] INT NULL
-    ,[MostRecent_Parent2SchoolEducationLevel] INT NULL
-    ,[MostRecent_Parent1NonSchoolEducation] INT NULL
-    ,[MostRecent_Parent2NonSchoolEducation] INT NULL
-    ,[MostRecent_LocalCampusId] VARCHAR (111) NULL
-    ,[MostRecent_SchoolACARAId] VARCHAR (111) NULL
-    ,[MostRecent_TestLevel] VARCHAR (8) NULL
-    ,[MostRecent_Homegroup] VARCHAR (111) NULL
-    ,[MostRecent_ClassCode] VARCHAR (111) NULL
-    ,[MostRecent_MembershipType] CHAR (2) NULL
-    ,[MostRecent_FFPOS] INT NULL
-    ,[MostRecent_ReportingSchoolId] VARCHAR (111) NULL
-    ,[MostRecent_OtherEnrollmentSchoolACARAId] VARCHAR (111) NULL
-    ,[MostRecent_OtherSchoolName] VARCHAR (111) NULL
-    ,[MostRecent_DisabilityLevelOfAdjustment] VARCHAR (71) NULL
-    ,[MostRecent_DisabilityCategory] VARCHAR (16) NULL
-    ,[MostRecent_CensusAge] INT NULL
-    ,[MostRecent_DistanceEducationStudent] CHAR (1) NULL
-    ,[MostRecent_BoardingStatus] CHAR (1) NULL
     ,[AcceptableUsePolicy] CHAR (1) NULL
     ,[GiftedTalented] CHAR (1) NULL
     ,[EconomicDisadvantage] CHAR (1) NULL
@@ -2380,23 +2347,6 @@ CREATE TABLE cdm_demo_gold.Dim1StudentPersonal (
     ,CONSTRAINT [RefUnique_StudentPersonal] UNIQUE ([RefId])
     ,CONSTRAINT [RefUUID_StudentPersonal] CHECK ([RefId] LIKE '________-____-7___-____-____________')
     ,CONSTRAINT [PK_StudentPersonal] PRIMARY KEY ([LocalId])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_YearLevel] FOREIGN KEY ([MostRecent_YearLevel]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
-    ,CONSTRAINT [Check_StudentPersonal_MostRecent_FTE_Range] CHECK (MostRecent_FTE >= 0 AND MostRecent_FTE <= 1)
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent1Language] FOREIGN KEY ([MostRecent_Parent1Language]) REFERENCES cdm_demo_gold.Dim1Languages ([LocalId])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent2Language] FOREIGN KEY ([MostRecent_Parent2Language]) REFERENCES cdm_demo_gold.Dim1Languages ([LocalId])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent1EmploymentType] FOREIGN KEY ([MostRecent_Parent1EmploymentType]) REFERENCES cdm_demo_gold.Dim0EmploymentType ([TypeKey])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent2EmploymentType] FOREIGN KEY ([MostRecent_Parent2EmploymentType]) REFERENCES cdm_demo_gold.Dim0EmploymentType ([TypeKey])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent1SchoolEducationLevel] FOREIGN KEY ([MostRecent_Parent1SchoolEducationLevel]) REFERENCES cdm_demo_gold.Dim0SchoolEducationLevelType ([TypeKey])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent2SchoolEducationLevel] FOREIGN KEY ([MostRecent_Parent2SchoolEducationLevel]) REFERENCES cdm_demo_gold.Dim0SchoolEducationLevelType ([TypeKey])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent1NonSchoolEducation] FOREIGN KEY ([MostRecent_Parent1NonSchoolEducation]) REFERENCES cdm_demo_gold.Dim0NonSchoolEducationType ([TypeKey])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_Parent2NonSchoolEducation] FOREIGN KEY ([MostRecent_Parent2NonSchoolEducation]) REFERENCES cdm_demo_gold.Dim0NonSchoolEducationType ([TypeKey])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_TestLevel] FOREIGN KEY ([MostRecent_TestLevel]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_MembershipType] FOREIGN KEY ([MostRecent_MembershipType]) REFERENCES cdm_demo_gold.Dim0SchoolEnrollmentType ([TypeKey])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_FFPOS] FOREIGN KEY ([MostRecent_FFPOS]) REFERENCES cdm_demo_gold.Dim0FFPOSStatusCode ([TypeKey])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_DisabilityLevelOfAdjustment] FOREIGN KEY ([MostRecent_DisabilityLevelOfAdjustment]) REFERENCES cdm_demo_gold.Dim0DisabilityLevelOfAdjustment ([TypeKey])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_DisabilityCategory] FOREIGN KEY ([MostRecent_DisabilityCategory]) REFERENCES cdm_demo_gold.Dim0DisabilityNCCDCategory ([TypeKey])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_DistanceEducationStudent] FOREIGN KEY ([MostRecent_DistanceEducationStudent]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
-    ,CONSTRAINT [FK_StudentPersonal_MostRecent_BoardingStatus] FOREIGN KEY ([MostRecent_BoardingStatus]) REFERENCES cdm_demo_gold.Dim0BoardingStatus ([TypeKey])
     ,CONSTRAINT [FK_StudentPersonal_AcceptableUsePolicy] FOREIGN KEY ([AcceptableUsePolicy]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_StudentPersonal_GiftedTalented] FOREIGN KEY ([GiftedTalented]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
     ,CONSTRAINT [FK_StudentPersonal_EconomicDisadvantage] FOREIGN KEY ([EconomicDisadvantage]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
@@ -4039,6 +3989,19 @@ GO
 -- 3.10.5 SchoolInfo --
 -- ----------------- --
 
+-- Just a list of schools with populated ACARAId values only:
+CREATE TABLE cdm_demo_gold.Dim3SchoolACARAIdList (
+     [SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[ACARAId] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [Unique_SchoolACARAId] UNIQUE ([ACARAId])
+    ,CONSTRAINT [FKRef_SchoolACARAIdList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SchoolACARAIdList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [PK_SchoolACARAIdList] PRIMARY KEY ([SchoolLocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim3SchoolACARAIdList';
+GO
+
 CREATE TABLE cdm_demo_gold.Dim3SchoolOtherIdList (
      [SchoolRefId] CHAR (36) NOT NULL
     ,[SchoolLocalId] INT NOT NULL
@@ -4810,6 +4773,96 @@ GO
 -- DEPENDENCY: Tables with 4 in name have FK to table(s) with 3               --
 -- -------------------------------------------------------------------------- --
 
+-- -------------------- --
+-- 3.10.7 StaffPersonal --
+-- -------------------- --
+
+-- MostRecent container NOT flattened, so it can reference high numbered tables, while StaffPersonal remains a Dim1
+CREATE TABLE cdm_demo_gold.Dim4StaffPersonalMostRecent (
+     [StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[SchoolRefId] CHAR (36) NULL
+    ,[SchoolLocalId] INT NULL
+    ,[SchoolACARAId] VARCHAR (111) NULL
+    ,[SchoolCampusId] VARCHAR (111) NULL
+    ,[HomeGroup] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_StaffPersonalMostRecent_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffPersonalMostRecent_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffPersonalMostRecent] PRIMARY KEY ([StaffLocalId])
+    ,CONSTRAINT [FKRef_StaffPersonalMostRecent_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StaffPersonalMostRecent_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FK_StaffPersonalMostRecent_SchoolInfo] FOREIGN KEY ([SchoolACARAId]) REFERENCES cdm_demo_gold.Dim3SchoolACARAIdList ([ACARAId])
+    ,CONSTRAINT [FK_StaffPersonalMostRecent_SchoolCampus] FOREIGN KEY ([SchoolCampusId]) REFERENCES cdm_demo_gold.Dim3SchoolCampus ([SchoolCampusId])
+);
+PRINT N'Created cdm_demo_gold.Dim4StaffPersonalMostRecent';
+GO
+
+-- ----------------------- --
+-- 3.10.10 StudentPersonal --
+-- ----------------------- --
+
+-- MostRecent container NOT flattened, so it can reference high numbered tables, while StudentPersonal remains a Dim1
+CREATE TABLE cdm_demo_gold.Dim4StudentPersonalMostRecent (
+     [StudentRefId] CHAR (36) NOT NULL
+    ,[StudentLocalId] INT NOT NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NULL
+    ,[SchoolACARAId] VARCHAR (111) NULL
+    ,[SchoolCampusId] VARCHAR (111) NULL
+-- Nothing available to reference for Homeroom yet (in Phase 1 or Phase 2):
+    ,[HomeroomRefId] CHAR (36) NULL
+    ,[HomeroomLocalId] VARCHAR (111) NULL
+    ,[YearLevel] VARCHAR (8) NULL
+    ,[FTE] DECIMAL (3,2) NULL
+    ,[Parent1Language] CHAR (4) NULL
+    ,[Parent2Language] CHAR (4) NULL
+    ,[Parent1EmploymentType] INT NULL
+    ,[Parent2EmploymentType] INT NULL
+    ,[Parent1SchoolEducationLevel] INT NULL
+    ,[Parent2SchoolEducationLevel] INT NULL
+    ,[Parent1NonSchoolEducation] INT NULL
+    ,[Parent2NonSchoolEducation] INT NULL
+    ,[TestLevel] VARCHAR (8) NULL
+    ,[Homegroup] VARCHAR (111) NULL
+    ,[ClassCode] VARCHAR (111) NULL
+    ,[MembershipType] CHAR (2) NULL
+    ,[FFPOS] INT NULL
+    ,[ReportingSchoolId] VARCHAR (111) NULL
+    ,[OtherEnrollmentSchoolACARAId] VARCHAR (111) NULL
+    ,[OtherSchoolName] VARCHAR (111) NULL
+    ,[DisabilityLevelOfAdjustment] VARCHAR (71) NULL
+    ,[DisabilityCategory] VARCHAR (16) NULL
+    ,[CensusAge] INT NULL
+    ,[DistanceEducationStudent] CHAR (1) NULL
+    ,[BoardingStatus] CHAR (1) NULL
+    ,CONSTRAINT [FKRef_StudentPersonalMostRecent_StudentPersonal] FOREIGN KEY ([StudentRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentPersonalMostRecent_StudentPersonal] FOREIGN KEY ([StudentLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
+    ,CONSTRAINT [PK_StudentPersonalMostRecent] PRIMARY KEY ([StudentLocalId])
+    ,CONSTRAINT [FKRef_StudentPersonalMostRecent_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StudentPersonalMostRecent_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_SchoolInfo] FOREIGN KEY ([SchoolACARAId]) REFERENCES cdm_demo_gold.Dim3SchoolACARAIdList ([ACARAId])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_SchoolCampus] FOREIGN KEY ([SchoolCampusId]) REFERENCES cdm_demo_gold.Dim3SchoolCampus ([SchoolCampusId])
+    ,CONSTRAINT [FK_StudentPersonal_MostRecent_YearLevel] FOREIGN KEY ([YearLevel]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+    ,CONSTRAINT [Check_StudentPersonalMostRecent_FTE_Range] CHECK ([FTE] >= 0 AND [FTE] <= 1)
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_Parent1Language] FOREIGN KEY ([Parent1Language]) REFERENCES cdm_demo_gold.Dim1Languages ([LocalId])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_Parent2Language] FOREIGN KEY ([Parent2Language]) REFERENCES cdm_demo_gold.Dim1Languages ([LocalId])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_Parent1EmploymentType] FOREIGN KEY ([Parent1EmploymentType]) REFERENCES cdm_demo_gold.Dim0EmploymentType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_Parent2EmploymentType] FOREIGN KEY ([Parent2EmploymentType]) REFERENCES cdm_demo_gold.Dim0EmploymentType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_Parent1SchoolEducationLevel] FOREIGN KEY ([Parent1SchoolEducationLevel]) REFERENCES cdm_demo_gold.Dim0SchoolEducationLevelType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_Parent2SchoolEducationLevel] FOREIGN KEY ([Parent2SchoolEducationLevel]) REFERENCES cdm_demo_gold.Dim0SchoolEducationLevelType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_Parent1NonSchoolEducation] FOREIGN KEY ([Parent1NonSchoolEducation]) REFERENCES cdm_demo_gold.Dim0NonSchoolEducationType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_Parent2NonSchoolEducation] FOREIGN KEY ([Parent2NonSchoolEducation]) REFERENCES cdm_demo_gold.Dim0NonSchoolEducationType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_TestLevel] FOREIGN KEY ([TestLevel]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_MembershipType] FOREIGN KEY ([MembershipType]) REFERENCES cdm_demo_gold.Dim0SchoolEnrollmentType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_FFPOS] FOREIGN KEY ([FFPOS]) REFERENCES cdm_demo_gold.Dim0FFPOSStatusCode ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_DisabilityLevelOfAdjustment] FOREIGN KEY ([DisabilityLevelOfAdjustment]) REFERENCES cdm_demo_gold.Dim0DisabilityLevelOfAdjustment ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_DisabilityCategory] FOREIGN KEY ([DisabilityCategory]) REFERENCES cdm_demo_gold.Dim0DisabilityNCCDCategory ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_DistanceEducationStudent] FOREIGN KEY ([DistanceEducationStudent]) REFERENCES cdm_demo_gold.Dim0YesNoType ([TypeKey])
+    ,CONSTRAINT [FK_StudentPersonalMostRecent_BoardingStatus] FOREIGN KEY ([BoardingStatus]) REFERENCES cdm_demo_gold.Dim0BoardingStatus ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim4StudentPersonalMostRecent';
+GO
+
 -- ----------------- --
 -- 3.10.5 SchoolInfo --
 -- ----------------- --
@@ -5030,26 +5083,6 @@ GO
 -- 3.10.6 StaffAssignment --
 -- ---------------------- --
 
--- TO-DO: Constrain SubjectLocalId and TimeTableSubjectRefId with FKs when reach that phase of SIF Spec target data structure implementation
-CREATE TABLE cdm_demo_gold.Fact4StaffAssignmentSubjectList (
-     [StaffAssignmentRefId] CHAR (36) NOT NULL
-    ,[SchoolInfoRefId] CHAR (36) NOT NULL
-    ,[SchoolInfoLocalId] INT NOT NULL
-    ,[StaffPersonalRefId] CHAR (36) NOT NULL
-    ,[StaffPersonalLocalId] INT NOT NULL
-    ,[PreferenceNumber] INT NOT NULL
-    ,[SubjectLocalId] VARCHAR (111) NULL
-    ,[TimeTableSubjectRefId] CHAR (36) NULL
-    ,CONSTRAINT [FKRef_StaffAssignmentSubjectList_StaffAssignment] FOREIGN KEY ([StaffAssignmentRefId]) REFERENCES cdm_demo_gold.Fact3StaffAssignment ([RefId])
-    ,CONSTRAINT [FKRef_StaffAssignmentSubjectList_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
-    ,CONSTRAINT [FKLocal_StaffAssignmentSubjectList_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
-    ,CONSTRAINT [FKRef_StaffAssignmentSubjectList_StaffPersonal] FOREIGN KEY ([StaffPersonalRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
-    ,CONSTRAINT [FKLocal_StaffAssignmentSubjectList_StaffPersonal] FOREIGN KEY ([StaffPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
-    ,CONSTRAINT [PK_StaffAssignmentSubjectList] PRIMARY KEY ([StaffAssignmentRefId],[PreferenceNumber])
-);
-PRINT N'Created cdm_demo_gold.Fact4StaffAssignmentSubjectList';
-GO
-
 CREATE TABLE cdm_demo_gold.Fact4StaffAssignmentActivityExtension (
      [StaffAssignmentRefId] CHAR (36) NOT NULL
     ,[SchoolInfoRefId] CHAR (36) NOT NULL
@@ -5166,28 +5199,6 @@ CREATE TABLE cdm_demo_gold.Fact4StudentSchoolEnrollmentOtherCodes (
     ,CONSTRAINT [PK_StudentSchoolEnrollmentOtherCodes] PRIMARY KEY ([StudentSchoolEnrollmentRefId],[OtherCodeField],[CodeSet])
 );
 PRINT N'Created cdm_demo_gold.Fact4StudentSchoolEnrollmentOtherCodes';
-GO
-
-CREATE TABLE cdm_demo_gold.Fact4StudentSubjectChoice (
-     [StudentSchoolEnrollmentRefId] CHAR (36) NOT NULL
-    ,[SchoolInfoRefId] CHAR (36) NOT NULL
-    ,[SchoolInfoLocalId] INT NOT NULL
-    ,[StudentPersonalRefId] CHAR (36) NOT NULL
-    ,[StudentPersonalLocalId] INT NOT NULL
-    ,[PreferenceNumber] INT NULL
-    ,[SubjectLocalId] INT NOT NULL
-    ,[SubjectAreaTypeCode] VARCHAR (111) NULL
-    ,[OtherSchoolLocalId] INT NULL
-    ,CONSTRAINT [FKRef_StudentSubjectChoice_StudentSchoolEnrollment] FOREIGN KEY ([StudentSchoolEnrollmentRefId]) REFERENCES cdm_demo_gold.Fact3StudentSchoolEnrollment ([RefId])
-    ,CONSTRAINT [FKRef_StudentSubjectChoice_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
-    ,CONSTRAINT [FKLocal_StudentSubjectChoice_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
-    ,CONSTRAINT [FKRef_StudentSubjectChoice_StudentPersonal] FOREIGN KEY ([StudentPersonalRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
-    ,CONSTRAINT [FKLocal_StudentSubjectChoice_StudentPersonal] FOREIGN KEY ([StudentPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
--- TO-DO: Need an FK constraint to a PK for SubjectLocalId, here
-    ,CONSTRAINT [PK_StudentSubjectChoice] PRIMARY KEY ([StudentSchoolEnrollmentRefId],[SubjectLocalId])
-    ,CONSTRAINT [FKLocal_StudentSubjectChoice_OtherSchoolInfo] FOREIGN KEY ([OtherSchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
-);
-PRINT N'Created cdm_demo_gold.Fact4StudentSubjectChoice';
 GO
 
 CREATE TABLE cdm_demo_gold.Fact4StudentSchoolEnrollmentStudentGroup (
@@ -5630,32 +5641,6 @@ CREATE TABLE cdm_demo_gold.Dim5PersonPrivacyDataDomainDoNotShareWith (
 PRINT N'Created cdm_demo_gold.Dim5PersonPrivacyDataDomainDoNotShareWith';
 GO
 
--- ------------------------------- --
--- 3.10.11 StudentSchoolEnrollment --
--- ------------------------------- --
-
-CREATE TABLE cdm_demo_gold.Fact5StudentSubjectChoiceOtherCode (
-     [StudentSchoolEnrollmentRefId] CHAR (36) NOT NULL
-    ,[SchoolInfoRefId] CHAR (36) NOT NULL
-    ,[SchoolInfoLocalId] INT NOT NULL
-    ,[StudentPersonalRefId] CHAR (36) NOT NULL
-    ,[StudentPersonalLocalId] INT NOT NULL
-    ,[SubjectChoiceLocalId] INT NOT NULL
-    ,[Codeset] VARCHAR (13) NOT NULL
-    ,[OtherCodeValue] VARCHAR (111) NOT NULL
-    ,CONSTRAINT [FKRef_StudentSubjectChoiceOtherCode_StudentSchoolEnrollment] FOREIGN KEY ([StudentSchoolEnrollmentRefId]) REFERENCES cdm_demo_gold.Fact3StudentSchoolEnrollment ([RefId])
-    ,CONSTRAINT [FKRef_StudentSubjectChoiceOtherCode_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
-    ,CONSTRAINT [FKLocal_StudentSubjectChoiceOtherCode_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
-    ,CONSTRAINT [FKRef_StudentSubjectChoiceOtherCode_StudentPersonal] FOREIGN KEY ([StudentPersonalRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
-    ,CONSTRAINT [FKLocal_StudentSubjectChoiceOtherCode_StudentPersonal] FOREIGN KEY ([StudentPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
--- TO-DO: This commented out FK cannot be used until we have a deduplicated list of subjects, setting a PK for SubjectLocalId:
---    ,CONSTRAINT [FKLocal_StudentSubjectChoiceOtherCode_SubjectChoiceLocalId] FOREIGN KEY ([SubjectChoiceLocalId]) REFERENCES cdm_demo_gold.Fact4StudentSubjectChoice ([SubjectLocalId])
-    ,CONSTRAINT [FK_StudentSubjectChoiceOtherCode_Codeset] FOREIGN KEY ([Codeset]) REFERENCES cdm_demo_gold.Dim0CodesetForOtherCodeListType ([TypeKey])
-    ,CONSTRAINT [PK_StudentSubjectChoiceOtherCode] PRIMARY KEY ([StudentSchoolEnrollmentRefId],[SubjectChoiceLocalId],[Codeset])
-);
-PRINT N'Created cdm_demo_gold.Fact5StudentSubjectChoiceOtherCode';
-GO
-
 -- -------------------------- --
 -- 3.11.2 LibraryPatronStatus --
 -- -------------------------- --
@@ -5772,6 +5757,84 @@ GO
 -- DEPENDENCY: Tables with 6 in name have FK to table(s) with 5               --
 -- -------------------------------------------------------------------------- --
 
+-- ---------------------- --
+-- 3.10.6 StaffAssignment --
+-- ---------------------- --
+
+CREATE TABLE cdm_demo_gold.Fact6StaffAssignmentSubjectList (
+     [StaffAssignmentRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoLocalId] INT NOT NULL
+    ,[StaffPersonalRefId] CHAR (36) NOT NULL
+    ,[StaffPersonalLocalId] INT NOT NULL
+    ,[PreferenceNumber] INT NOT NULL
+    ,[TimeTableSubjectRefId] CHAR (36) NULL
+    ,[TimeTableSubjectLocalId] INT NULL
+    ,CONSTRAINT [FKRef_StaffAssignmentSubjectList_StaffAssignment] FOREIGN KEY ([StaffAssignmentRefId]) REFERENCES cdm_demo_gold.Fact3StaffAssignment ([RefId])
+    ,CONSTRAINT [FKRef_StaffAssignmentSubjectList_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignmentSubjectList_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_StaffAssignmentSubjectList_StaffPersonal] FOREIGN KEY ([StaffPersonalRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignmentSubjectList_StaffPersonal] FOREIGN KEY ([StaffPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [PK_StaffAssignmentSubjectList] PRIMARY KEY ([StaffAssignmentRefId],[PreferenceNumber])
+    ,CONSTRAINT [FKRef_StaffAssignmentSubjectList_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectRefId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([RefId])
+    ,CONSTRAINT [FKLocal_StaffAssignmentSubjectList_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectLocalId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([SubjectLocalId])
+);
+PRINT N'Created cdm_demo_gold.Fact6StaffAssignmentSubjectList';
+GO
+
+-- ------------------------------- --
+-- 3.10.11 StudentSchoolEnrollment --
+-- ------------------------------- --
+
+CREATE TABLE cdm_demo_gold.Fact6StudentSubjectChoice (
+     [StudentSchoolEnrollmentRefId] CHAR (36) NOT NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[StudentRefId] CHAR (36) NOT NULL
+    ,[StudentLocalId] INT NOT NULL
+    ,[TimeTableSubjectRefId] CHAR (36) NOT NULL
+    ,[TimeTableSubjectLocalId] INT NOT NULL
+    ,[PreferenceNumber] INT NULL
+    ,[SubjectAreaTypeCode] VARCHAR (111) NULL
+    ,[OtherSchoolRefId] CHAR (36) NOT NULL
+    ,[OtherSchoolLocalId] INT NULL
+    ,CONSTRAINT [FKRef_StudentSubjectChoice_StudentSchoolEnrollment] FOREIGN KEY ([StudentSchoolEnrollmentRefId]) REFERENCES cdm_demo_gold.Fact3StudentSchoolEnrollment ([RefId])
+    ,CONSTRAINT [FKRef_StudentSubjectChoice_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSubjectChoice_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_StudentSubjectChoice_StudentPersonal] FOREIGN KEY ([StudentRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSubjectChoice_StudentPersonal] FOREIGN KEY ([StudentLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
+    ,CONSTRAINT [FKRef_StudentSubjectChoice_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectRefId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSubjectChoice_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectLocalId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([SubjectLocalId])
+    ,CONSTRAINT [PK_StudentSubjectChoice] PRIMARY KEY ([StudentSchoolEnrollmentRefId],[TimeTableSubjectLocalId])
+    ,CONSTRAINT [FKRef_StudentSubjectChoice_OtherSchoolInfo] FOREIGN KEY ([OtherSchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSubjectChoice_OtherSchoolInfo] FOREIGN KEY ([OtherSchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Fact6StudentSubjectChoice';
+GO
+
+CREATE TABLE cdm_demo_gold.Fact6StudentSubjectChoiceOtherCode (
+     [StudentSchoolEnrollmentRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoRefId] CHAR (36) NOT NULL
+    ,[SchoolInfoLocalId] INT NOT NULL
+    ,[StudentPersonalRefId] CHAR (36) NOT NULL
+    ,[StudentPersonalLocalId] INT NOT NULL
+    ,[TimeTableSubjectRefId] CHAR (36) NOT NULL
+    ,[TimeTableSubjectLocalId] INT NOT NULL
+    ,[Codeset] VARCHAR (13) NOT NULL
+    ,[OtherCodeValue] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_StudentSubjectChoiceOtherCode_StudentSchoolEnrollment] FOREIGN KEY ([StudentSchoolEnrollmentRefId]) REFERENCES cdm_demo_gold.Fact3StudentSchoolEnrollment ([RefId])
+    ,CONSTRAINT [FKRef_StudentSubjectChoiceOtherCode_SchoolInfo] FOREIGN KEY ([SchoolInfoRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSubjectChoiceOtherCode_SchoolInfo] FOREIGN KEY ([SchoolInfoLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_StudentSubjectChoiceOtherCode_StudentPersonal] FOREIGN KEY ([StudentPersonalRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSubjectChoiceOtherCode_StudentPersonal] FOREIGN KEY ([StudentPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
+    ,CONSTRAINT [FKRef_StudentSubjectChoiceOtherCode_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectRefId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSubjectChoiceOtherCode_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectLocalId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([SubjectLocalId])
+    ,CONSTRAINT [FK_StudentSubjectChoiceOtherCode_Codeset] FOREIGN KEY ([Codeset]) REFERENCES cdm_demo_gold.Dim0CodesetForOtherCodeListType ([TypeKey])
+    ,CONSTRAINT [PK_StudentSubjectChoiceOtherCode] PRIMARY KEY ([StudentSchoolEnrollmentRefId],[TimeTableSubjectLocalId],[Codeset])
+);
+PRINT N'Created cdm_demo_gold.Fact6StudentSubjectChoiceOtherCode';
+GO
+
 -- ----------------------- --
 -- 3.11.6 SchoolCourseInfo --
 -- ----------------------- --
@@ -5797,6 +5860,7 @@ CREATE TABLE cdm_demo_gold.Dim6SchoolCourseSubjectAreaOtherCodes (
 );
 PRINT N'Created cdm_demo_gold.Dim6SchoolCourseSubjectAreaOtherCodes';
 GO
+
 -- ------------------------ --
 -- 3.11.13 TimeTableSubject --
 -- ------------------------ --
