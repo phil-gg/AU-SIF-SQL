@@ -2502,6 +2502,21 @@ CREATE TABLE cdm_demo_gold.Dim1EquipmentInfo (
 PRINT N'Created cdm_demo_gold.Dim1EquipmentInfo';
 GO
 
+-- -------------------------- --
+-- 3.11.12 TimeTableContainer --
+-- -------------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim1TimeTableContainer (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_TimeTableContainer] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_TimeTableContainer] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_TimeTableContainer] PRIMARY KEY ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim1TimeTableContainer';
+GO
+
 
 
 
@@ -5571,6 +5586,37 @@ CREATE TABLE cdm_demo_gold.Dim4SchoolCourseInfo (
 );
 PRINT N'Created cdm_demo_gold.Dim4SchoolCourseInfo';
 GO
+-- -------------------------- --
+-- 3.11.12 TimeTableContainer --
+-- -------------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim4TimeTableContainerSchedule (
+     [TimeTableContainerRefId] CHAR (36) NOT NULL
+    ,[TimeTableContainerLocalId] INT NOT NULL
+    ,[TimeTableRefId] CHAR (36) NOT NULL
+    ,[TimeTableLocalId] INT NOT NULL
+    ,[SchoolRefId] CHAR (36) NULL
+    ,[SchoolLocalId] INT NULL
+    ,[SchoolYear] SMALLINT NOT NULL
+    ,[SchoolName] VARCHAR (111) NULL
+    ,[Title] VARCHAR (111) NOT NULL
+    ,[DaysPerCycle] SMALLINT NOT NULL
+    ,[PeriodsPerDay] SMALLINT NOT NULL
+    ,[TeachingPeriodsPerDay] SMALLINT NULL
+    ,[TimeTableCreationDate] DATETIME NULL
+    ,[StartDate] TIME NULL
+    ,[EndDate] TIME NULL
+-- Dont need to repeat TimeTableDayList here; instead source this by joining Dim4TimeTableDay using TimeTable LocalId or RefId FKs above
+    ,CONSTRAINT [FKRef_TimeTableContainerSchedule_TimeTableContainer] FOREIGN KEY ([TimeTableContainerRefId]) REFERENCES cdm_demo_gold.Dim1TimeTableContainer ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableContainerSchedule_TimeTableContainer] FOREIGN KEY ([TimeTableContainerLocalId]) REFERENCES cdm_demo_gold.Dim1TimeTableContainer ([LocalId])
+    ,CONSTRAINT [FKRef_TimeTableContainerSchedule_TimeTable] FOREIGN KEY ([TimeTableRefId]) REFERENCES cdm_demo_gold.Dim3TimeTable ([RefId])
+    ,CONSTRAINT [FKMulti_TimeTableContainerSchedule_TimeTable] FOREIGN KEY ([TimeTableLocalId],[SchoolLocalId],[SchoolYear]) REFERENCES cdm_demo_gold.Dim3TimeTable ([LocalId],[SchoolLocalId],[SchoolYear])
+    ,CONSTRAINT [PK_TimeTableContainerSchedule] PRIMARY KEY ([TimeTableContainerLocalId],[TimeTableLocalId])
+    ,CONSTRAINT [FKRef_TimeTableContainerSchedule_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableContainerSchedule_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim4TimeTableContainerSchedule';
+GO
 
 
 
@@ -6040,6 +6086,49 @@ CREATE TABLE cdm_demo_gold.Dim7TimeTableCell (
 PRINT N'Created cdm_demo_gold.Dim7TimeTableCell';
 GO
 
+-- -------------------------- --
+-- 3.11.12 TimeTableContainer --
+-- -------------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim7TimeTableContainerTeachingGroupScheduleList (
+     [TimeTableContainerRefId] CHAR (36) NOT NULL
+    ,[TimeTableContainerLocalId] INT NOT NULL
+    ,[TeachingGroupRefId] CHAR (36) NOT NULL -- equivalent of EditorGUID
+    ,[TeachingGroupLocalId] INT NOT NULL
+    ,[SchoolYear] SMALLINT NOT NULL
+    ,[ShortName] VARCHAR (111) NOT NULL
+    ,[LongName] VARCHAR (111) NULL
+    ,[GroupType] VARCHAR (111) NULL
+    ,[Set] VARCHAR (111) NULL
+    ,[Block] VARCHAR (111) NULL
+    ,[CurriculumLevel] VARCHAR (111) NULL
+    ,[SchoolRefId] CHAR (36) NULL
+    ,[SchoolLocalId] INT NULL
+    ,[SchoolCourseRefId] CHAR (36) NULL
+    ,[SchoolCourseLocalId] VARCHAR(111) NOT NULL -- FK to Dim4SchoolCourseInfo.CourseCode
+    ,[TimeTableSubjectRefId] CHAR (36) NULL
+    ,[TimeTableSubjectLocalId] INT NULL
+    ,[Semester] bigint NULL
+-- Dont need to repeat StudentList here; instead join to and reuse Dim7TeachingGroupStudentList
+-- Dont need to repeat TeacherList here; instead join to and reuse Dim7TeachingGroupTeacherList
+    ,[MinClassSize] SMALLINT NULL
+    ,[MaxClassSize] SMALLINT NULL
+-- Dont need to repeat TeachingGroupPeriodList here; instead join to and reuse Dim8TeachingGroupPeriodList
+    ,CONSTRAINT [FKRef_TimeTableContainerTeachingGroupScheduleList_TimeTableContainer] FOREIGN KEY ([TimeTableContainerRefId]) REFERENCES cdm_demo_gold.Dim1TimeTableContainer ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableContainerTeachingGroupScheduleList_TimeTableContainer] FOREIGN KEY ([TimeTableContainerLocalId]) REFERENCES cdm_demo_gold.Dim1TimeTableContainer ([LocalId])
+    ,CONSTRAINT [FKRef_TimeTableContainerTeachingGroupScheduleList_TeachingGroup] FOREIGN KEY ([TeachingGroupRefId]) REFERENCES cdm_demo_gold.Dim6TeachingGroup ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableContainerTeachingGroupScheduleList_TeachingGroup] FOREIGN KEY ([TeachingGroupLocalId]) REFERENCES cdm_demo_gold.Dim6TeachingGroup ([LocalId])
+    ,CONSTRAINT [PK_TimeTableContainerTeachingGroupScheduleList] PRIMARY KEY ([TimeTableContainerLocalId],[TeachingGroupLocalId])
+    ,CONSTRAINT [FKRef_TimeTableContainerTeachingGroupScheduleList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableContainerTeachingGroupScheduleList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_TimeTableContainerTeachingGroupScheduleList_SchoolCourseInfo] FOREIGN KEY ([SchoolCourseRefId]) REFERENCES cdm_demo_gold.Dim4SchoolCourseInfo ([RefId])
+    ,CONSTRAINT [FKMulti_TimeTableContainerTeachingGroupScheduleList_SchoolCourseInfo] FOREIGN KEY ([SchoolLocalId],[SchoolCourseLocalId]) REFERENCES cdm_demo_gold.Dim4SchoolCourseInfo ([SchoolLocalId],[CourseCode])
+    ,CONSTRAINT [FKRef_TimeTableContainerTeachingGroupScheduleList_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectRefId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableContainerTeachingGroupScheduleList_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectLocalId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([SubjectLocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim7TimeTableContainerTeachingGroupScheduleList';
+GO
+
 
 
 
@@ -6113,6 +6202,57 @@ CREATE TABLE cdm_demo_gold.Dim8TimeTableCellRoomList (
     ,CONSTRAINT [FKLocal_TimeTableCellRoomList_RoomInfo] FOREIGN KEY ([RoomInfoLocalId]) REFERENCES cdm_demo_gold.Dim3RoomInfo ([LocalId])
 );
 PRINT N'Created cdm_demo_gold.Dim8TimeTableCellRoomList';
+GO
+
+-- -------------------------- --
+-- 3.11.12 TimeTableContainer --
+-- -------------------------- --
+
+CREATE TABLE cdm_demo_gold.Dim8TimeTableContainerScheduleCellList (
+     [TimeTableContainerRefId] CHAR (36) NOT NULL
+    ,[TimeTableContainerLocalId] INT NOT NULL
+    ,[TimeTableCellRefId] CHAR (36) NOT NULL
+    ,[TimeTableCellLocalId] INT NOT NULL
+    ,[TimeTableSubjectRefId] CHAR (36) NULL
+    ,[TimeTableSubjectLocalId] INT NULL
+    ,[TeachingGroupRefId] CHAR (36) NOT NULL
+    ,[TeachingGroupLocalId] INT NOT NULL
+    ,[RoomInfoRefId] CHAR (36) NULL
+    ,[RoomInfoLocalId] INT NULL
+    ,[StaffRefId] CHAR (36) NULL
+    ,[StaffLocalId] INT NULL
+    ,[TimeTableRefId] CHAR (36) NULL
+    ,[TimeTableLocalId] INT NULL
+    ,[RoomNumber] VARCHAR (111) NULL
+    ,[DayId] VARCHAR (111) NOT NULL
+    ,[PeriodId] VARCHAR (111) NOT NULL
+    ,[CellType] VARCHAR (111) NOT NULL
+    ,[SchoolRefId] CHAR (36) NULL
+    ,[SchoolLocalId] INT NULL
+    ,[SchoolYear] SMALLINT NULL
+-- Dont need to repeat TeacherCoverList here; instead source this by joining Dim8TimeTableCellTeacherCoverList using TimeTableCellLocalId & StaffLocalId
+-- Dont need to repeat RoomList here; instead source this by joining Dim8TimeTableCellRoomList using TimeTableCellLocalId & RoomInfoLocalId
+    ,CONSTRAINT [FKRef_TimeTableContainerScheduleCellList_TimeTableContainer] FOREIGN KEY ([TimeTableContainerRefId]) REFERENCES cdm_demo_gold.Dim1TimeTableContainer ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableContainerScheduleCellList_TimeTableContainer] FOREIGN KEY ([TimeTableContainerLocalId]) REFERENCES cdm_demo_gold.Dim1TimeTableContainer ([LocalId])
+    ,CONSTRAINT [FKRef_TimeTableContainerScheduleCellList_TimeTableCell] FOREIGN KEY ([TimeTableCellRefId]) REFERENCES cdm_demo_gold.Dim7TimeTableCell ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableContainerScheduleCellList_TimeTableCell] FOREIGN KEY ([TimeTableCellLocalId]) REFERENCES cdm_demo_gold.Dim7TimeTableCell ([LocalId])
+    ,CONSTRAINT [PK_TimeTableContainerScheduleCellList] PRIMARY KEY ([TimeTableContainerLocalId],[TimeTableCellLocalId])
+    ,CONSTRAINT [FKRef_TimeTableContainerScheduleCellList_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectRefId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableContainerScheduleCellList_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectLocalId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([SubjectLocalId])
+    ,CONSTRAINT [FKRef_TimeTableContainerScheduleCellList_TeachingGroup] FOREIGN KEY ([TeachingGroupRefId]) REFERENCES cdm_demo_gold.Dim6TeachingGroup ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableContainerScheduleCellList_TeachingGroup] FOREIGN KEY ([TeachingGroupLocalId]) REFERENCES cdm_demo_gold.Dim6TeachingGroup ([LocalId])
+    ,CONSTRAINT [FKRef_TimeTableContainerScheduleCellList_RoomInfo] FOREIGN KEY ([RoomInfoRefId]) REFERENCES cdm_demo_gold.Dim3RoomInfo ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableContainerScheduleCellList_RoomInfo] FOREIGN KEY ([RoomInfoLocalId]) REFERENCES cdm_demo_gold.Dim3RoomInfo ([LocalId])
+    ,CONSTRAINT [FKRef_TimeTableContainerScheduleCellList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableContainerScheduleCellList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [FKRef_TimeTableContainerScheduleCellList_TimeTable] FOREIGN KEY ([TimeTableRefId]) REFERENCES cdm_demo_gold.Dim3TimeTable ([RefId])
+    ,CONSTRAINT [FKMulti_TimeTableContainerScheduleCellList_TimeTable] FOREIGN KEY ([TimeTableLocalId],[SchoolLocalId],[SchoolYear]) REFERENCES cdm_demo_gold.Dim3TimeTable ([LocalId],[SchoolLocalId],[SchoolYear])
+    ,CONSTRAINT [FKMulti_TimeTableContainerScheduleCellList_TimeTableDay] FOREIGN KEY ([TimeTableLocalId],[SchoolLocalId],[SchoolYear],[DayId]) REFERENCES cdm_demo_gold.Dim4TimeTableDay ([TimeTableLocalId],[SchoolLocalId],[SchoolYear],[DayId])
+    ,CONSTRAINT [FKMulti_TimeTableContainerScheduleCellList_TimeTablePeriod] FOREIGN KEY ([TimeTableLocalId],[SchoolLocalId],[SchoolYear],[DayId],[PeriodId]) REFERENCES cdm_demo_gold.Dim5TimeTablePeriod ([TimeTableLocalId],[SchoolLocalId],[SchoolYear],[DayId],[PeriodId])
+    ,CONSTRAINT [FKRef_TimeTableContainerScheduleCellList_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_TimeTableContainerScheduleCellList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim8TimeTableContainerScheduleCellList';
 GO
 
 
