@@ -6651,6 +6651,32 @@ CREATE TABLE cdm_demo_gold.Dim6SectionInfoOtherCodes (
 PRINT N'Created cdm_demo_gold.Dim6SectionInfoOtherCodes';
 GO
 
+-- ------------------------------- --
+-- 3.11.8 StudentSectionEnrollment --
+-- ------------------------------- --
+
+CREATE TABLE cdm_demo_gold.Fact6StudentSectionEnrollment (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[StudentRefId] CHAR (36) NOT NULL
+    ,[StudentLocalId] INT NOT NULL
+    ,[SectionInfoRefId] CHAR (36) NOT NULL
+    ,[SectionInfoLocalId] INT NOT NULL
+    ,[SchoolYear] SMALLINT NULL
+    ,[EntryDate] DATE NULL
+    ,[ExitDate] DATE NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_StudentSectionEnrollment] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_StudentSectionEnrollment] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_StudentSectionEnrollment] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FKRef_StudentSectionEnrollment_StudentPersonal] FOREIGN KEY ([StudentRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSectionEnrollment_StudentPersonal] FOREIGN KEY ([StudentLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
+    ,CONSTRAINT [FKRef_StudentSectionEnrollment_SectionInfo] FOREIGN KEY ([SectionInfoRefId]) REFERENCES cdm_demo_gold.Dim5SectionInfo ([RefId])
+    ,CONSTRAINT [FKLocal_StudentSectionEnrollment_SectionInfo] FOREIGN KEY ([SectionInfoLocalId]) REFERENCES cdm_demo_gold.Dim5SectionInfo ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Fact6StudentSectionEnrollment';
+GO
+
 
 
 
