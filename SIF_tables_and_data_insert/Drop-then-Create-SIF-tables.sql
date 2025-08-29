@@ -4597,18 +4597,27 @@ CREATE TABLE cdm_demo_gold.Dim3LearningResourceYearLevels (
 PRINT N'Created cdm_demo_gold.Dim3LearningResourceYearLevels';
 GO
 
-CREATE TABLE cdm_demo_gold.Dim3LearningResourceAustralianCurriculumStrandandSubjectAreas (
+CREATE TABLE cdm_demo_gold.Dim3LearningResourceAustralianCurriculumStrandList (
      [LearningResourceRefId] CHAR (36) NOT NULL
     ,[LearningResourceLocalId] INT NOT NULL
     ,[ACStrand] CHAR (1) NOT NULL
-    ,[SubjectAreaCode] VARCHAR (111) NULL
-    ,CONSTRAINT [FKRef_LearningResourceAustralianCurriculumStrandandSubjectAreas_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
-    ,CONSTRAINT [FKLocal_LearningResourceAustralianCurriculumStrandandSubjectAreas_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
-    ,CONSTRAINT [FK_LearningResourceAustralianCurriculumStrandandSubjectAreas_ACStrand] FOREIGN KEY ([ACStrand]) REFERENCES cdm_demo_gold.Dim0AustralianCurriculumStrand ([TypeKey])
-    ,CONSTRAINT [PK_LearningResourceAustralianCurriculumStrandandSubjectAreas] PRIMARY KEY ([LearningResourceLocalId],[ACStrand])
-    ,CONSTRAINT [RefUnique_SearningResourceAustralianCurriculumStrandandSubjectAreas] UNIQUE ([LearningResourceLocalId],[ACStrand],[SubjectAreaCode])
+    ,CONSTRAINT [FKRef_LearningResourceAustralianCurriculumStrandList_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
+    ,CONSTRAINT [FKLocal_LearningResourceAustralianCurriculumStrandList_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
+    ,CONSTRAINT [FK_LearningResourceAustralianCurriculumStrandList_ACStrand] FOREIGN KEY ([ACStrand]) REFERENCES cdm_demo_gold.Dim0AustralianCurriculumStrand ([TypeKey])
+    ,CONSTRAINT [PK_LearningResourceAustralianCurriculumStrandList] PRIMARY KEY ([LearningResourceLocalId],[ACStrand])
 );
-PRINT N'Created cdm_demo_gold.Dim3LearningResourceAustralianCurriculumStrandandSubjectAreas';
+PRINT N'Created cdm_demo_gold.Dim3LearningResourceAustralianCurriculumStrandList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim3LearningResourceSubjectAreaList (
+     [LearningResourceRefId] CHAR (36) NOT NULL
+    ,[LearningResourceLocalId] INT NOT NULL
+    ,[SubjectAreaCode] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_LearningResourceSubjectAreaList_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
+    ,CONSTRAINT [FKLocal_LearningResourceSubjectAreaList_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
+    ,CONSTRAINT [PK_LearningResourceSubjectAreaList] PRIMARY KEY ([LearningResourceLocalId],[SubjectAreaCode])
+);
+PRINT N'Created cdm_demo_gold.Dim3LearningResourceSubjectAreaList';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim3LearningResourceMediaTypes (
@@ -4762,7 +4771,7 @@ PRINT N'Created cdm_demo_gold.Dim3LibraryPatronStatus';
 GO
 
 -- --------------- --
--- 3.10.5 RoomInfo --
+-- 3.11.4 RoomInfo --
 -- --------------- --
 
 CREATE TABLE cdm_demo_gold.Dim3RoomInfo (
@@ -5410,24 +5419,19 @@ CREATE TABLE cdm_demo_gold.Dim4LearningResourceContactEmails (
 PRINT N'Created cdm_demo_gold.Dim4LearningResourceContactEmails';
 GO
 
--- ---------------------- --
--- 3.8.1 LearningResource --
--- ---------------------- --
-
-CREATE TABLE cdm_demo_gold.Dim4LearningResourceSubjectAreaOtherCodes (
+CREATE TABLE cdm_demo_gold.Dim4LearningResourceSubjectAreaOtherCodeList (
      [LearningResourceRefId] CHAR (36) NOT NULL
     ,[LearningResourceLocalId] INT NOT NULL
-    ,[ACStrand] CHAR (1) NOT NULL
     ,[SubjectAreaCode] VARCHAR (111) NOT NULL
     ,[Codeset] VARCHAR (13) NOT NULL
     ,[OtherCodeValue] VARCHAR (111) NOT NULL
     ,CONSTRAINT [FKRef_LearningResourceSubjectAreaOtherCodes_LearningResource] FOREIGN KEY ([LearningResourceRefId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([RefId])
     ,CONSTRAINT [FKLocal_LearningResourceSubjectAreaOtherCodes_LearningResource] FOREIGN KEY ([LearningResourceLocalId]) REFERENCES cdm_demo_gold.Dim2LearningResource ([LocalId])
-    ,CONSTRAINT [FK_LearningResourceSubjectAreaOtherCodes_ACStrand] FOREIGN KEY ([ACStrand]) REFERENCES cdm_demo_gold.Dim0AustralianCurriculumStrand ([TypeKey])
+    ,CONSTRAINT [FKMulti_LearningResourceSubjectAreaOtherCodes_SubjectAreaCode] FOREIGN KEY ([LearningResourceLocalId],[SubjectAreaCode]) REFERENCES cdm_demo_gold.Dim3LearningResourceSubjectAreaList ([LearningResourceLocalId],[SubjectAreaCode])
     ,CONSTRAINT [FK_LearningResourceSubjectAreaOtherCodes_Codeset] FOREIGN KEY ([Codeset]) REFERENCES cdm_demo_gold.Dim0CodesetForOtherCodeListType ([TypeKey])
-    ,CONSTRAINT [PK_LearningResourceSubjectAreaOtherCodes] PRIMARY KEY ([LearningResourceLocalId],[ACStrand],[SubjectAreaCode])
+    ,CONSTRAINT [PK_LearningResourceSubjectAreaOtherCodes] PRIMARY KEY ([LearningResourceLocalId],[SubjectAreaCode],[Codeset])
 );
-PRINT N'Created cdm_demo_gold.Dim4LearningResourceSubjectAreaOtherCodes';
+PRINT N'Created cdm_demo_gold.Dim4LearningResourceSubjectAreaOtherCodeList';
 GO
 
 CREATE TABLE cdm_demo_gold.Dim4LearningResourceComponentTeachingLearningStrategies (
@@ -5522,7 +5526,7 @@ PRINT N'Created cdm_demo_gold.Dim4LibraryPatronMessageList';
 GO
 
 -- --------------- --
--- 3.10.5 RoomInfo --
+-- 3.11.4 RoomInfo --
 -- --------------- --
 
 CREATE TABLE cdm_demo_gold.Bridge4RoomInfoStaffList (
