@@ -2271,6 +2271,573 @@ INSERT INTO cdm_demo_gold.Dim0TimeTableChangeType ([TypeKey], [TypeValue]) VALUE
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0TimeTableChangeType';
 GO
 
+-- SectionInfo Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0MediumOfInstruction (
+     [TypeKey] CHAR (4) NOT NULL
+    ,[TypeValue] VARCHAR (255) NULL
+    ,CONSTRAINT [PK_MediumOfInstruction] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0MediumOfInstruction';
+INSERT INTO cdm_demo_gold.Dim0MediumOfInstruction ([TypeKey], [TypeValue]) VALUES
+    ('0603', 'Technology-based instruction in classroom'),
+    ('0604', 'Correspondence instruction'),
+    ('0605', 'Face-to-face instruction'),
+    ('0608', 'Virtual/On-line Distance learning'),
+    ('0609', 'Center-based instruction'),
+    ('0610', 'Independent study'),
+    ('0611', 'Internship'),
+    ('9999', 'Other');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0MediumOfInstruction';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0LanguageOfInstruction (
+     [TypeKey] CHAR (4) NOT NULL
+    ,[TypeValue] VARCHAR (255) NULL
+    ,CONSTRAINT [PK_LanguageOfInstruction] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0LanguageOfInstruction';
+INSERT INTO cdm_demo_gold.Dim0LanguageOfInstruction ([TypeKey], [TypeValue]) VALUES
+    ('0000', 'Inadequately Described'),
+    ('0001', 'Non Verbal, so described'),
+    ('0002', 'Not Stated'),
+    ('0003', 'Swiss, so described'),
+    ('0004', 'Cypriot, so described'),
+    ('0005', 'Creole, nfd'),
+    ('0006', 'French Creole, nfd'),
+    ('0007', 'Spanish Creole, nfd'),
+    ('0008', 'Portuguese Creole, nfd'),
+    ('0009', 'Pidgin, nfd'),
+    ('1000', 'Northern European Languages, nfd'),
+    ('1100', 'Celtic, nfd'),
+    ('1101', 'Gaelic (Scotland)'),
+    ('1102', 'Irish'),
+    ('1103', 'Welsh'),
+    ('1199', 'Celtic, nec'),
+    ('1201', 'English'),
+    ('1300', 'German and Related Languages, nfd'),
+    ('1301', 'German'),
+    ('1302', 'Letzeburgish'),
+    ('1303', 'Yiddish'),
+    ('1400', 'Dutch and Related Languages, nfd'),
+    ('1401', 'Dutch'),
+    ('1402', 'Frisian'),
+    ('1403', 'Afrikaans'),
+    ('1500', 'Scandinavian, nfd'),
+    ('1501', 'Danish'),
+    ('1502', 'Icelandic'),
+    ('1503', 'Norwegian'),
+    ('1504', 'Swedish'),
+    ('1599', 'Scandinavian, nec'),
+    ('1600', 'Finnish and Related Languages, nfd'),
+    ('1601', 'Estonian'),
+    ('1602', 'Finnish'),
+    ('1699', 'Finnish and Related Languages, nec'),
+    ('2000', 'Southern European Languages, nfd'),
+    ('2101', 'French'),
+    ('2201', 'Greek'),
+    ('2300', 'Iberian Romance, nfd'),
+    ('2301', 'Catalan'),
+    ('2302', 'Portuguese'),
+    ('2303', 'Spanish'),
+    ('2399', 'Iberian Romance, nec'),
+    ('2401', 'Italian'),
+    ('2501', 'Maltese'),
+    ('2900', 'Other Southern European Languages, nfd'),
+    ('2901', 'Basque'),
+    ('2902', 'Latin'),
+    ('2999', 'Other Southern European Languages, nec'),
+    ('3000', 'Eastern European Languages, nfd'),
+    ('3100', 'Baltic, nfd'),
+    ('3101', 'Latvian'),
+    ('3102', 'Lithuanian'),
+    ('3301', 'Hungarian'),
+    ('3400', 'East Slavic, nfd'),
+    ('3401', 'Belorussian'),
+    ('3402', 'Russian'),
+    ('3403', 'Ukrainian'),
+    ('3500', 'South Slavic, nfd'),
+    ('3501', 'Bosnian'),
+    ('3502', 'Bulgarian'),
+    ('3503', 'Croatian'),
+    ('3504', 'Macedonian'),
+    ('3505', 'Serbian'),
+    ('3506', 'Slovene'),
+    ('3507', 'Serbo-Croatian/Yugoslavian, so described'),
+    ('3600', 'West Slavic, nfd'),
+    ('3601', 'Czech'),
+    ('3602', 'Polish'),
+    ('3603', 'Slovak'),
+    ('3604', 'Czechoslovakian, so described'),
+    ('3900', 'Other Eastern European Languages, nfd'),
+    ('3901', 'Albanian'),
+    ('3903', 'Aromunian (Macedo-Romanian)'),
+    ('3904', 'Romanian'),
+    ('3905', 'Romany'),
+    ('3999', 'Other Eastern European Languages, nec'),
+    ('4000', 'Southwest and Central Asian Languages, nfd'),
+    ('4100', 'Iranic, nfd'),
+    ('4101', 'Kurdish'),
+    ('4102', 'Pashto'),
+    ('4104', 'Balochi'),
+    ('4105', 'Dari'),
+    ('4106', 'Persian (excluding Dari)'),
+    ('4107', 'Hazaraghi'),
+    ('4199', 'Iranic, nec'),
+    ('4200', 'Middle Eastern Semitic Languages, nfd'),
+    ('4202', 'Arabic'),
+    ('4204', 'Hebrew'),
+    ('4206', 'Assyrian Neo-Aramaic'),
+    ('4207', 'Chaldean Neo-Aramaic'),
+    ('4208', 'Mandaean (Mandaic)'),
+    ('4299', 'Middle Eastern Semitic Languages, nec'),
+    ('4300', 'Turkic, nfd'),
+    ('4301', 'Turkish'),
+    ('4302', 'Azeri'),
+    ('4303', 'Tatar'),
+    ('4304', 'Turkmen'),
+    ('4305', 'Uygur'),
+    ('4306', 'Uzbek'),
+    ('4399', 'Turkic, nec'),
+    ('4900', 'Other Southwest and Central Asian Languages, nfd'),
+    ('4901', 'Armenian'),
+    ('4902', 'Georgian'),
+    ('4999', 'Other Southwest and Central Asian Languages, nec'),
+    ('5000', 'Southern Asian Languages, nfd'),
+    ('5100', 'Dravidian, nfd'),
+    ('5101', 'Kannada'),
+    ('5102', 'Malayalam'),
+    ('5103', 'Tamil'),
+    ('5104', 'Telugu'),
+    ('5105', 'Tulu'),
+    ('5199', 'Dravidian, nec'),
+    ('5200', 'Indo-Aryan, nfd'),
+    ('5201', 'Bengali'),
+    ('5202', 'Gujarati'),
+    ('5203', 'Hindi'),
+    ('5204', 'Konkani'),
+    ('5205', 'Marathi'),
+    ('5206', 'Nepali'),
+    ('5207', 'Punjabi'),
+    ('5208', 'Sindhi'),
+    ('5211', 'Sinhalese'),
+    ('5212', 'Urdu'),
+    ('5213', 'Assamese'),
+    ('5214', 'Dhivehi'),
+    ('5215', 'Kashmiri'),
+    ('5216', 'Oriya'),
+    ('5217', 'Fijian Hindustani'),
+    ('5299', 'Indo-Aryan, nec'),
+    ('5999', 'Other Southern Asian Languages'),
+    ('6000', 'Southeast Asian Languages, nfd'),
+    ('6100', 'Burmese and Related Languages, nfd'),
+    ('6101', 'Burmese'),
+    ('6102', 'Chin Haka'),
+    ('6103', 'Karen'),
+    ('6104', 'Rohingya'),
+    ('6105', 'Zomi'),
+    ('6199', 'Burmese and Related Languages, nec'),
+    ('6200', 'Hmong-Mien, nfd'),
+    ('6201', 'Hmong'),
+    ('6299', 'Hmong-Mien, nec'),
+    ('6300', 'Mon-Khmer, nfd'),
+    ('6301', 'Khmer'),
+    ('6302', 'Vietnamese'),
+    ('6303', 'Mon'),
+    ('6399', 'Mon-Khmer, nec'),
+    ('6400', 'Tai, nfd'),
+    ('6401', 'Lao'),
+    ('6402', 'Thai'),
+    ('6499', 'Tai, nec'),
+    ('6500', 'Southeast Asian Austronesian Languages, nfd'),
+    ('6501', 'Bisaya'),
+    ('6502', 'Cebuano'),
+    ('6503', 'IIokano'),
+    ('6504', 'Indonesian'),
+    ('6505', 'Malay'),
+    ('6507', 'Tetum'),
+    ('6508', 'Timorese'),
+    ('6511', 'Tagalog'),
+    ('6512', 'Filipino'),
+    ('6513', 'Acehnese'),
+    ('6514', 'Balinese'),
+    ('6515', 'Bikol'),
+    ('6516', 'Iban'),
+    ('6517', 'Ilonggo (Hiligaynon)'),
+    ('6518', 'Javanese'),
+    ('6521', 'Pampangan'),
+    ('6599', 'Southeast Asian Austronesian Languages, nec'),
+    ('6999', 'Other Southeast Asian Languages'),
+    ('7000', 'Eastern Asian Languages, nfd'),
+    ('7100', 'Chinese, nfd'),
+    ('7101', 'Cantonese'),
+    ('7102', 'Hakka'),
+    ('7104', 'Mandarin'),
+    ('7106', 'Wu'),
+    ('7107', 'Min Nan'),
+    ('7199', 'Chinese, nec'),
+    ('7201', 'Japanese'),
+    ('7301', 'Korean'),
+    ('7900', 'Other Eastern Asian Languages, nfd'),
+    ('7901', 'Tibetan'),
+    ('7902', 'Mongolian'),
+    ('7999', 'Other Eastern Asian Languages, nec'),
+    ('8000', 'Australian Indigenous Languages, nfd'),
+    ('8100', 'Arnhem Land and Daly River Region Languages, nfd'),
+    ('8101', 'Anindilyakwa'),
+    ('8111', 'Maung'),
+    ('8113', 'Ngan''gikurunggurr'),
+    ('8114', 'Nunggubuyu'),
+    ('8115', 'Rembarrnga'),
+    ('8117', 'Tiwi'),
+    ('8121', 'Alawa'),
+    ('8122', 'Dalabon'),
+    ('8123', 'Gudanji'),
+    ('8127', 'Iwaidja'),
+    ('8128', 'Jaminjung'),
+    ('8131', 'Jawoyn'),
+    ('8132', 'Jingulu'),
+    ('8133', 'Kunbarlang'),
+    ('8136', 'Larrakiya'),
+    ('8137', 'Malak Malak'),
+    ('8138', 'Mangarrayi'),
+    ('8141', 'Maringarr'),
+    ('8142', 'Marra'),
+    ('8143', 'Marrithiyel'),
+    ('8144', 'Matngala'),
+    ('8146', 'Murrinh Patha'),
+    ('8147', 'Na-kara'),
+    ('8148', 'Ndjebbana (Gunavidji)'),
+    ('8151', 'Ngalakgan'),
+    ('8152', 'Ngaliwurru'),
+    ('8153', 'Nungali'),
+    ('8154', 'Wambaya'),
+    ('8155', 'Wardaman'),
+    ('8156', 'Amurdak'),
+    ('8157', 'Garrwa'),
+    ('8158', 'Kuwema'),
+    ('8161', 'Marramaninyshi'),
+    ('8162', 'Ngandi'),
+    ('8163', 'Waanyi'),
+    ('8164', 'Wagiman'),
+    ('8165', 'Yanyuwa'),
+    ('8166', 'Marridan (Maridan)'),
+    ('8170', 'Kunwinjkuan, nfd'),
+    ('8171', 'Gundjeihmi'),
+    ('8172', 'Kune'),
+    ('8173', 'Kuninjku'),
+    ('8174', 'Kunwinjku'),
+    ('8175', 'Mayali'),
+    ('8179', 'Kunwinjkuan, nec'),
+    ('8180', 'Burarran, nfd'),
+    ('8181', 'Burarra'),
+    ('8182', 'Gun-nartpa'),
+    ('8183', 'Gurr-goni'),
+    ('8189', 'Burarran, nec'),
+    ('8199', 'Arnhem Land and Daly River Region Languages, nec'),
+    ('8200', 'Yolngu Matha, nfd'),
+    ('8210', 'Dhangu, nfd'),
+    ('8211', 'Galpu'),
+    ('8212', 'Golumala'),
+    ('8213', 'Wangurri'),
+    ('8219', 'Dhangu, nec'),
+    ('8220', 'Dhay''yi, nfd'),
+    ('8221', 'Dhalwangu'),
+    ('8222', 'Djarrwark'),
+    ('8229', 'Dhay''yi, nec'),
+    ('8230', 'Dhuwal, nfd'),
+    ('8231', 'Djambarrpuyngu'),
+    ('8232', 'Djapu'),
+    ('8233', 'Daatiwuy'),
+    ('8234', 'Marrangu'),
+    ('8235', 'Liyagalawumirr'),
+    ('8236', 'Liyagawumirr'),
+    ('8239', 'Dhuwal, nec'),
+    ('8240', 'Dhuwala, nfd'),
+    ('8242', 'Gumatj'),
+    ('8243', 'Gupapuyngu'),
+    ('8244', 'Guyamirrilili'),
+    ('8246', 'Manggalili'),
+    ('8247', 'Wubulkarra'),
+    ('8249', 'Dhuwala, nec'),
+    ('8250', 'Djinang, nfd'),
+    ('8251', 'Wurlaki'),
+    ('8259', 'Djinang, nec'),
+    ('8260', 'Djinba, nfd'),
+    ('8261', 'Ganalbingu'),
+    ('8262', 'Djinba'),
+    ('8263', 'Manyjalpingu'),
+    ('8269', 'Djinba, nec'),
+    ('8270', 'Yakuy, nfd'),
+    ('8271', 'Ritharrngu'),
+    ('8272', 'Wagilak'),
+    ('8279', 'Yakuy, nec'),
+    ('8281', 'Nhangu'),
+    ('8282', 'Yan-nhangu'),
+    ('8289', 'Nhangu, nec'),
+    ('8291', 'Dhuwaya'),
+    ('8292', 'Djangu'),
+    ('8293', 'Madarrpa'),
+    ('8294', 'Warramiri'),
+    ('8295', 'Rirratjingu'),
+    ('8299', 'Other Yolngu Matha, nec'),
+    ('8300', 'Cape York Peninsula Languages, nfd'),
+    ('8301', 'Kuku Yalanji'),
+    ('8302', 'Guugu Yimidhirr'),
+    ('8303', 'Kuuku-Ya''u'),
+    ('8304', 'Wik Mungkan'),
+    ('8305', 'Djabugay'),
+    ('8306', 'Dyirbal'),
+    ('8307', 'Girramay'),
+    ('8308', 'Koko-Bera'),
+    ('8311', 'Kuuk Thayorre'),
+    ('8312', 'Lamalama'),
+    ('8313', 'Yidiny'),
+    ('8314', 'Wik Ngathan'),
+    ('8315', 'Alngith'),
+    ('8316', 'Kugu Muminh'),
+    ('8317', 'Morrobalama'),
+    ('8318', 'Thaynakwith'),
+    ('8321', 'Yupangathi'),
+    ('8322', 'Tjungundji'),
+    ('8399', 'Cape York Peninsula Languages, nec'),
+    ('8400', 'Torres Strait Island Languages, nfd'),
+    ('8401', 'Kalaw Kawaw Ya/Kalaw Lagaw Ya'),
+    ('8402', 'Meriam Mir'),
+    ('8403', 'Yumplatok (Torres Strait Creole)'),
+    ('8500', 'Northern Desert Fringe Area Languages, nfd'),
+    ('8504', 'Bilinarra'),
+    ('8505', 'Gurindji'),
+    ('8506', 'Gurindji Kriol'),
+    ('8507', 'Jaru'),
+    ('8508', 'Light Warlpiri'),
+    ('8511', 'Malngin'),
+    ('8512', 'Mudburra'),
+    ('8514', 'Ngardi'),
+    ('8515', 'Ngarinyman'),
+    ('8516', 'Walmajarri'),
+    ('8517', 'Wanyjirra'),
+    ('8518', 'Warlmanpa'),
+    ('8521', 'Warlpiri'),
+    ('8522', 'Warumungu'),
+    ('8599', 'Northern Desert Fringe Area Languages, nec'),
+    ('8600', 'Arandic, nfd'),
+    ('8603', 'Alyawarr'),
+    ('8606', 'Kaytetye'),
+    ('8607', 'Antekerrepenh'),
+    ('8610', 'Anmatyerr, nfd'),
+    ('8611', 'Central Anmatyerr'),
+    ('8612', 'Eastern Anmatyerr'),
+    ('8619', 'Anmatyerr, nec'),
+    ('8620', 'Arrernte, nfd'),
+    ('8621', 'Eastern Arrernte'),
+    ('8622', 'Western Arrarnta'),
+    ('8629', 'Arrernte, nec'),
+    ('8699', 'Arandic, nec'),
+    ('8700', 'Western Desert Languages, nfd'),
+    ('8703', 'Antikarinya'),
+    ('8704', 'Kartujarra'),
+    ('8705', 'Kukatha'),
+    ('8706', 'Kukatja'),
+    ('8707', 'Luritja'),
+    ('8708', 'Manyjilyjarra'),
+    ('8711', 'Martu Wangka'),
+    ('8712', 'Ngaanyatjarra'),
+    ('8713', 'Pintupi'),
+    ('8714', 'Pitjantjatjara'),
+    ('8715', 'Wangkajunga'),
+    ('8716', 'Wangkatha'),
+    ('8717', 'Warnman'),
+    ('8718', 'Yankunytjatjara'),
+    ('8721', 'Yulparija'),
+    ('8722', 'Tjupany'),
+    ('8799', 'Western Desert Languages, nec'),
+    ('8800', 'Kimberley Area Languages, nfd'),
+    ('8801', 'Bardi'),
+    ('8802', 'Bunuba'),
+    ('8803', 'Gooniyandi'),
+    ('8804', 'Miriwoong'),
+    ('8805', 'Ngarinyin'),
+    ('8806', 'Nyikina'),
+    ('8807', 'Worla'),
+    ('8808', 'Worrorra'),
+    ('8811', 'Wunambal'),
+    ('8812', 'Yawuru'),
+    ('8813', 'Gambera'),
+    ('8814', 'Jawi'),
+    ('8815', 'Kija'),
+    ('8899', 'Kimberley Area Languages, nec'),
+    ('8900', 'Other Australian Indigenous Languages, nfd'),
+    ('8901', 'Adnymathanha'),
+    ('8902', 'Arabana'),
+    ('8903', 'Bandjalang'),
+    ('8904', 'Banyjima'),
+    ('8905', 'Batjala'),
+    ('8906', 'Bidjara'),
+    ('8907', 'Dhanggatti'),
+    ('8908', 'Diyari'),
+    ('8911', 'Gamilaraay'),
+    ('8913', 'Garuwali'),
+    ('8914', 'Githabul'),
+    ('8915', 'Gumbaynggir'),
+    ('8916', 'Kanai'),
+    ('8917', 'Karajarri'),
+    ('8918', 'Kariyarra'),
+    ('8921', 'Kaurna'),
+    ('8922', 'Kayardild'),
+    ('8924', 'Kriol'),
+    ('8925', 'Lardil'),
+    ('8926', 'Mangala'),
+    ('8927', 'Muruwari'),
+    ('8928', 'Narungga'),
+    ('8931', 'Ngarluma'),
+    ('8932', 'Ngarrindjeri'),
+    ('8933', 'Nyamal'),
+    ('8934', 'Nyangumarta'),
+    ('8935', 'Nyungar'),
+    ('8936', 'Paakantyi'),
+    ('8937', 'Palyku/Nyiyaparli'),
+    ('8938', 'Wajarri'),
+    ('8941', 'Wiradjuri'),
+    ('8943', 'Yindjibarndi'),
+    ('8944', 'Yinhawangka'),
+    ('8945', 'Yorta Yorta'),
+    ('8946', 'Baanbay'),
+    ('8947', 'Badimaya'),
+    ('8948', 'Barababaraba'),
+    ('8951', 'Dadi Dadi'),
+    ('8952', 'Dharawal'),
+    ('8953', 'Djabwurrung'),
+    ('8954', 'Gudjal'),
+    ('8955', 'Keerray-Woorroong'),
+    ('8956', 'Ladji Ladji'),
+    ('8957', 'Mirning'),
+    ('8958', 'Ngatjumaya'),
+    ('8961', 'Waluwarra'),
+    ('8962', 'Wangkangurru'),
+    ('8963', 'Wargamay'),
+    ('8964', 'Wergaia'),
+    ('8965', 'Yugambeh'),
+    ('8998', 'Aboriginal English, so described'),
+    ('8999', 'Other Australian Indigenous Languages, nec'),
+    ('9000', 'Other Languages, nfd'),
+    ('9101', 'American Languages'),
+    ('9200', 'African Languages, nfd'),
+    ('9201', 'Acholi'),
+    ('9203', 'Akan'),
+    ('9205', 'Mauritian Creole'),
+    ('9206', 'Oromo'),
+    ('9207', 'Shona'),
+    ('9208', 'Somali'),
+    ('9211', 'Swahili'),
+    ('9212', 'Yoruba'),
+    ('9213', 'Zulu'),
+    ('9214', 'Amharic'),
+    ('9215', 'Bemba'),
+    ('9216', 'Dinka'),
+    ('9217', 'Ewe'),
+    ('9218', 'Ga'),
+    ('9221', 'Harari'),
+    ('9222', 'Hausa'),
+    ('9223', 'Igbo'),
+    ('9224', 'Kikuyu'),
+    ('9225', 'Krio'),
+    ('9226', 'Luganda'),
+    ('9227', 'Luo'),
+    ('9228', 'Ndebele'),
+    ('9231', 'Nuer'),
+    ('9232', 'Nyanja (Chichewa)'),
+    ('9233', 'Shilluk'),
+    ('9234', 'Tigre'),
+    ('9235', 'Tigrinya'),
+    ('9236', 'Tswana'),
+    ('9237', 'Xhosa'),
+    ('9238', 'Seychelles Creole'),
+    ('9241', 'Anuak'),
+    ('9242', 'Bari'),
+    ('9243', 'Bassa'),
+    ('9244', 'Dan (Gio-Dan)'),
+    ('9245', 'Fulfulde'),
+    ('9246', 'Kinyarwanda (Rwanda)'),
+    ('9247', 'Kirundi (Rundi)'),
+    ('9248', 'Kpelle'),
+    ('9251', 'Krahn'),
+    ('9252', 'Liberian (Liberian English)'),
+    ('9253', 'Loma (Lorma)'),
+    ('9254', 'Lumun (Kuku Lumun)'),
+    ('9255', 'Madi'),
+    ('9256', 'Mandinka'),
+    ('9257', 'Mann'),
+    ('9258', 'Moro (Nuba Moro)'),
+    ('9261', 'Themne'),
+    ('9262', 'Lingala'),
+    ('9299', 'African Languages, nec'),
+    ('9300', 'Pacific Austronesian Languages, nfd'),
+    ('9301', 'Fijian'),
+    ('9302', 'Gilbertese'),
+    ('9303', 'Maori (Cook Island)'),
+    ('9304', 'Maori (New Zealand)'),
+    ('9306', 'Nauruan'),
+    ('9307', 'Niue'),
+    ('9308', 'Samoan'),
+    ('9311', 'Tongan'),
+    ('9312', 'Rotuman'),
+    ('9313', 'Tokelauan'),
+    ('9314', 'Tuvaluan'),
+    ('9315', 'Yapese'),
+    ('9399', 'Pacific Austronesian Languages, nec'),
+    ('9400', 'Oceanic Pidgins and Creoles, nfd'),
+    ('9402', 'Bislama'),
+    ('9403', 'Hawaiian English'),
+    ('9404', 'Norf''k-Pitcairn'),
+    ('9405', 'Solomon Islands Pijin'),
+    ('9499', 'Oceanian Pidgins and Creoles, nec'),
+    ('9500', 'Papua New Guinea Languages, nfd'),
+    ('9502', 'Kiwai'),
+    ('9503', 'Motu (HiriMotu)'),
+    ('9504', 'Tok Pisin (Neomelanesian)'),
+    ('9599', 'Papua New Guinea Languages, nec'),
+    ('9601', 'Invented Languages'),
+    ('9700', 'Sign Languages, nfd'),
+    ('9701', 'Auslan'),
+    ('9702', 'Key Word Sign Australia'),
+    ('9799', 'Sign Languages, nec');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0LanguageOfInstruction';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0ReceivingLocationOfInstruction (
+     [TypeKey] CHAR (4) NOT NULL
+    ,[TypeValue] VARCHAR (255) NULL
+    ,CONSTRAINT [PK_ReceivingLocationOfInstruction] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0ReceivingLocationOfInstruction';
+INSERT INTO cdm_demo_gold.Dim0ReceivingLocationOfInstruction ([TypeKey], [TypeValue]) VALUES
+    ('0340', 'In school'),
+    ('0341', 'Other K-12 educational institution'),
+    ('0342', 'Postsecondary facility'),
+    ('0752', 'Community facility'),
+    ('0754', 'Hospital'),
+    ('0997', 'Business'),
+    ('2192', 'Home'),
+    ('3018', 'Library/media centre'),
+    ('3506', 'Mobile'),
+    ('9999', 'Other');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0ReceivingLocationOfInstruction';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0SectionInfoOtherCodeField (
+     [TypeKey] VARCHAR (21) NOT NULL
+    ,CONSTRAINT [PK_SectionInfoOtherCodeField] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0SectionInfoOtherCodeField';
+INSERT INTO cdm_demo_gold.Dim0SectionInfoOtherCodeField ([TypeKey]) VALUES
+    ('MediumOfInstruction'),
+    ('LanguageOfInstruction'),
+    ('LocationOfInstruction'),
+    ('Override_SubjectArea');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0SectionInfoOtherCodeField';
+GO
+
 
 
 
@@ -5178,7 +5745,7 @@ CREATE TABLE cdm_demo_gold.Fact4StaffAssignmentActivityExtensionOtherCode (
     ,CONSTRAINT [FKRef_StaffAssignmentActivityExtensionOtherCode_StaffPersonal] FOREIGN KEY ([StaffPersonalRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
     ,CONSTRAINT [FKLocal_StaffAssignmentActivityExtensionOtherCode_StaffPersonal] FOREIGN KEY ([StaffPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
     ,CONSTRAINT [FK_StaffAssignmentActivityExtensionOtherCode_Codeset] FOREIGN KEY ([Codeset]) REFERENCES cdm_demo_gold.Dim0CodesetForOtherCodeListType ([TypeKey])
-    ,CONSTRAINT [PK_StaffAssignmentActivityExtensionOtherCode] PRIMARY KEY ([StaffAssignmentRefId],[CodeSet])
+    ,CONSTRAINT [PK_StaffAssignmentActivityExtensionOtherCode] PRIMARY KEY ([StaffAssignmentRefId],[Codeset])
 );
 PRINT N'Created cdm_demo_gold.Fact4StaffAssignmentActivityExtensionOtherCode';
 GO
@@ -5259,7 +5826,7 @@ CREATE TABLE cdm_demo_gold.Fact4StudentSchoolEnrollmentOtherCodes (
     ,CONSTRAINT [FKLocal_StudentSchoolEnrollmentOtherCodes_StudentPersonal] FOREIGN KEY ([StudentPersonalLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
     ,CONSTRAINT [FK_StudentSchoolEnrollmentOtherCodes_OtherCodeField] FOREIGN KEY ([OtherCodeField]) REFERENCES cdm_demo_gold.Dim0StudentSchoolEnrollmentOtherCodeField ([TypeKey])
     ,CONSTRAINT [FK_StudentSchoolEnrollmentOtherCodes_Codeset] FOREIGN KEY ([Codeset]) REFERENCES cdm_demo_gold.Dim0CodesetForOtherCodeListType ([TypeKey])
-    ,CONSTRAINT [PK_StudentSchoolEnrollmentOtherCodes] PRIMARY KEY ([StudentSchoolEnrollmentRefId],[OtherCodeField],[CodeSet])
+    ,CONSTRAINT [PK_StudentSchoolEnrollmentOtherCodes] PRIMARY KEY ([StudentSchoolEnrollmentRefId],[OtherCodeField],[Codeset])
 );
 PRINT N'Created cdm_demo_gold.Fact4StudentSchoolEnrollmentOtherCodes';
 GO
@@ -5838,6 +6405,57 @@ CREATE TABLE cdm_demo_gold.Dim5TimeTableSubject (
 PRINT N'Created cdm_demo_gold.Dim5TimeTableSubject';
 GO
 
+-- ------------------ --
+-- 3.11.7 SectionInfo --
+-- ------------------ --
+
+CREATE TABLE cdm_demo_gold.Dim5SectionInfo (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolCourseRefId] CHAR (36) NOT NULL
+    ,[SchoolCourseLocalId] VARCHAR (111) NOT NULL -- FK to Dim4SchoolCourseInfo.CourseCode
+    ,[SchoolYear] SMALLINT NULL
+    ,[TermInfoRefId] CHAR (36) NULL
+    ,[TermInfoLocalId] INT NULL
+    ,[Description] VARCHAR (111) NULL
+    ,[MediumOfInstructionCode] CHAR (4) NULL
+    ,[LanguageOfInstructionCode] CHAR (4) NULL
+    ,[LocationOfInstructionCode] CHAR (4) NULL
+    ,[SummerSchool] VARCHAR (3) NULL
+-- SchoolCourseInfoOverride flattened here:
+    ,[Override_InUse] VARCHAR (3) NOT NULL
+    ,[Override_CourseCode] VARCHAR (111) NULL
+    ,[Override_StateCourseCode] VARCHAR (111) NULL
+    ,[Override_DistrictCourseCode] VARCHAR (111) NULL
+    ,[Override_SubjectAreaCode] VARCHAR (111) NULL
+    ,[Override_CourseTitle] VARCHAR (111) NULL
+    ,[Override_InstructionalLevel] VARCHAR (111) NULL
+    ,[Override_CourseCredits] VARCHAR (111) NULL
+    ,[CourseSectionCode] VARCHAR (111) NULL
+    ,[SectionCode] VARCHAR (111) NULL
+    ,[CountForAttendance] VARCHAR (3) NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_SectionInfo] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_SectionInfo] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_SectionInfo] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FKRef_SectionInfo_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SectionInfo_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_SectionInfo_SchoolCourseInfo] FOREIGN KEY ([SchoolCourseRefId]) REFERENCES cdm_demo_gold.Dim4SchoolCourseInfo ([RefId])
+    ,CONSTRAINT [FKMulti_SectionInfo_SchoolCourseInfo] FOREIGN KEY ([SchoolLocalId],[SchoolCourseLocalId]) REFERENCES cdm_demo_gold.Dim4SchoolCourseInfo ([SchoolLocalId],[CourseCode])
+    ,CONSTRAINT [FKRef_SectionInfo_TermInfo] FOREIGN KEY ([TermInfoRefId]) REFERENCES cdm_demo_gold.Dim3TermInfo ([RefId])
+    ,CONSTRAINT [FKMulti_SectionInfo_TermInfo] FOREIGN KEY ([TermInfoLocalId],[SchoolLocalId],[SchoolYear]) REFERENCES cdm_demo_gold.Dim3TermInfo ([LocalId],[SchoolLocalId],[SchoolYear])
+    ,CONSTRAINT [FK_SectionInfo_MediumOfInstruction] FOREIGN KEY ([MediumOfInstructionCode]) REFERENCES cdm_demo_gold.Dim0MediumOfInstruction ([TypeKey])
+    ,CONSTRAINT [FK_SectionInfo_LanguageOfInstruction] FOREIGN KEY ([LanguageOfInstructionCode]) REFERENCES cdm_demo_gold.Dim0LanguageOfInstruction ([TypeKey])
+    ,CONSTRAINT [FK_SectionInfo_ReceivingLocationOfInstruction] FOREIGN KEY ([LocationOfInstructionCode]) REFERENCES cdm_demo_gold.Dim0ReceivingLocationOfInstruction ([TypeKey])
+    ,CONSTRAINT [FK_SectionInfo_SummerSchool] FOREIGN KEY ([SummerSchool]) REFERENCES cdm_demo_gold.Dim0YesNoOnly ([TypeKey])
+    ,CONSTRAINT [FK_SectionInfo_Override_InUse] FOREIGN KEY ([Override_InUse]) REFERENCES cdm_demo_gold.Dim0YesNoOnly ([TypeKey])
+    ,CONSTRAINT [FK_SectionInfo_CountForAttendance] FOREIGN KEY ([CountForAttendance]) REFERENCES cdm_demo_gold.Dim0YesNoOnly ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim5SectionInfo';
+GO
+
 
 
 
@@ -6012,6 +6630,25 @@ CREATE TABLE cdm_demo_gold.Dim6TeachingGroup (
     ,CONSTRAINT [FK_TeachingGroup_KeyLearningArea] FOREIGN KEY ([KeyLearningArea]) REFERENCES cdm_demo_gold.Dim0AustralianCurriculumStrand ([TypeKey])
 );
 PRINT N'Created cdm_demo_gold.Dim6TeachingGroup';
+GO
+
+-- ------------------ --
+-- 3.11.7 SectionInfo --
+-- ------------------ --
+
+CREATE TABLE cdm_demo_gold.Dim6SectionInfoOtherCodes (
+     [SectionInfoRefId] CHAR (36) NOT NULL
+    ,[SectionInfoLocalId] INT NOT NULL
+    ,[OtherCodeField] VARCHAR (21) NOT NULL
+    ,[Codeset] VARCHAR (13) NOT NULL
+    ,[OtherCodeValue] VARCHAR (111) NOT NULL
+    ,CONSTRAINT [FKRef_SectionInfoOtherCodes_SectionInfo] FOREIGN KEY ([SectionInfoRefId]) REFERENCES cdm_demo_gold.Dim5SectionInfo ([RefId])
+    ,CONSTRAINT [FKLocal_SectionInfoOtherCodes_SectionInfo] FOREIGN KEY ([SectionInfoLocalId]) REFERENCES cdm_demo_gold.Dim5SectionInfo ([LocalId])
+    ,CONSTRAINT [FK_SectionInfoOtherCodes_OtherCodeField] FOREIGN KEY ([OtherCodeField]) REFERENCES cdm_demo_gold.Dim0SectionInfoOtherCodeField ([TypeKey])
+    ,CONSTRAINT [FK_SectionInfoOtherCodes_Codeset] FOREIGN KEY ([Codeset]) REFERENCES cdm_demo_gold.Dim0CodesetForOtherCodeListType ([TypeKey])
+    ,CONSTRAINT [PK_SectionInfoOtherCodes] PRIMARY KEY ([SectionInfolocalId],[OtherCodeField],[Codeset])
+);
+PRINT N'Created cdm_demo_gold.Dim6SectionInfoOtherCodes';
 GO
 
 
