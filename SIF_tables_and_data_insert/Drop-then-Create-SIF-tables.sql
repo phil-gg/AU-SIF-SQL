@@ -6152,7 +6152,7 @@ CREATE TABLE cdm_demo_gold.Dim7TimeTableContainerTeachingGroupScheduleList (
 -- Dont need to repeat TeacherList child to-many table here; instead source this by joining Dim7TeachingGroupTeacherList using TeachingGroupLocalId
     ,[MinClassSize] SMALLINT NULL
     ,[MaxClassSize] SMALLINT NULL
--- Dont need to repeat TeachingGroupPeriodList here; instead join to and reuse Dim8TeachingGroupPeriodList
+-- Dont need to repeat TeachingGroupPeriodList child to-many table here; instead instead source this by joining Dim8TeachingGroupPeriodList using TeachingGroupLocalId
     ,CONSTRAINT [FKRef_TimeTableContainerTeachingGroupScheduleList_TimeTableContainer] FOREIGN KEY ([TimeTableContainerRefId]) REFERENCES cdm_demo_gold.Dim1TimeTableContainer ([RefId])
     ,CONSTRAINT [FKLocal_TimeTableContainerTeachingGroupScheduleList_TimeTableContainer] FOREIGN KEY ([TimeTableContainerLocalId]) REFERENCES cdm_demo_gold.Dim1TimeTableContainer ([LocalId])
     ,CONSTRAINT [FKRef_TimeTableContainerTeachingGroupScheduleList_TeachingGroup] FOREIGN KEY ([TeachingGroupRefId]) REFERENCES cdm_demo_gold.Dim6TeachingGroup ([RefId])
