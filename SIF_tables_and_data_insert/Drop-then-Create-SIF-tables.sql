@@ -2232,6 +2232,45 @@ INSERT INTO cdm_demo_gold.Dim0TeacherCoverSupervision ([TypeKey], [TypeValue]) V
 PRINT N'Inserted SIF values into cdm_demo_gold.Dim0TeacherCoverSupervision';
 GO
 
+-- ScheduledActivity Dim0 items from here
+
+CREATE TABLE cdm_demo_gold.Dim0ScheduledActivityType (
+     [TypeKey] VARCHAR (22) NOT NULL
+    ,[TypeValue] VARCHAR (255) NULL
+    ,CONSTRAINT [PK_ScheduledActivityType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0ScheduledActivityType';
+INSERT INTO cdm_demo_gold.Dim0ScheduledActivityType ([TypeKey], [TypeValue]) VALUES
+    ('Duty', 'Yard duty (cyclical)'),
+    ('Event', 'Anything else (one-off)'),
+    ('Exam', 'Exam (one-off)'),
+    ('Excursion', 'Excursion (one-off)'),
+    ('ExtraCurricular', 'Music, sport, chess club etc (cyclical)'),
+    ('Incursion', 'Excursion held on campus (one-off)'),
+    ('RollClass', 'Morning roll-call (cyclical)'),
+    ('RosteredTimeOff', 'Rostered Time Off (cyclical)'),
+    ('StaffMeeting', 'Staff Meeting (cyclical)'),
+    ('Study', 'Supervised study for students with gaps in their timetables (cyclical)'),
+    ('TeachingClass', 'Classroom teaching (cyclical)');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0ScheduledActivityType';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim0TimeTableChangeType (
+     [TypeKey] VARCHAR (14) NOT NULL
+    ,[TypeValue] VARCHAR (255) NULL
+    ,CONSTRAINT [PK_TimeTableChangeType] PRIMARY KEY ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim0TimeTableChangeType';
+INSERT INTO cdm_demo_gold.Dim0TimeTableChangeType ([TypeKey], [TypeValue]) VALUES
+    ('Cancellation', 'Activity is cancelled, and not merely updated'),
+    ('Event', 'Cyclical activity is overridden with a one-off event, such as an excursion, incursion, exam, assembly, sport day or camp'),
+    ('Mapping', 'Update defines a mapping between a timetable cyclical day and a calendar date'),
+    ('RoomRemoval', 'Remove room from timetabled activity, update may also specify replacement room(s)'),
+    ('StudentChange', 'Change the list of students included in the activity'),
+    ('TeacherAbsence', 'Teacher is absent, update may also specify replacement teacher(s)');
+PRINT N'Inserted SIF values into cdm_demo_gold.Dim0TimeTableChangeType';
+GO
+
 
 
 
@@ -6147,8 +6186,8 @@ CREATE TABLE cdm_demo_gold.Dim8TeachingGroupPeriodList (
     ,[TeachingGroupSchoolYear] SMALLINT NOT NULL
     ,[TimeTableCellRefId] CHAR (36) NOT NULL
     ,[TimeTableCellLocalId] INT NOT NULL
-    ,[StaffRefId] CHAR (36) NOT NULL
-    ,[StaffLocalId] INT NOT NULL
+    ,[StaffRefId] CHAR (36) NULL
+    ,[StaffLocalId] INT NULL
     ,[RoomNumber] VARCHAR (111) NULL
     ,[DayId] VARCHAR (111) NOT NULL
     ,[PeriodId] VARCHAR (111) NULL
@@ -6230,8 +6269,8 @@ CREATE TABLE cdm_demo_gold.Dim8TimeTableContainerScheduleCellList (
     ,[SchoolRefId] CHAR (36) NULL
     ,[SchoolLocalId] INT NULL
     ,[SchoolYear] SMALLINT NULL
--- Dont need to repeat TeacherCoverList here; instead source this by joining Dim8TimeTableCellTeacherCoverList using TimeTableCellLocalId & StaffLocalId
--- Dont need to repeat RoomList here; instead source this by joining Dim8TimeTableCellRoomList using TimeTableCellLocalId & RoomInfoLocalId
+-- Dont need to repeat TeacherCoverList here; instead source this by joining Dim8TimeTableCellTeacherCoverList using TimeTableCellLocalId
+-- Dont need to repeat RoomList here; instead source this by joining Dim8TimeTableCellRoomList using TimeTableCellLocalId
     ,CONSTRAINT [FKRef_TimeTableContainerScheduleCellList_TimeTableContainer] FOREIGN KEY ([TimeTableContainerRefId]) REFERENCES cdm_demo_gold.Dim1TimeTableContainer ([RefId])
     ,CONSTRAINT [FKLocal_TimeTableContainerScheduleCellList_TimeTableContainer] FOREIGN KEY ([TimeTableContainerLocalId]) REFERENCES cdm_demo_gold.Dim1TimeTableContainer ([LocalId])
     ,CONSTRAINT [FKRef_TimeTableContainerScheduleCellList_TimeTableCell] FOREIGN KEY ([TimeTableCellRefId]) REFERENCES cdm_demo_gold.Dim7TimeTableCell ([RefId])
@@ -6253,6 +6292,238 @@ CREATE TABLE cdm_demo_gold.Dim8TimeTableContainerScheduleCellList (
     ,CONSTRAINT [FKLocal_TimeTableContainerScheduleCellList_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
 );
 PRINT N'Created cdm_demo_gold.Dim8TimeTableContainerScheduleCellList';
+GO
+
+-- ------------------------ --
+-- 3.11.5 ScheduledActivity --
+-- ------------------------ --
+
+CREATE TABLE cdm_demo_gold.Dim8ScheduledActivity (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[SchoolRefId] CHAR (36) NOT NULL
+    ,[SchoolLocalId] INT NOT NULL
+    ,[SchoolYear] SMALLINT NOT NULL
+    ,[TimeTableCellRefId] CHAR (36) NULL
+    ,[TimeTableCellLocalId] INT NULL
+    ,[DayId] VARCHAR (111) NULL
+    ,[PeriodId] VARCHAR (111) NULL
+    ,[TimeTableRefId] CHAR (36) NULL
+    ,[TimeTableLocalId] INT NULL
+    ,[ActivityDate] DATE NOT NULL
+    ,[ActivityEndDate] DATE NULL
+    ,[StartTime] TIME NOT NULL
+    ,[FinishTime] TIME NOT NULL
+    ,[CellType] VARCHAR (111) NULL
+    ,[TimeTableSubjectRefId] CHAR (36) NULL
+    ,[TimeTableSubjectLocalId] INT NULL
+    ,[Location] VARCHAR (111) NULL
+    ,[ActivityType] VARCHAR (22) NULL
+    ,[ActivityName] VARCHAR (111) NULL
+    ,[ActivityComment] VARCHAR (111) NULL
+    ,[Override] BIT NULL
+    ,[OverrideDateTime] DATETIME NULL
+-- You can't have separate delta records in a relational structure with unique PKs
+-- (at least not without adding a version field to table PK)
+-- Thus this is a message only field not persisted in the DB:
+--  ,[OverridePatch] BIT NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_ScheduledActivity] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_ScheduledActivity] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_ScheduledActivity] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FKRef_ScheduledActivity_SchoolInfo] FOREIGN KEY ([SchoolRefId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivity_SchoolInfo] FOREIGN KEY ([SchoolLocalId]) REFERENCES cdm_demo_gold.Dim2SchoolInfo ([LocalId])
+    ,CONSTRAINT [FKRef_ScheduledActivity_TimeTableCell] FOREIGN KEY ([TimeTableCellRefId]) REFERENCES cdm_demo_gold.Dim7TimeTableCell ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivity_TimeTableCell] FOREIGN KEY ([TimeTableCellLocalId]) REFERENCES cdm_demo_gold.Dim7TimeTableCell ([LocalId])
+    ,CONSTRAINT [FKMulti_ScheduledActivity_TimeTableDay] FOREIGN KEY ([TimeTableLocalId],[SchoolLocalId],[SchoolYear],[DayId]) REFERENCES cdm_demo_gold.Dim4TimeTableDay ([TimeTableLocalId],[SchoolLocalId],[SchoolYear],[DayId])
+    ,CONSTRAINT [FKMulti_ScheduledActivity_TimeTablePeriod] FOREIGN KEY ([TimeTableLocalId],[SchoolLocalId],[SchoolYear],[DayId],[PeriodId]) REFERENCES cdm_demo_gold.Dim5TimeTablePeriod ([TimeTableLocalId],[SchoolLocalId],[SchoolYear],[DayId],[PeriodId])
+    ,CONSTRAINT [FKRef_ScheduledActivity_TimeTable] FOREIGN KEY ([TimeTableRefId]) REFERENCES cdm_demo_gold.Dim3TimeTable ([RefId])
+    ,CONSTRAINT [FKMulti_ScheduledActivity_TimeTable] FOREIGN KEY ([TimeTableLocalId],[SchoolLocalId],[SchoolYear]) REFERENCES cdm_demo_gold.Dim3TimeTable ([LocalId],[SchoolLocalId],[SchoolYear])
+    ,CONSTRAINT [FKRef_ScheduledActivity_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectRefId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivity_TimeTableSubject] FOREIGN KEY ([TimeTableSubjectLocalId]) REFERENCES cdm_demo_gold.Dim5TimeTableSubject ([SubjectLocalId])
+    ,CONSTRAINT [FKLocal_ScheduledActivity_ActivityType] FOREIGN KEY ([ActivityType]) REFERENCES cdm_demo_gold.Dim0ScheduledActivityType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim8ScheduledActivity';
+GO
+
+
+
+
+
+-- -------------------------------------------------------------------------- --
+-- DEPENDENCY: Tables with 9 in name have FK to table(s) with 8               --
+-- -------------------------------------------------------------------------- --
+
+-- ------------------------ --
+-- 3.11.5 ScheduledActivity --
+-- ------------------------ --
+
+CREATE TABLE cdm_demo_gold.Dim9ScheduledActivityTeacherCoverList (
+     [ScheduledActivityRefId] CHAR (36) NOT NULL
+    ,[ScheduledActivityLocalId] INT NOT NULL
+    ,[StaffRefId] CHAR (36) NOT NULL
+    ,[StaffLocalId] INT NOT NULL
+    ,[StartTime] TIME NULL
+    ,[FinishTime] TIME NULL
+    ,[Credit] VARCHAR (9) NULL
+    ,[Supervision] VARCHAR (18) NULL
+    ,[Weighting] DECIMAL (4,3) NULL
+    ,CONSTRAINT [FKRef_ScheduledActivityTeacherCoverList_ScheduledActivity] FOREIGN KEY ([ScheduledActivityRefId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivityTeacherCoverList_ScheduledActivity] FOREIGN KEY ([ScheduledActivityLocalId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([LocalId])
+    ,CONSTRAINT [PK_ScheduledActivityTeacherCoverList] PRIMARY KEY ([ScheduledActivityLocalId],[StaffLocalId])
+    ,CONSTRAINT [FKRef_ScheduledActivityTeacherCoverList_StaffPersonal] FOREIGN KEY ([StaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivityTeacherCoverList_StaffPersonal] FOREIGN KEY ([StaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [FK_ScheduledActivityTeacherCoverList_Credit] FOREIGN KEY ([Credit]) REFERENCES cdm_demo_gold.Dim0TeacherCoverCredit ([TypeKey])
+    ,CONSTRAINT [FK_ScheduledActivityTeacherCoverList_Supervision] FOREIGN KEY ([Supervision]) REFERENCES cdm_demo_gold.Dim0TeacherCoverSupervision ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim9ScheduledActivityTeacherCoverList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim9ScheduledActivityRoomList (
+     [ScheduledActivityRefId] CHAR (36) NOT NULL
+    ,[ScheduledActivityLocalId] INT NOT NULL
+    ,[RoomInfoRefId] CHAR (36) NOT NULL
+    ,[RoomInfoLocalId] INT NOT NULL
+    ,CONSTRAINT [FKRef_ScheduledActivityRoomList_ScheduledActivity] FOREIGN KEY ([ScheduledActivityRefId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivityRoomList_ScheduledActivity] FOREIGN KEY ([ScheduledActivityLocalId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([LocalId])
+    ,CONSTRAINT [PK_ScheduledActivityRoomList] PRIMARY KEY ([ScheduledActivityLocalId],[RoomInfoLocalId])
+    ,CONSTRAINT [FKRef_ScheduledActivityRoomList_RoomInfo] FOREIGN KEY ([RoomInfoRefId]) REFERENCES cdm_demo_gold.Dim3RoomInfo ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivityRoomList_RoomInfo] FOREIGN KEY ([RoomInfoLocalId]) REFERENCES cdm_demo_gold.Dim3RoomInfo ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim9ScheduledActivityRoomList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim9ScheduledActivityAddressList (
+     [ScheduledActivityRefId] CHAR (36) NOT NULL
+    ,[ScheduledActivityLocalId] INT NOT NULL
+    ,[AddressLocalId] VARCHAR (111) NOT NULL
+    ,[AddressType] VARCHAR (5) NOT NULL
+    ,[AddressRole] CHAR (4) NOT NULL
+    ,[EffectiveFromDate] DATETIME NULL
+    ,[EffectiveToDate] DATETIME NULL
+    ,[AddressStreet_Line1] VARCHAR (111) NULL
+    ,[AddressStreet_Line2] VARCHAR (111) NULL
+    ,[AddressStreet_Line3] VARCHAR (111) NULL
+    ,[AddressStreet_Complex] VARCHAR (111) NULL
+    ,[AddressStreet_StreetNumber] VARCHAR (111) NULL
+    ,[AddressStreet_StreetPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_StreetName] VARCHAR (111) NULL
+    ,[AddressStreet_StreetType] VARCHAR (111) NULL
+    ,[AddressStreet_StreetSuffix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentType] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberPrefix] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumber] VARCHAR (111) NULL
+    ,[AddressStreet_ApartmentNumberSuffix] VARCHAR (111) NULL
+    ,[City] VARCHAR (111) NOT NULL
+    ,[StateProvince] VARCHAR (3) NULL
+    ,[Country] VARCHAR (111) NULL
+    ,[PostalCode] VARCHAR (111) NOT NULL
+-- LatLong to 5dp is accurate to about 1 metre on Earth
+    ,[GridLocation_DecimalLatitude] DECIMAL (7,5) NULL
+    ,[GridLocation_DecimalLongitude] DECIMAL (8,5) NULL
+    ,[MapReference_MapType] VARCHAR (111) NULL
+    ,[MapReference_XCoordinate] VARCHAR (111) NULL
+    ,[MapReference_YCoordinate] VARCHAR (111) NULL
+    ,[MapReference_MapNumber] VARCHAR (111) NULL
+    ,[RadioContact] VARCHAR (111) NULL
+    ,[Community] VARCHAR (111) NULL
+    ,[AddressGlobalUID] VARCHAR (111) NULL
+    ,[StatisticalAreaLevel4Code] CHAR (3) NULL
+    ,[StatisticalAreaLevel4Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel3Code] CHAR (5) NULL
+    ,[StatisticalAreaLevel3Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel2Code] CHAR (9) NULL
+    ,[StatisticalAreaLevel2Name] VARCHAR (50) NULL
+    ,[StatisticalAreaLevel1] CHAR (11) NULL
+    ,[StatisticalAreaMeshBlock] CHAR (11) NULL
+    ,[LocalGovernmentAreaName] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_ScheduledActivityAddressList_ScheduledActivity] FOREIGN KEY ([ScheduledActivityRefId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivityAddressList_ScheduledActivity] FOREIGN KEY ([ScheduledActivityLocalId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([LocalId])
+    ,CONSTRAINT [PK_ScheduledActivityAddressList] PRIMARY KEY ([ScheduledActivityLocalId],[AddressLocalId])
+    ,CONSTRAINT [FK_ScheduledActivityAddressList_AddressType] FOREIGN KEY ([AddressType]) REFERENCES cdm_demo_gold.Dim0AddressType ([TypeKey])
+    ,CONSTRAINT [FK_ScheduledActivityAddressList_AddressRole] FOREIGN KEY ([AddressRole]) REFERENCES cdm_demo_gold.Dim0AddressRole ([TypeKey])
+    ,CONSTRAINT [FK_ScheduledActivityAddressList_StateProvince] FOREIGN KEY ([StateProvince]) REFERENCES cdm_demo_gold.Dim0StateTerritoryCode ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim9ScheduledActivityAddressList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim9ScheduledActivityStudentList (
+     [ScheduledActivityRefId] CHAR (36) NOT NULL
+    ,[ScheduledActivityLocalId] INT NOT NULL
+    ,[StudentRefId] CHAR (36) NOT NULL
+    ,[StudentLocalId] INT NOT NULL
+    ,CONSTRAINT [FKRef_ScheduledActivityStudentList_ScheduledActivity] FOREIGN KEY ([ScheduledActivityRefId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivityStudentList_ScheduledActivity] FOREIGN KEY ([ScheduledActivityLocalId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([LocalId])
+    ,CONSTRAINT [PK_ScheduledActivityStudentList] PRIMARY KEY ([ScheduledActivityLocalId],[StudentLocalId])
+    ,CONSTRAINT [FKRef_ScheduledActivityStudentList_StudentPersonal] FOREIGN KEY ([StudentRefId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivityStudentList_StudentPersonal] FOREIGN KEY ([StudentLocalId]) REFERENCES cdm_demo_gold.Dim1StudentPersonal ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim9ScheduledActivityStudentList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim9ScheduledActivityTeachingGroupList (
+     [ScheduledActivityRefId] CHAR (36) NOT NULL
+    ,[ScheduledActivityLocalId] INT NOT NULL
+    ,[TeachingGroupRefId] CHAR (36) NOT NULL
+    ,[TeachingGroupLocalId] INT NOT NULL
+    ,CONSTRAINT [FKRef_ScheduledActivityTeachingGroupList_ScheduledActivity] FOREIGN KEY ([ScheduledActivityRefId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivityTeachingGroupList_ScheduledActivity] FOREIGN KEY ([ScheduledActivityLocalId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([LocalId])
+    ,CONSTRAINT [PK_ScheduledActivityTeachingGroupList] PRIMARY KEY ([ScheduledActivityLocalId],[TeachingGroupLocalId])
+    ,CONSTRAINT [FKRef_ScheduledActivityTeachingGroupList_TeachingGroup] FOREIGN KEY ([TeachingGroupRefId]) REFERENCES cdm_demo_gold.Dim6TeachingGroup ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivityTeachingGroupList_TeachingGroup] FOREIGN KEY ([TeachingGroupLocalId]) REFERENCES cdm_demo_gold.Dim6TeachingGroup ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Dim9ScheduledActivityTeachingGroupList';
+GO
+
+CREATE TABLE cdm_demo_gold.Dim9ScheduledActivityChangeReasonList (
+     [ScheduledActivityRefId] CHAR (36) NOT NULL
+    ,[ScheduledActivityLocalId] INT NOT NULL
+    ,[TimeTableChangeType] VARCHAR (14) NOT NULL
+    ,[TimeTableChangeNotes] VARCHAR (111) NULL
+    ,CONSTRAINT [FKRef_ScheduledActivityChangeReasonList_ScheduledActivity] FOREIGN KEY ([ScheduledActivityRefId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivityChangeReasonList_ScheduledActivity] FOREIGN KEY ([ScheduledActivityLocalId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([LocalId])
+    ,CONSTRAINT [PK_ScheduledActivityChangeReasonList] PRIMARY KEY ([ScheduledActivityLocalId],[TimeTableChangeType])
+    ,CONSTRAINT [FK_ScheduledActivityChangeReasonList_TimeTableChangeType] FOREIGN KEY ([TimeTableChangeType]) REFERENCES cdm_demo_gold.Dim0TimeTableChangeType ([TypeKey])
+);
+PRINT N'Created cdm_demo_gold.Dim9ScheduledActivityChangeReasonList';
+GO
+
+-- ---------------------- --
+-- 3.11.3 ResourceBooking --
+-- ---------------------- --
+
+CREATE TABLE cdm_demo_gold.Fact9ResourceBooking (
+     [RefId] CHAR (36) NOT NULL
+    ,[LocalId] INT NOT NULL
+    ,[ResourceRefId] CHAR (36) NOT NULL
+    ,[ResourceLocalId] INT NOT NULL
+    ,[ResourceType] VARCHAR (16) NOT NULL
+    ,[StartDateTime] DATETIME NOT NULL
+    ,[FinishDateTime] DATETIME NOT NULL
+    ,[FromPeriod] VARCHAR (111) NULL
+    ,[ToPeriod] VARCHAR (111) NULL
+    ,[BookerStaffRefId] CHAR (36) NOT NULL
+    ,[BookerStaffLocalId] INT NOT NULL
+    ,[Reason] VARCHAR (111) NULL
+    ,[ScheduledActivityRefId] CHAR (36) NULL
+    ,[ScheduledActivityLocalId] INT NULL
+-- You can't have separate delta records in a relational structure with unique PKs
+-- (at least not without adding a version field to table PK)
+-- Thus this is a message only field not persisted in the DB:
+--  ,[KeepOld] BIT NULL
+    ,[ee_Placeholder] VARCHAR (111) NULL
+    ,CONSTRAINT [RefUnique_ResourceBooking] UNIQUE ([RefId])
+    ,CONSTRAINT [RefUUID_ResourceBooking] CHECK ([RefId] LIKE '________-____-7___-____-____________')
+    ,CONSTRAINT [PK_ResourceBooking] PRIMARY KEY ([LocalId])
+    ,CONSTRAINT [FKRef_ResourceBooking_ResourceList] FOREIGN KEY ([ResourceRefId]) REFERENCES cdm_demo_gold.Dim4ResourceList ([RefId])
+    ,CONSTRAINT [FKLocal_ResourceBooking_ResourceList] FOREIGN KEY ([ResourceLocalId]) REFERENCES cdm_demo_gold.Dim4ResourceList ([LocalId])
+    ,CONSTRAINT [FK_ResourceBooking_ResourceType] FOREIGN KEY ([ResourceType]) REFERENCES cdm_demo_gold.Dim0ResourceType ([TypeKey])
+    ,CONSTRAINT [FKRef_ResourceBooking_StaffPersonal] FOREIGN KEY ([BookerStaffRefId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([RefId])
+    ,CONSTRAINT [FKLocal_ResourceBooking_StaffPersonal] FOREIGN KEY ([BookerStaffLocalId]) REFERENCES cdm_demo_gold.Dim1StaffPersonal ([LocalId])
+    ,CONSTRAINT [FKRef_ResourceBooking_ScheduledActivity] FOREIGN KEY ([ScheduledActivityRefId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([RefId])
+    ,CONSTRAINT [FKLocal_ResourceBooking_ScheduledActivity] FOREIGN KEY ([ScheduledActivityLocalId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([LocalId])
+);
+PRINT N'Created cdm_demo_gold.Fact9ResourceBooking';
 GO
 
 
