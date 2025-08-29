@@ -6148,8 +6148,8 @@ CREATE TABLE cdm_demo_gold.Dim7TimeTableContainerTeachingGroupScheduleList (
     ,[TimeTableSubjectRefId] CHAR (36) NULL
     ,[TimeTableSubjectLocalId] INT NULL
     ,[Semester] bigint NULL
--- Dont need to repeat StudentList here; instead join to and reuse Dim7TeachingGroupStudentList
--- Dont need to repeat TeacherList here; instead join to and reuse Dim7TeachingGroupTeacherList
+-- Dont need to repeat StudentList child to-many table here; instead source this by joining Dim7TeachingGroupStudentList using TeachingGroupLocalId
+-- Dont need to repeat TeacherList child to-many table here; instead source this by joining Dim7TeachingGroupTeacherList using TeachingGroupLocalId
     ,[MinClassSize] SMALLINT NULL
     ,[MaxClassSize] SMALLINT NULL
 -- Dont need to repeat TeachingGroupPeriodList here; instead join to and reuse Dim8TeachingGroupPeriodList
@@ -6269,8 +6269,8 @@ CREATE TABLE cdm_demo_gold.Dim8TimeTableContainerScheduleCellList (
     ,[SchoolRefId] CHAR (36) NULL
     ,[SchoolLocalId] INT NULL
     ,[SchoolYear] SMALLINT NULL
--- Dont need to repeat TeacherCoverList here; instead source this by joining Dim8TimeTableCellTeacherCoverList using TimeTableCellLocalId
--- Dont need to repeat RoomList here; instead source this by joining Dim8TimeTableCellRoomList using TimeTableCellLocalId
+-- Dont need to repeat TeacherCoverList child to-many table here; instead source this by joining Dim8TimeTableCellTeacherCoverList using TimeTableCellLocalId
+-- Dont need to repeat RoomList child to-many table here; instead source this by joining Dim8TimeTableCellRoomList using TimeTableCellLocalId
     ,CONSTRAINT [FKRef_TimeTableContainerScheduleCellList_TimeTableContainer] FOREIGN KEY ([TimeTableContainerRefId]) REFERENCES cdm_demo_gold.Dim1TimeTableContainer ([RefId])
     ,CONSTRAINT [FKLocal_TimeTableContainerScheduleCellList_TimeTableContainer] FOREIGN KEY ([TimeTableContainerLocalId]) REFERENCES cdm_demo_gold.Dim1TimeTableContainer ([LocalId])
     ,CONSTRAINT [FKRef_TimeTableContainerScheduleCellList_TimeTableCell] FOREIGN KEY ([TimeTableCellRefId]) REFERENCES cdm_demo_gold.Dim7TimeTableCell ([RefId])
