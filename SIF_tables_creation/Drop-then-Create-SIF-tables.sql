@@ -7142,6 +7142,18 @@ CREATE TABLE cdm_demo_gold.Dim9ScheduledActivityTeachingGroupList (
 PRINT N'Created cdm_demo_gold.Dim9ScheduledActivityTeachingGroupList';
 GO
 
+CREATE TABLE cdm_demo_gold.Dim9ScheduledActivityYearLevels (
+     [ScheduledActivityRefId] CHAR (36) NOT NULL
+    ,[ScheduledActivityLocalId] INT NOT NULL
+    ,[YearLevelCode] VARCHAR (8) NOT NULL
+    ,CONSTRAINT [FKRef_ScheduledActivityYearLevels_ScheduledActivity] FOREIGN KEY ([ScheduledActivityRefId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([RefId])
+    ,CONSTRAINT [FKLocal_ScheduledActivityYearLevels_ScheduledActivity] FOREIGN KEY ([ScheduledActivityLocalId]) REFERENCES cdm_demo_gold.Dim8ScheduledActivity ([LocalId])
+    ,CONSTRAINT [FK_ScheduledActivityYearLevels_YearLevelCode] FOREIGN KEY ([YearLevelCode]) REFERENCES cdm_demo_gold.Dim0YearLevelCode ([TypeKey])
+    ,CONSTRAINT [PK_ScheduledActivityYearLevels] PRIMARY KEY ([ScheduledActivityLocalId],[YearLevelCode])
+);
+PRINT N'Created cdm_demo_gold.Dim9ScheduledActivityYearLevels';
+GO
+
 CREATE TABLE cdm_demo_gold.Dim9ScheduledActivityChangeReasonList (
      [ScheduledActivityRefId] CHAR (36) NOT NULL
     ,[ScheduledActivityLocalId] INT NOT NULL
