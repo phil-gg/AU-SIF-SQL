@@ -41,7 +41,7 @@ However, in line with the source XML tree data structure (and unlike Kimball dim
 
 eMinerva ([introduction](https://web.archive.org/web/20080721004425/http://www.mxl.com/downloads/Schools_product_sheet.pdf), [solution overview](https://web.archive.org/web/20080721004537/http://www.mxl.com/downloads/Schools_Solution_overview.pdf), [student portal](https://web.archive.org/web/20080720032125/http://www.mxl.com/publicsite/default.aspx?sectionid=179)) is a student information management system, built on the ASP.NET framework, with a Microsoft SQL Server data layer.  It was developed by MXL Consolidated Pty Ltd (ASN.MXL, founded 2001).
 
-Large users of eMinerva include Brisbane Catholic Education, and Department for Education Tasmania *(2006 - 2011, since migrated away)*.  eMinerva is/was also one of seven [government accredited student management software systems in New Zealand](https://www.beehive.govt.nz/release/schools-get-choice-accredited-student-management-software).
+Large users of eMinerva include(d) Brisbane Catholic Education, and Department for Education Tasmania.  eMinerva is/was also one of seven [government accredited student management software systems in New Zealand](https://www.beehive.govt.nz/release/schools-get-choice-accredited-student-management-software).
 
 MXL went into administration in 2010, and was bought by UXC Limited (ASX.UXC).  UXC's Eclipse business unit also integrated eMinerva with Microsoft Dynamics and sold it as EduPoint.  Computer Sciences Corporation (CSC) then bought UXC in a deal that closed in 2016.  CSC in turn merged with HP Enterprise in 2017 to create DXC Technology.
 
