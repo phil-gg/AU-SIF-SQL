@@ -27,13 +27,13 @@ This project takes the [AU SIF specification v3.6.3](http://specification.sifass
 Tables are prefixed with: -
  - 'Dim' *(short for Dimension)*, or 'Bridge', or 'Fact', in accordance with the table's function if it was in a Kimball dimensional model, and
 
- - a digit, tracking the dependencies for creating foreign key constraints: -
+ - a digit, tracking the dependencies for creating foreign key (FK) constraints: -
 
-    (0\)    zero for fixed reference information from the SIF specification only;
+    **(0\)**  zero for fixed reference information from the SIF specification only;
 
-    (1\)    one for data ingested from systems of record *(with either no FK constraints or references to Dom0 only)*; and
+    **(1\)**  one for data ingested from systems of record *(with either no FK constraints or references to Dim0 only)*; and
 
-    (2\)    two plus for tables with foreign key (FK) constraints *(each table with digit 'n' has a foreign key (FK) relation to a highest numbered table of 'n – 1')*.
+    **(2\)**  two plus for tables with FK constraints *(each table with digit 'n' has 1..m FK constraints to a highest numbered table of 'n – 1')*.
 
 However, in line with the source XML tree data structure (and unlike Kimball dimensional modelling standard practice), this data model is a snowflake schema, not a star schema.  This architectural decision lines up with the intended use of this project's output, as the companion database to a SIF message broker.  A snowflake schema exactly mapping to AU SIF v3.6.3 will be quicker to integrate with a SIF-compliant data broker, than a flattened star schema.
 
@@ -41,7 +41,7 @@ However, in line with the source XML tree data structure (and unlike Kimball dim
 
 eMinerva ([introduction](https://web.archive.org/web/20080721004425/http://www.mxl.com/downloads/Schools_product_sheet.pdf), [solution overview](https://web.archive.org/web/20080721004537/http://www.mxl.com/downloads/Schools_Solution_overview.pdf), [student portal](https://web.archive.org/web/20080720032125/http://www.mxl.com/publicsite/default.aspx?sectionid=179)) is a student information management system, built on the ASP.NET framework, with a Microsoft SQL Server data layer.  It was developed by MXL Consolidated Pty Ltd (ASN.MXL, founded 2001).
 
-Large users of eMinerva include Brisbane Catholic Education, and Department for Education Tasmania *(2006 - 2011, since migrated away)*.  eMinerva is/was also one of seven [government accredited student management software systems in New Zealand](https://www.beehive.govt.nz/release/schools-get-choice-accredited-student-management-software).
+Large users of eMinerva include(d) Brisbane Catholic Education, and Department for Education Tasmania.  eMinerva is/was also one of seven [government accredited student management software systems in New Zealand](https://www.beehive.govt.nz/release/schools-get-choice-accredited-student-management-software).
 
 MXL went into administration in 2010, and was bought by UXC Limited (ASX.UXC).  UXC's Eclipse business unit also integrated eMinerva with Microsoft Dynamics and sold it as EduPoint.  Computer Sciences Corporation (CSC) then bought UXC in a deal that closed in 2016.  CSC in turn merged with HP Enterprise in 2017 to create DXC Technology.
 
