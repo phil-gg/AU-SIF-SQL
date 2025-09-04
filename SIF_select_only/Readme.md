@@ -4,7 +4,7 @@ SQL scripts here have filenames that each align with one table from **"Drop-then
 They select the data for the target table only, without inserting them into any target SIF tables.
 
 The "tables list" files track all the scripts to be built, and *(with "xxx.yyy" filename prefix)* recommends the order in which  to complete the mappings, and documents the dependency order in which data insert must occur.
-The status table below is a copy-paste of "tables List" columns A to E into [tablesgenerator.com/markdown_tables](https://www.tablesgenerator.com/markdown_tables).
+The status table below is a copy-paste of "tables list" columns A to E into [tablesgenerator.com/markdown_tables](https://www.tablesgenerator.com/markdown_tables).
 
 ## Current state of mapping
 
