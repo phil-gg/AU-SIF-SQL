@@ -6136,7 +6136,7 @@ CREATE TABLE cdm_demo_gold.Dim4ResourceList (
     ,CONSTRAINT [FKRef_ResourceList_RoomInfo] FOREIGN KEY ([RoomInfoContactRefId]) REFERENCES cdm_demo_gold.Dim3RoomInfo ([RefId])
     ,CONSTRAINT [FKLocal_ResourceList_RoomInfo] FOREIGN KEY ([RoomInfoContactLocalId]) REFERENCES cdm_demo_gold.Dim3RoomInfo ([LocalId])
 );
-PRINT N'Created cdm_demo_gold.Dim2ResourceList';
+PRINT N'Created cdm_demo_gold.Dim4ResourceList';
 GO
 
 -- ----------------- --
