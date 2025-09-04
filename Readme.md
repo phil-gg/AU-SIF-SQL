@@ -31,7 +31,7 @@ Tables are prefixed with: -
 
     (0\)    zero for fixed reference information from the SIF specification only;
 
-    (1\)    one for data ingested from systems of record; and
+    (1\)    one for data ingested from systems of record *(with either no FK constraints or references to Dom0 only)*; and
 
     (2\)    two plus for tables with foreign key (FK) constraints *(each table with digit 'n' has a foreign key (FK) relation to a highest numbered table of 'n – 1')*.
 
