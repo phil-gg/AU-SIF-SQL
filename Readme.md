@@ -27,13 +27,13 @@ This project takes the [AU SIF specification v3.6.3](http://specification.sifass
 Tables are prefixed with: -
  - 'Dim' *(short for Dimension)*, or 'Bridge', or 'Fact', in accordance with the table's function if it was in a Kimball dimensional model, and
 
- - a digit, tracking the dependencies for creating foreign key constraints: -
+ - a digit, tracking the dependencies for creating foreign key (FK) constraints: -
 
     **(0\)**  zero for fixed reference information from the SIF specification only;
 
     **(1\)**  one for data ingested from systems of record *(with either no FK constraints or references to Dim0 only)*; and
 
-    **(2\)**  two plus for tables with foreign key (FK) constraints *(each table with digit 'n' has FK relation to a highest numbered table of 'n – 1')*.
+    **(2\)**  two plus for tables with FK constraints *(each table with digit 'n' has 1..m FK constraints to a highest numbered table of 'n – 1')*.
 
 However, in line with the source XML tree data structure (and unlike Kimball dimensional modelling standard practice), this data model is a snowflake schema, not a star schema.  This architectural decision lines up with the intended use of this project's output, as the companion database to a SIF message broker.  A snowflake schema exactly mapping to AU SIF v3.6.3 will be quicker to integrate with a SIF-compliant data broker, than a flattened star schema.
 
