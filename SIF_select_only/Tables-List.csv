@@ -1,0 +1,266 @@
+﻿Create Table Order,TableName,Mapped Yet?,Group,Area,SelectStarQuery,FileName_SelectOnly,FileName_InsertData
+1,Dim0StaffEmploymentStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0StaffEmploymentStatus;,N/A,Drop-then-Create-SIF-tables.sql
+2,Dim0ElectronicIdType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0ElectronicIdType;,N/A,Drop-then-Create-SIF-tables.sql
+3,Dim0NameUsageType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0NameUsageType;,N/A,Drop-then-Create-SIF-tables.sql
+4,Dim0YesNoType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0YesNoType;,N/A,Drop-then-Create-SIF-tables.sql
+5,Dim0IndigenousStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0IndigenousStatus;,N/A,Drop-then-Create-SIF-tables.sql
+6,Dim0SexCode,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0SexCode;,N/A,Drop-then-Create-SIF-tables.sql
+7,Dim0BirthdateVerification,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0BirthdateVerification;,N/A,Drop-then-Create-SIF-tables.sql
+8,Dim0StateTerritoryCode,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0StateTerritoryCode;,N/A,Drop-then-Create-SIF-tables.sql
+9,Dim0AustralianCitizenshipStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0AustralianCitizenshipStatus;,N/A,Drop-then-Create-SIF-tables.sql
+10,Dim0EnglishProficiency,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0EnglishProficiency;,N/A,Drop-then-Create-SIF-tables.sql
+11,Dim0DwellingArrangement,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0DwellingArrangement;,N/A,Drop-then-Create-SIF-tables.sql
+12,Dim0ReligionType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0ReligionType;,N/A,Drop-then-Create-SIF-tables.sql
+13,Dim0PermanentResidentStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0PermanentResidentStatus;,N/A,Drop-then-Create-SIF-tables.sql
+14,Dim0VisaStudyEntitlement,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0VisaStudyEntitlement;,N/A,Drop-then-Create-SIF-tables.sql
+15,Dim0ImmunisationCertificateStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0ImmunisationCertificateStatus;,N/A,Drop-then-Create-SIF-tables.sql
+16,Dim0CulturalEthnicGroups,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0CulturalEthnicGroups;,N/A,Drop-then-Create-SIF-tables.sql
+17,Dim0MaritalStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0MaritalStatus;,N/A,Drop-then-Create-SIF-tables.sql
+18,Dim0AddressType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0AddressType;,N/A,Drop-then-Create-SIF-tables.sql
+19,Dim0AddressRole,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0AddressRole;,N/A,Drop-then-Create-SIF-tables.sql
+20,Dim0SpatialUnitType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0SpatialUnitType;,N/A,Drop-then-Create-SIF-tables.sql
+21,Dim0PhoneNumberType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0PhoneNumberType;,N/A,Drop-then-Create-SIF-tables.sql
+22,Dim0EmailType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0EmailType;,N/A,Drop-then-Create-SIF-tables.sql
+23,Dim0AlertMessageType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0AlertMessageType;,N/A,Drop-then-Create-SIF-tables.sql
+24,Dim0MedicalSeverity,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0MedicalSeverity;,N/A,Drop-then-Create-SIF-tables.sql
+25,Dim0DisabilityNCCDCategory,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0DisabilityNCCDCategory;,N/A,Drop-then-Create-SIF-tables.sql
+26,Dim0PrePrimaryEducationHours,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0PrePrimaryEducationHours;,N/A,Drop-then-Create-SIF-tables.sql
+27,Dim0SchoolEnrollmentType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0SchoolEnrollmentType;,N/A,Drop-then-Create-SIF-tables.sql
+28,Dim0FFPOSStatusCode,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0FFPOSStatusCode;,N/A,Drop-then-Create-SIF-tables.sql
+29,Dim0DisabilityLevelOfAdjustment,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0DisabilityLevelOfAdjustment;,N/A,Drop-then-Create-SIF-tables.sql
+30,Dim0BoardingStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0BoardingStatus;,N/A,Drop-then-Create-SIF-tables.sql
+31,Dim0EmploymentType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0EmploymentType;,N/A,Drop-then-Create-SIF-tables.sql
+32,Dim0SchoolEducationLevelType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0SchoolEducationLevelType;,N/A,Drop-then-Create-SIF-tables.sql
+33,Dim0NonSchoolEducationType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0NonSchoolEducationType;,N/A,Drop-then-Create-SIF-tables.sql
+34,Dim0EducationAgencyType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0EducationAgencyType;,N/A,Drop-then-Create-SIF-tables.sql
+35,Dim0OperationalStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0OperationalStatus;,N/A,Drop-then-Create-SIF-tables.sql
+36,Dim0SchoolLevelType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0SchoolLevelType;,N/A,Drop-then-Create-SIF-tables.sql
+37,Dim0SchoolFocusCode,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0SchoolFocusCode;,N/A,Drop-then-Create-SIF-tables.sql
+38,Dim0ARIAClass,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0ARIAClass;,N/A,Drop-then-Create-SIF-tables.sql
+39,Dim0SessionType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0SessionType;,N/A,Drop-then-Create-SIF-tables.sql
+40,Dim0YearLevelCode,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0YearLevelCode;,N/A,Drop-then-Create-SIF-tables.sql
+41,Dim0FederalElectorateList,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0FederalElectorateList;,N/A,Drop-then-Create-SIF-tables.sql
+42,Dim0SchoolSectorCode,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0SchoolSectorCode;,N/A,Drop-then-Create-SIF-tables.sql
+43,Dim0SystemicStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0SystemicStatus;,N/A,Drop-then-Create-SIF-tables.sql
+44,Dim0SchoolSystemType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0SchoolSystemType;,N/A,Drop-then-Create-SIF-tables.sql
+45,Dim0SchoolGeographicLocationType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0SchoolGeographicLocationType;,N/A,Drop-then-Create-SIF-tables.sql
+46,Dim0SchoolCoEdStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0SchoolCoEdStatus;,N/A,Drop-then-Create-SIF-tables.sql
+47,Dim0AusTimeZoneList,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0AusTimeZoneList;,N/A,Drop-then-Create-SIF-tables.sql
+48,Dim0PartyType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0PartyType;,N/A,Drop-then-Create-SIF-tables.sql
+49,Dim0AuthenticationSource,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0AuthenticationSource;,N/A,Drop-then-Create-SIF-tables.sql
+50,Dim0EncryptionAlgorithm,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0EncryptionAlgorithm;,N/A,Drop-then-Create-SIF-tables.sql
+51,Dim0PermissionCategoryCode,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0PermissionCategoryCode;,N/A,Drop-then-Create-SIF-tables.sql
+52,Dim0PermissionYesNoType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0PermissionYesNoType;,N/A,Drop-then-Create-SIF-tables.sql
+53,Dim0StaffActivity,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0StaffActivity;,N/A,Drop-then-Create-SIF-tables.sql
+54,Dim0RelationshipToStudentType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0RelationshipToStudentType;,N/A,Drop-then-Create-SIF-tables.sql
+55,Dim0ParentRelationshipStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0ParentRelationshipStatus;,N/A,Drop-then-Create-SIF-tables.sql
+56,Dim0ContactSourceType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0ContactSourceType;,N/A,Drop-then-Create-SIF-tables.sql
+57,Dim0ContactMethod,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0ContactMethod;,N/A,Drop-then-Create-SIF-tables.sql
+58,Dim0CodesetForOtherCodeListType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0CodesetForOtherCodeListType;,N/A,Drop-then-Create-SIF-tables.sql
+59,Dim0EnrollmentTimeFrame,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0EnrollmentTimeFrame;,N/A,Drop-then-Create-SIF-tables.sql
+60,Dim0EnrollmentEntryType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0EnrollmentEntryType;,N/A,Drop-then-Create-SIF-tables.sql
+61,Dim0EnrollmentExitWithdrawalType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0EnrollmentExitWithdrawalType;,N/A,Drop-then-Create-SIF-tables.sql
+62,Dim0EnrollmentExitWithdrawalStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0EnrollmentExitWithdrawalStatus;,N/A,Drop-then-Create-SIF-tables.sql
+63,Dim0StudentSchoolEnrollmentOtherCodeField,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0StudentSchoolEnrollmentOtherCodeField;,N/A,Drop-then-Create-SIF-tables.sql
+64,Dim0FullTimePartTimeStatusCode,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0FullTimePartTimeStatusCode;,N/A,Drop-then-Create-SIF-tables.sql
+65,Dim0PublicSchoolCatchmentStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0PublicSchoolCatchmentStatus;,N/A,Drop-then-Create-SIF-tables.sql
+66,Dim0StudentSchoolEnrollmentRecordClosureReason,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0StudentSchoolEnrollmentRecordClosureReason;,N/A,Drop-then-Create-SIF-tables.sql
+67,Dim0StudentSchoolEnrollmentPromotionStatus,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0StudentSchoolEnrollmentPromotionStatus;,N/A,Drop-then-Create-SIF-tables.sql
+68,Dim0TravelMode,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0TravelMode;,N/A,Drop-then-Create-SIF-tables.sql
+69,Dim0TravelAccompaniment,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0TravelAccompaniment;,N/A,Drop-then-Create-SIF-tables.sql
+70,Dim0StudentGroupCategoryCode,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0StudentGroupCategoryCode;,N/A,Drop-then-Create-SIF-tables.sql
+71,Dim0AbstractContentType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0AbstractContentType;,N/A,Drop-then-Create-SIF-tables.sql
+72,Dim0AustralianCurriculumStrand,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0AustralianCurriculumStrand;,N/A,Drop-then-Create-SIF-tables.sql
+73,Dim0TermInfoSessionType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0TermInfoSessionType;,N/A,Drop-then-Create-SIF-tables.sql
+74,Dim0EquipmentType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0EquipmentType;,N/A,Drop-then-Create-SIF-tables.sql
+75,Dim0OwnerOrLocationSIF_RefObject,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0OwnerOrLocationSIF_RefObject;,N/A,Drop-then-Create-SIF-tables.sql
+76,Dim0ResourceType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0ResourceType;,N/A,Drop-then-Create-SIF-tables.sql
+77,Dim0YesNoOnly,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0YesNoOnly;,N/A,Drop-then-Create-SIF-tables.sql
+78,Dim0AcademicYearEntryType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0AcademicYearEntryType;,N/A,Drop-then-Create-SIF-tables.sql
+79,Dim0TeacherCoverCredit,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0TeacherCoverCredit;,N/A,Drop-then-Create-SIF-tables.sql
+80,Dim0TeacherCoverSupervision,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0TeacherCoverSupervision;,N/A,Drop-then-Create-SIF-tables.sql
+81,Dim0ScheduledActivityType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0ScheduledActivityType;,N/A,Drop-then-Create-SIF-tables.sql
+82,Dim0TimeTableChangeType,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0TimeTableChangeType;,N/A,Drop-then-Create-SIF-tables.sql
+83,Dim0MediumOfInstruction,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0MediumOfInstruction;,N/A,Drop-then-Create-SIF-tables.sql
+84,Dim0LanguageOfInstruction,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0LanguageOfInstruction;,N/A,Drop-then-Create-SIF-tables.sql
+85,Dim0ReceivingLocationOfInstruction,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0ReceivingLocationOfInstruction;,N/A,Drop-then-Create-SIF-tables.sql
+86,Dim0SectionInfoOtherCodeField,✅,0,Tables populated by SIF specification,SELECT * FROM cdm_demo_gold.Dim0SectionInfoOtherCodeField;,N/A,Drop-then-Create-SIF-tables.sql
+87,Dim1Country,✅,1,eMinerva sourced reference data,SELECT * FROM cdm_demo_gold.Dim1Country;,001.001_Dim1Country_SelectOnly.sql,001.001_Dim1Country_InsertData.sql
+88,Dim1Languages,✅,1,eMinerva sourced reference data,SELECT * FROM cdm_demo_gold.Dim1Languages;,001.002_Dim1Languages_SelectOnly.sql,001.002_Dim1Languages_InsertData.sql
+89,Dim1VisaSubClass,✅,1,eMinerva sourced reference data,SELECT * FROM cdm_demo_gold.Dim1VisaSubClass;,001.003_Dim1VisaSubClass_SelectOnly.sql,001.003_Dim1VisaSubClass_InsertData.sql
+90,Dim1StaffPersonal,✅,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim1StaffPersonal;,002.001_Dim1StaffPersonal_SelectOnly.sql,002.001_Dim1StaffPersonal_InsertData.sql
+91,Dim1StaffHouseholdContactInfo,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim1StaffHouseholdContactInfo;,002.002_Dim1StaffHouseholdContactInfo_SelectOnly.sql,002.002_Dim1StaffHouseholdContactInfo_InsertData.sql
+100,Dim2StaffList,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffList;,002.003_Dim2StaffList_SelectOnly.sql,002.003_Dim2StaffList_InsertData.sql
+101,Dim2StaffElectronicIdList,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffElectronicIdList;,002.004_Dim2StaffElectronicIdList_SelectOnly.sql,002.004_Dim2StaffElectronicIdList_InsertData.sql
+102,Dim2StaffOtherIdList,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffOtherIdList;,002.005_Dim2StaffOtherIdList_SelectOnly.sql,002.005_Dim2StaffOtherIdList_InsertData.sql
+103,Dim2StaffNames,✅,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffNames;,002.006_Dim2StaffNames_SelectOnly.sql,002.006_Dim2StaffNames_InsertData.sql
+104,Dim2StaffDemographics,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffDemographics;,002.007_Dim2StaffDemographics_SelectOnly.sql,002.007_Dim2StaffDemographics_InsertData.sql
+105,Bridge2StaffCountriesOfCitizenship,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Bridge2StaffCountriesOfCitizenship;,002.008_Bridge2StaffCountriesOfCitizenship_SelectOnly.sql,002.008_Bridge2StaffCountriesOfCitizenship_InsertData.sql
+106,Bridge2StaffCountriesOfResidency,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Bridge2StaffCountriesOfResidency;,002.009_Bridge2StaffCountriesOfResidency_SelectOnly.sql,002.009_Bridge2StaffCountriesOfResidency_InsertData.sql
+107,Bridge2StaffLanguages,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Bridge2StaffLanguages;,002.010_Bridge2StaffLanguages_SelectOnly.sql,002.010_Bridge2StaffLanguages_InsertData.sql
+108,Dim2StaffReligiousEvent,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffReligiousEvent;,002.011_Dim2StaffReligiousEvent_SelectOnly.sql,002.011_Dim2StaffReligiousEvent_InsertData.sql
+109,Dim2StaffPassport,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffPassport;,002.012_Dim2StaffPassport_SelectOnly.sql,002.012_Dim2StaffPassport_InsertData.sql
+110,Dim2StaffAddressList,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffAddressList;,002.013_Dim2StaffAddressList_SelectOnly.sql,002.013_Dim2StaffAddressList_InsertData.sql
+111,Dim2StaffPhoneNumberList,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffPhoneNumberList;,002.014_Dim2StaffPhoneNumberList_SelectOnly.sql,002.014_Dim2StaffPhoneNumberList_InsertData.sql
+112,Dim2StaffEmailList,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffEmailList;,002.015_Dim2StaffEmailList_SelectOnly.sql,002.015_Dim2StaffEmailList_InsertData.sql
+113,Bridge2StaffHouseholdContactInfo,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Bridge2StaffHouseholdContactInfo;,002.016_Bridge2StaffHouseholdContactInfo_SelectOnly.sql,002.016_Bridge2StaffHouseholdContactInfo_InsertData.sql
+114,Dim2StaffHouseholdContactAddressList,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffHouseholdContactAddressList;,002.017_Dim2StaffHouseholdContactAddressList_SelectOnly.sql,002.017_Dim2StaffHouseholdContactAddressList_InsertData.sql
+115,Dim2StaffHouseholdContactPhoneNumberList,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffHouseholdContactPhoneNumberList;,002.018_Dim2StaffHouseholdContactPhoneNumberList_SelectOnly.sql,002.018_Dim2StaffHouseholdContactPhoneNumberList_InsertData.sql
+116,Dim2StaffHouseholdContactEmailList,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffHouseholdContactEmailList;,002.019_Dim2StaffHouseholdContactEmailList_SelectOnly.sql,002.019_Dim2StaffHouseholdContactEmailList_InsertData.sql
+117,Dim2StaffMostRecentNAPLANClassList,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim2StaffMostRecentNAPLANClassList;,002.020_Dim2StaffMostRecentNAPLANClassList_SelectOnly.sql,002.020_Dim2StaffMostRecentNAPLANClassList_InsertData.sql
+193,Dim4StaffPersonalMostRecent,,2,StaffPersonal,SELECT * FROM cdm_demo_gold.Dim4StaffPersonalMostRecent;,002.021_Dim4StaffPersonalMostRecent_SelectOnly.sql,002.021_Dim4StaffPersonalMostRecent_InsertData.sql
+96,Dim1LEAInfo,✅,3,LEAInfo,SELECT * FROM cdm_demo_gold.Dim1LEAInfo;,003.001_Dim1LEAInfo_SelectOnly.sql,003.001_Dim1LEAInfo_InsertData.sql
+153,Dim2LEAAddressList,,3,LEAInfo,SELECT * FROM cdm_demo_gold.Dim2LEAAddressList;,003.002_Dim2LEAAddressList_SelectOnly.sql,003.002_Dim2LEAAddressList_InsertData.sql
+154,Dim2LEAPhoneNumberList,,3,LEAInfo,SELECT * FROM cdm_demo_gold.Dim2LEAPhoneNumberList;,003.003_Dim2LEAPhoneNumberList_SelectOnly.sql,003.003_Dim2LEAPhoneNumberList_InsertData.sql
+155,Dim2LEAContactInfo,,3,LEAInfo,SELECT * FROM cdm_demo_gold.Dim2LEAContactInfo;,003.004_Dim2LEAContactInfo_SelectOnly.sql,003.004_Dim2LEAContactInfo_InsertData.sql
+159,Dim3LEAContactAddressList,,3,LEAInfo,SELECT * FROM cdm_demo_gold.Dim3LEAContactAddressList;,003.005_Dim3LEAContactAddressList_SelectOnly.sql,003.005_Dim3LEAContactAddressList_InsertData.sql
+160,Dim3LEAContactPhoneNumberList,,3,LEAInfo,SELECT * FROM cdm_demo_gold.Dim3LEAContactPhoneNumberList;,003.006_Dim3LEAContactPhoneNumberList_SelectOnly.sql,003.006_Dim3LEAContactPhoneNumberList_InsertData.sql
+161,Dim3LEAContactEmailList,,3,LEAInfo,SELECT * FROM cdm_demo_gold.Dim3LEAContactEmailList;,003.007_Dim3LEAContactEmailList_SelectOnly.sql,003.007_Dim3LEAContactEmailList_InsertData.sql
+156,Dim2SchoolInfo,✅,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim2SchoolInfo;,004.001_Dim2SchoolInfo_SelectOnly.sql,004.001_Dim2SchoolInfo_InsertData.sql
+162,Dim3SchoolACARAIdList,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim3SchoolACARAIdList;,004.002_Dim3SchoolACARAIdList_SelectOnly.sql,004.002_Dim3SchoolACARAIdList_InsertData.sql
+163,Dim3SchoolOtherIdList,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim3SchoolOtherIdList;,004.003_Dim3SchoolOtherIdList_SelectOnly.sql,004.003_Dim3SchoolOtherIdList_InsertData.sql
+164,Dim3SchoolFocus,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim3SchoolFocus;,004.004_Dim3SchoolFocus_SelectOnly.sql,004.004_Dim3SchoolFocus_InsertData.sql
+165,Dim3SchoolAddressList,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim3SchoolAddressList;,004.005_Dim3SchoolAddressList_SelectOnly.sql,004.005_Dim3SchoolAddressList_InsertData.sql
+166,Dim3SchoolPhoneNumberList,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim3SchoolPhoneNumberList;,004.006_Dim3SchoolPhoneNumberList_SelectOnly.sql,004.006_Dim3SchoolPhoneNumberList_InsertData.sql
+167,Dim3SchoolEmailList,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim3SchoolEmailList;,004.007_Dim3SchoolEmailList_SelectOnly.sql,004.007_Dim3SchoolEmailList_InsertData.sql
+168,Dim3SchoolPrincipalPhoneNumberList,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim3SchoolPrincipalPhoneNumberList;,004.008_Dim3SchoolPrincipalPhoneNumberList_SelectOnly.sql,004.008_Dim3SchoolPrincipalPhoneNumberList_InsertData.sql
+169,Dim3SchoolPrincipalEmailList,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim3SchoolPrincipalEmailList;,004.009_Dim3SchoolPrincipalEmailList_SelectOnly.sql,004.009_Dim3SchoolPrincipalEmailList_InsertData.sql
+170,Dim3SchoolContactInfo,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim3SchoolContactInfo;,004.010_Dim3SchoolContactInfo_SelectOnly.sql,004.010_Dim3SchoolContactInfo_InsertData.sql
+171,Dim3SchoolCampus,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim3SchoolCampus;,004.011_Dim3SchoolCampus_SelectOnly.sql,004.011_Dim3SchoolCampus_InsertData.sql
+172,Dim3SchoolGroup,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim3SchoolGroup;,004.012_Dim3SchoolGroup_SelectOnly.sql,004.012_Dim3SchoolGroup_InsertData.sql
+173,Dim3SchoolYearLevels,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim3SchoolYearLevels;,004.013_Dim3SchoolYearLevels_SelectOnly.sql,004.013_Dim3SchoolYearLevels_InsertData.sql
+174,Dim3SchoolEnrollmentByYearLevel,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim3SchoolEnrollmentByYearLevel;,004.014_Dim3SchoolEnrollmentByYearLevel_SelectOnly.sql,004.014_Dim3SchoolEnrollmentByYearLevel_InsertData.sql
+195,Dim4SchoolContactAddressList,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim4SchoolContactAddressList;,004.015_Dim4SchoolContactAddressList_SelectOnly.sql,004.015_Dim4SchoolContactAddressList_InsertData.sql
+196,Dim4SchoolContactPhoneNumberList,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim4SchoolContactPhoneNumberList;,004.016_Dim4SchoolContactPhoneNumberList_SelectOnly.sql,004.016_Dim4SchoolContactPhoneNumberList_InsertData.sql
+197,Dim4SchoolContactEmailList,,4,SchoolInfo,SELECT * FROM cdm_demo_gold.Dim4SchoolContactEmailList;,004.017_Dim4SchoolContactEmailList_SelectOnly.sql,004.017_Dim4SchoolContactEmailList_InsertData.sql
+92,Dim1StudentPersonal,✅,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim1StudentPersonal;,005.001_Dim1StudentPersonal_SelectOnly.sql,005.001_Dim1StudentPersonal_InsertData.sql
+93,Dim1StudentHouseholdContactInfo,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim1StudentHouseholdContactInfo;,005.002_Dim1StudentHouseholdContactInfo_SelectOnly.sql,005.002_Dim1StudentHouseholdContactInfo_InsertData.sql
+118,Dim2StudentList,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentList;,005.003_Dim2StudentList_SelectOnly.sql,005.003_Dim2StudentList_InsertData.sql
+119,Dim2StudentAlertMessages,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentAlertMessages;,005.004_Dim2StudentAlertMessages_SelectOnly.sql,005.004_Dim2StudentAlertMessages_InsertData.sql
+120,Dim2StudentMedicalAlertMessages,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentMedicalAlertMessages;,005.005_Dim2StudentMedicalAlertMessages_SelectOnly.sql,005.005_Dim2StudentMedicalAlertMessages_InsertData.sql
+121,Dim2StudentElectronicIdList,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentElectronicIdList;,005.006_Dim2StudentElectronicIdList_SelectOnly.sql,005.006_Dim2StudentElectronicIdList_InsertData.sql
+122,Dim2StudentOtherIdList,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentOtherIdList;,005.007_Dim2StudentOtherIdList_SelectOnly.sql,005.007_Dim2StudentOtherIdList_InsertData.sql
+123,Dim2StudentNames,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentNames;,005.008_Dim2StudentNames_SelectOnly.sql,005.008_Dim2StudentNames_InsertData.sql
+124,Dim2StudentDemographics,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentDemographics;,005.009_Dim2StudentDemographics_SelectOnly.sql,005.009_Dim2StudentDemographics_InsertData.sql
+125,Bridge2StudentCountriesOfCitizenship,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Bridge2StudentCountriesOfCitizenship;,005.010_Bridge2StudentCountriesOfCitizenship_SelectOnly.sql,005.010_Bridge2StudentCountriesOfCitizenship_InsertData.sql
+126,Bridge2StudentCountriesOfResidency,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Bridge2StudentCountriesOfResidency;,005.011_Bridge2StudentCountriesOfResidency_SelectOnly.sql,005.011_Bridge2StudentCountriesOfResidency_InsertData.sql
+127,Bridge2StudentLanguages,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Bridge2StudentLanguages;,005.012_Bridge2StudentLanguages_SelectOnly.sql,005.012_Bridge2StudentLanguages_InsertData.sql
+128,Dim2StudentReligiousEvent,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentReligiousEvent;,005.013_Dim2StudentReligiousEvent_SelectOnly.sql,005.013_Dim2StudentReligiousEvent_InsertData.sql
+129,Dim2StudentPassport,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentPassport;,005.014_Dim2StudentPassport_SelectOnly.sql,005.014_Dim2StudentPassport_InsertData.sql
+130,Dim2StudentAddressList,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentAddressList;,005.015_Dim2StudentAddressList_SelectOnly.sql,005.015_Dim2StudentAddressList_InsertData.sql
+131,Dim2StudentPhoneNumberList,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentPhoneNumberList;,005.016_Dim2StudentPhoneNumberList_SelectOnly.sql,005.016_Dim2StudentPhoneNumberList_InsertData.sql
+132,Dim2StudentEmailList,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentEmailList;,005.017_Dim2StudentEmailList_SelectOnly.sql,005.017_Dim2StudentEmailList_InsertData.sql
+133,Bridge2StudentHouseholdContactInfo,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Bridge2StudentHouseholdContactInfo;,005.018_Bridge2StudentHouseholdContactInfo_SelectOnly.sql,005.018_Bridge2StudentHouseholdContactInfo_InsertData.sql
+134,Dim2StudentHouseholdContactAddressList,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentHouseholdContactAddressList;,005.019_Dim2StudentHouseholdContactAddressList_SelectOnly.sql,005.019_Dim2StudentHouseholdContactAddressList_InsertData.sql
+135,Dim2StudentHouseholdContactPhoneNumberList,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentHouseholdContactPhoneNumberList;,005.020_Dim2StudentHouseholdContactPhoneNumberList_SelectOnly.sql,005.020_Dim2StudentHouseholdContactPhoneNumberList_InsertData.sql
+136,Dim2StudentHouseholdContactEmailList,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentHouseholdContactEmailList;,005.021_Dim2StudentHouseholdContactEmailList_SelectOnly.sql,005.021_Dim2StudentHouseholdContactEmailList_InsertData.sql
+194,Dim4StudentPersonalMostRecent,,5,StudentPersonal,SELECT * FROM cdm_demo_gold.Dim4StudentPersonalMostRecent;,005.022_Dim4StudentPersonalMostRecent_SelectOnly.sql,005.022_Dim4StudentPersonalMostRecent_InsertData.sql
+180,Fact3StudentSchoolEnrollment,✅,6,StudentSchoolEnrollment,SELECT * FROM cdm_demo_gold.Fact3StudentSchoolEnrollment;,006.001_Fact3StudentSchoolEnrollment_SelectOnly.sql,006.001_Fact3StudentSchoolEnrollment_InsertData.sql
+210,Fact4StudentSchoolEnrollmentOtherCodes,,6,StudentSchoolEnrollment,SELECT * FROM cdm_demo_gold.Fact4StudentSchoolEnrollmentOtherCodes;,006.002_Fact4StudentSchoolEnrollmentOtherCodes_SelectOnly.sql,006.002_Fact4StudentSchoolEnrollmentOtherCodes_InsertData.sql
+211,Fact4StudentSchoolEnrollmentStudentGroup,,6,StudentSchoolEnrollment,SELECT * FROM cdm_demo_gold.Fact4StudentSchoolEnrollmentStudentGroup;,006.003_Fact4StudentSchoolEnrollmentStudentGroup_SelectOnly.sql,006.003_Fact4StudentSchoolEnrollmentStudentGroup_InsertData.sql
+212,Fact4StudentSchoolEnrollmentPublishingPermissions,,6,StudentSchoolEnrollment,SELECT * FROM cdm_demo_gold.Fact4StudentSchoolEnrollmentPublishingPermissions;,006.004_Fact4StudentSchoolEnrollmentPublishingPermissions_SelectOnly.sql,006.004_Fact4StudentSchoolEnrollmentPublishingPermissions_InsertData.sql
+237,Fact6StudentSubjectChoice,,6,StudentSchoolEnrollment,SELECT * FROM cdm_demo_gold.Fact6StudentSubjectChoice;,006.005_Fact6StudentSubjectChoice_SelectOnly.sql,006.005_Fact6StudentSubjectChoice_InsertData.sql
+238,Fact6StudentSubjectChoiceOtherCode,,6,StudentSchoolEnrollment,SELECT * FROM cdm_demo_gold.Fact6StudentSubjectChoiceOtherCode;,006.006_Fact6StudentSubjectChoiceOtherCode_SelectOnly.sql,006.006_Fact6StudentSubjectChoiceOtherCode_InsertData.sql
+178,Fact3StaffAssignment,,7,StaffAssignment,SELECT * FROM cdm_demo_gold.Fact3StaffAssignment;,007.001_Fact3StaffAssignment_SelectOnly.sql,007.001_Fact3StaffAssignment_InsertData.sql
+205,Fact4StaffAssignmentActivityExtension,,7,StaffAssignment,SELECT * FROM cdm_demo_gold.Fact4StaffAssignmentActivityExtension;,007.002_Fact4StaffAssignmentActivityExtension_SelectOnly.sql,007.002_Fact4StaffAssignmentActivityExtension_InsertData.sql
+206,Fact4StaffAssignmentActivityExtensionOtherCode,,7,StaffAssignment,SELECT * FROM cdm_demo_gold.Fact4StaffAssignmentActivityExtensionOtherCode;,007.003_Fact4StaffAssignmentActivityExtensionOtherCode_SelectOnly.sql,007.003_Fact4StaffAssignmentActivityExtensionOtherCode_InsertData.sql
+207,Fact4StaffAssignmentYearLevels,,7,StaffAssignment,SELECT * FROM cdm_demo_gold.Fact4StaffAssignmentYearLevels;,007.004_Fact4StaffAssignmentYearLevels_SelectOnly.sql,007.004_Fact4StaffAssignmentYearLevels_InsertData.sql
+208,Fact4StaffAssignmentCalendarSummaryList,,7,StaffAssignment,SELECT * FROM cdm_demo_gold.Fact4StaffAssignmentCalendarSummaryList;,007.005_Fact4StaffAssignmentCalendarSummaryList_SelectOnly.sql,007.005_Fact4StaffAssignmentCalendarSummaryList_InsertData.sql
+236,Fact6StaffAssignmentSubjectList,,7,StaffAssignment,SELECT * FROM cdm_demo_gold.Fact6StaffAssignmentSubjectList;,007.006_Fact6StaffAssignmentSubjectList_SelectOnly.sql,007.006_Fact6StaffAssignmentSubjectList_InsertData.sql
+94,Dim1StudentContactPersonal,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim1StudentContactPersonal;,008.001_Dim1StudentContactPersonal_SelectOnly.sql,008.001_Dim1StudentContactPersonal_InsertData.sql
+95,Dim1StudentContactHouseholdContactInfo,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim1StudentContactHouseholdContactInfo;,008.002_Dim1StudentContactHouseholdContactInfo_SelectOnly.sql,008.002_Dim1StudentContactHouseholdContactInfo_InsertData.sql
+137,Dim2StudentContactPersonList,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentContactPersonList;,008.003_Dim2StudentContactPersonList_SelectOnly.sql,008.003_Dim2StudentContactPersonList_InsertData.sql
+138,Dim2StudentContactOtherIdList,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentContactOtherIdList;,008.004_Dim2StudentContactOtherIdList_SelectOnly.sql,008.004_Dim2StudentContactOtherIdList_InsertData.sql
+139,Dim2StudentContactNames,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentContactNames;,008.005_Dim2StudentContactNames_SelectOnly.sql,008.005_Dim2StudentContactNames_InsertData.sql
+140,Dim2StudentContactDemographics,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentContactDemographics;,008.006_Dim2StudentContactDemographics_SelectOnly.sql,008.006_Dim2StudentContactDemographics_InsertData.sql
+141,Bridge2StudentContactCountriesOfCitizenship,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Bridge2StudentContactCountriesOfCitizenship;,008.007_Bridge2StudentContactCountriesOfCitizenship_SelectOnly.sql,008.007_Bridge2StudentContactCountriesOfCitizenship_InsertData.sql
+142,Bridge2StudentContactCountriesOfResidency,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Bridge2StudentContactCountriesOfResidency;,008.008_Bridge2StudentContactCountriesOfResidency_SelectOnly.sql,008.008_Bridge2StudentContactCountriesOfResidency_InsertData.sql
+143,Bridge2StudentContactLanguages,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Bridge2StudentContactLanguages;,008.009_Bridge2StudentContactLanguages_SelectOnly.sql,008.009_Bridge2StudentContactLanguages_InsertData.sql
+144,Dim2StudentContactReligiousEvent,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentContactReligiousEvent;,008.010_Dim2StudentContactReligiousEvent_SelectOnly.sql,008.010_Dim2StudentContactReligiousEvent_InsertData.sql
+145,Dim2StudentContactPassport,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentContactPassport;,008.011_Dim2StudentContactPassport_SelectOnly.sql,008.011_Dim2StudentContactPassport_InsertData.sql
+146,Dim2StudentContactAddressList,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentContactAddressList;,008.012_Dim2StudentContactAddressList_SelectOnly.sql,008.012_Dim2StudentContactAddressList_InsertData.sql
+147,Dim2StudentContactPhoneNumberList,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentContactPhoneNumberList;,008.013_Dim2StudentContactPhoneNumberList_SelectOnly.sql,008.013_Dim2StudentContactPhoneNumberList_InsertData.sql
+148,Dim2StudentContactEmailList,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentContactEmailList;,008.014_Dim2StudentContactEmailList_SelectOnly.sql,008.014_Dim2StudentContactEmailList_InsertData.sql
+149,Bridge2StudentContactHouseholdContactInfo,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Bridge2StudentContactHouseholdContactInfo;,008.015_Bridge2StudentContactHouseholdContactInfo_SelectOnly.sql,008.015_Bridge2StudentContactHouseholdContactInfo_InsertData.sql
+150,Dim2StudentContactHouseholdContactAddressList,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentContactHouseholdContactAddressList;,008.016_Dim2StudentContactHouseholdContactAddressList_SelectOnly.sql,008.016_Dim2StudentContactHouseholdContactAddressList_InsertData.sql
+151,Dim2StudentContactHouseholdContactPhoneNumberList,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentContactHouseholdContactPhoneNumberList;,008.017_Dim2StudentContactHouseholdContactPhoneNumberList_SelectOnly.sql,008.017_Dim2StudentContactHouseholdContactPhoneNumberList_InsertData.sql
+152,Dim2StudentContactHouseholdContactEmailList,,8,StudentContactPersonal,SELECT * FROM cdm_demo_gold.Dim2StudentContactHouseholdContactEmailList;,008.018_Dim2StudentContactHouseholdContactEmailList_SelectOnly.sql,008.018_Dim2StudentContactHouseholdContactEmailList_InsertData.sql
+179,Fact3StudentContactRelationship,,9,StudentContactRelationship,SELECT * FROM cdm_demo_gold.Fact3StudentContactRelationship;,009.001_Fact3StudentContactRelationship_SelectOnly.sql,009.001_Fact3StudentContactRelationship_InsertData.sql
+209,Fact4StudentContactRelationshipHouseholdList,,9,StudentContactRelationship,SELECT * FROM cdm_demo_gold.Fact4StudentContactRelationshipHouseholdList;,009.002_Fact4StudentContactRelationshipHouseholdList_SelectOnly.sql,009.002_Fact4StudentContactRelationshipHouseholdList_InsertData.sql
+157,Dim2PartyList,,10,"Party, Identity, PersonPicture & PrivacyObligation(s)",SELECT * FROM cdm_demo_gold.Dim2PartyList;,010.001_Dim2PartyList_SelectOnly.sql,010.001_Dim2PartyList_InsertData.sql
+175,Dim3Identity,,10,"Party, Identity, PersonPicture & PrivacyObligation(s)",SELECT * FROM cdm_demo_gold.Dim3Identity;,010.002_Dim3Identity_SelectOnly.sql,010.002_Dim3Identity_InsertData.sql
+176,Dim3PersonPicture,,10,"Party, Identity, PersonPicture & PrivacyObligation(s)",SELECT * FROM cdm_demo_gold.Dim3PersonPicture;,010.003_Dim3PersonPicture_SelectOnly.sql,010.003_Dim3PersonPicture_InsertData.sql
+177,Dim3PersonPrivacyObligationDocument,,10,"Party, Identity, PersonPicture & PrivacyObligation(s)",SELECT * FROM cdm_demo_gold.Dim3PersonPrivacyObligationDocument;,010.004_Dim3PersonPrivacyObligationDocument_SelectOnly.sql,010.004_Dim3PersonPrivacyObligationDocument_InsertData.sql
+198,Dim4IdentityAssertions,,10,"Party, Identity, PersonPicture & PrivacyObligation(s)",SELECT * FROM cdm_demo_gold.Dim4IdentityAssertions;,010.005_Dim4IdentityAssertions_SelectOnly.sql,010.005_Dim4IdentityAssertions_InsertData.sql
+199,Dim4IdentityPasswordList,,10,"Party, Identity, PersonPicture & PrivacyObligation(s)",SELECT * FROM cdm_demo_gold.Dim4IdentityPasswordList;,010.006_Dim4IdentityPasswordList_SelectOnly.sql,010.006_Dim4IdentityPasswordList_InsertData.sql
+200,Dim4PersonPicturePublishingPermissions,,10,"Party, Identity, PersonPicture & PrivacyObligation(s)",SELECT * FROM cdm_demo_gold.Dim4PersonPicturePublishingPermissions;,010.007_Dim4PersonPicturePublishingPermissions_SelectOnly.sql,010.007_Dim4PersonPicturePublishingPermissions_InsertData.sql
+201,Dim4PersonPrivacySettingLocation,,10,"Party, Identity, PersonPicture & PrivacyObligation(s)",SELECT * FROM cdm_demo_gold.Dim4PersonPrivacySettingLocation;,010.008_Dim4PersonPrivacySettingLocation_SelectOnly.sql,010.008_Dim4PersonPrivacySettingLocation_InsertData.sql
+202,Dim4PersonPrivacyDataDomain,,10,"Party, Identity, PersonPicture & PrivacyObligation(s)",SELECT * FROM cdm_demo_gold.Dim4PersonPrivacyDataDomain;,010.009_Dim4PersonPrivacyDataDomain_SelectOnly.sql,010.009_Dim4PersonPrivacyDataDomain_InsertData.sql
+203,Dim4PersonPrivacyPermissionToParticipate,,10,"Party, Identity, PersonPicture & PrivacyObligation(s)",SELECT * FROM cdm_demo_gold.Dim4PersonPrivacyPermissionToParticipate;,010.010_Dim4PersonPrivacyPermissionToParticipate_SelectOnly.sql,010.010_Dim4PersonPrivacyPermissionToParticipate_InsertData.sql
+204,Dim4PersonPrivacyApplicableLaw,,10,"Party, Identity, PersonPicture & PrivacyObligation(s)",SELECT * FROM cdm_demo_gold.Dim4PersonPrivacyApplicableLaw;,010.011_Dim4PersonPrivacyApplicableLaw_SelectOnly.sql,010.011_Dim4PersonPrivacyApplicableLaw_InsertData.sql
+228,Dim5PersonPrivacyDataDomainShareWith,,10,"Party, Identity, PersonPicture & PrivacyObligation(s)",SELECT * FROM cdm_demo_gold.Dim5PersonPrivacyDataDomainShareWith;,010.012_Dim5PersonPrivacyDataDomainShareWith_SelectOnly.sql,010.012_Dim5PersonPrivacyDataDomainShareWith_InsertData.sql
+229,Dim5PersonPrivacyDataDomainDoNotShareWith,,10,"Party, Identity, PersonPicture & PrivacyObligation(s)",SELECT * FROM cdm_demo_gold.Dim5PersonPrivacyDataDomainDoNotShareWith;,010.013_Dim5PersonPrivacyDataDomainDoNotShareWith_SelectOnly.sql,010.013_Dim5PersonPrivacyDataDomainDoNotShareWith_InsertData.sql
+97,Dim1LearningResourcePackage,,11,LearningResourcePackage,SELECT * FROM cdm_demo_gold.Dim1LearningResourcePackage;,011.001_Dim1LearningResourcePackage_SelectOnly.sql,011.001_Dim1LearningResourcePackage_InsertData.sql
+158,Dim2LearningResource,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim2LearningResource;,012.001_Dim2LearningResource_SelectOnly.sql,012.001_Dim2LearningResource_InsertData.sql
+181,Dim3LearningResourceContacts,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim3LearningResourceContacts;,012.002_Dim3LearningResourceContacts_SelectOnly.sql,012.002_Dim3LearningResourceContacts_InsertData.sql
+182,Dim3LearningResourceYearLevels,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim3LearningResourceYearLevels;,012.003_Dim3LearningResourceYearLevels_SelectOnly.sql,012.003_Dim3LearningResourceYearLevels_InsertData.sql
+183,Dim3LearningResourceAustralianCurriculumStrandList,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim3LearningResourceAustralianCurriculumStrandList;,012.004_Dim3LearningResourceAustralianCurriculumStrandList_SelectOnly.sql,012.004_Dim3LearningResourceAustralianCurriculumStrandList_InsertData.sql
+184,Dim3LearningResourceSubjectAreaList,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim3LearningResourceSubjectAreaList;,012.005_Dim3LearningResourceSubjectAreaList_SelectOnly.sql,012.005_Dim3LearningResourceSubjectAreaList_InsertData.sql
+185,Dim3LearningResourceMediaTypes,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim3LearningResourceMediaTypes;,012.006_Dim3LearningResourceMediaTypes_SelectOnly.sql,012.006_Dim3LearningResourceMediaTypes_InsertData.sql
+186,Dim3LearningResourceApprovals,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim3LearningResourceApprovals;,012.007_Dim3LearningResourceApprovals_SelectOnly.sql,012.007_Dim3LearningResourceApprovals_InsertData.sql
+187,Dim3LearningResourceEvaluations,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim3LearningResourceEvaluations;,012.008_Dim3LearningResourceEvaluations_SelectOnly.sql,012.008_Dim3LearningResourceEvaluations_InsertData.sql
+188,Dim3LearningResourceComponents,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim3LearningResourceComponents;,012.009_Dim3LearningResourceComponents_SelectOnly.sql,012.009_Dim3LearningResourceComponents_InsertData.sql
+213,Dim4LearningResourceContactNames,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim4LearningResourceContactNames;,012.010_Dim4LearningResourceContactNames_SelectOnly.sql,012.010_Dim4LearningResourceContactNames_InsertData.sql
+214,Dim4LearningResourceContactAddresses,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim4LearningResourceContactAddresses;,012.011_Dim4LearningResourceContactAddresses_SelectOnly.sql,012.011_Dim4LearningResourceContactAddresses_InsertData.sql
+215,Dim4LearningResourceContactPhoneNumbers,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim4LearningResourceContactPhoneNumbers;,012.012_Dim4LearningResourceContactPhoneNumbers_SelectOnly.sql,012.012_Dim4LearningResourceContactPhoneNumbers_InsertData.sql
+216,Dim4LearningResourceContactEmails,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim4LearningResourceContactEmails;,012.013_Dim4LearningResourceContactEmails_SelectOnly.sql,012.013_Dim4LearningResourceContactEmails_InsertData.sql
+217,Dim4LearningResourceSubjectAreaOtherCodeList,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim4LearningResourceSubjectAreaOtherCodeList;,012.014_Dim4LearningResourceSubjectAreaOtherCodeList_SelectOnly.sql,012.014_Dim4LearningResourceSubjectAreaOtherCodeList_InsertData.sql
+218,Dim4LearningResourceComponentTeachingLearningStrategies,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim4LearningResourceComponentTeachingLearningStrategies;,012.015_Dim4LearningResourceComponentTeachingLearningStrategies_SelectOnly.sql,012.015_Dim4LearningResourceComponentTeachingLearningStrategies_InsertData.sql
+219,Dim4LearningResourceComponentAssociatedObjects,,12,LearningResource,SELECT * FROM cdm_demo_gold.Dim4LearningResourceComponentAssociatedObjects;,012.016_Dim4LearningResourceComponentAssociatedObjects_SelectOnly.sql,012.016_Dim4LearningResourceComponentAssociatedObjects_InsertData.sql
+98,Dim1EquipmentInfo,,13,EquipmentInfo,SELECT * FROM cdm_demo_gold.Dim1EquipmentInfo;,013.001_Dim1EquipmentInfo_SelectOnly.sql,013.001_Dim1EquipmentInfo_InsertData.sql
+191,Dim3RoomInfo,,14,RoomInfo,SELECT * FROM cdm_demo_gold.Dim3RoomInfo;,014.001_Dim3RoomInfo_SelectOnly.sql,014.001_Dim3RoomInfo_InsertData.sql
+223,Dim4RoomInfoStaffList,,14,RoomInfo,SELECT * FROM cdm_demo_gold.Dim4RoomInfoStaffList;,014.002_Dim4RoomInfoStaffList_SelectOnly.sql,014.002_Dim4RoomInfoStaffList_InsertData.sql
+224,Dim4ResourceList,,15,ResourceList,SELECT * FROM cdm_demo_gold.Dim4ResourceList;,015.001_Dim4ResourceList_SelectOnly.sql,015.001_Dim4ResourceList_InsertData.sql
+190,Dim3LibraryPatronStatus,,16,LibraryPatronStatus,SELECT * FROM cdm_demo_gold.Dim3LibraryPatronStatus;,016.001_Dim3LibraryPatronStatus_SelectOnly.sql,016.001_Dim3LibraryPatronStatus_InsertData.sql
+220,Dim4LibraryPatronElectronicIdList,,16,LibraryPatronStatus,SELECT * FROM cdm_demo_gold.Dim4LibraryPatronElectronicIdList;,016.002_Dim4LibraryPatronElectronicIdList_SelectOnly.sql,016.002_Dim4LibraryPatronElectronicIdList_InsertData.sql
+221,Dim4LibraryPatronTransactionList,,16,LibraryPatronStatus,SELECT * FROM cdm_demo_gold.Dim4LibraryPatronTransactionList;,016.003_Dim4LibraryPatronTransactionList_SelectOnly.sql,016.003_Dim4LibraryPatronTransactionList_InsertData.sql
+222,Dim4LibraryPatronMessageList,,16,LibraryPatronStatus,SELECT * FROM cdm_demo_gold.Dim4LibraryPatronMessageList;,016.004_Dim4LibraryPatronMessageList_SelectOnly.sql,016.004_Dim4LibraryPatronMessageList_InsertData.sql
+230,Dim5LibraryItemElectronicIdList,,16,LibraryPatronStatus,SELECT * FROM cdm_demo_gold.Dim5LibraryItemElectronicIdList;,016.005_Dim5LibraryItemElectronicIdList_SelectOnly.sql,016.005_Dim5LibraryItemElectronicIdList_InsertData.sql
+189,Dim3TermInfo,,17,TermInfo,SELECT * FROM cdm_demo_gold.Dim3TermInfo;,017.001_Dim3TermInfo_SelectOnly.sql,017.001_Dim3TermInfo_InsertData.sql
+226,Dim4SchoolCourseInfo,,18,SchoolCourseInfo,SELECT * FROM cdm_demo_gold.Dim4SchoolCourseInfo;,018.001_Dim4SchoolCourseInfo_SelectOnly.sql,018.001_Dim4SchoolCourseInfo_InsertData.sql
+232,Dim5SchoolCourseSubjectAreaList,,18,SchoolCourseInfo,SELECT * FROM cdm_demo_gold.Dim5SchoolCourseSubjectAreaList;,018.002_Dim5SchoolCourseSubjectAreaList_SelectOnly.sql,018.002_Dim5SchoolCourseSubjectAreaList_InsertData.sql
+239,Dim6SchoolCourseSubjectAreaOtherCodes,,18,SchoolCourseInfo,SELECT * FROM cdm_demo_gold.Dim6SchoolCourseSubjectAreaOtherCodes;,018.003_Dim6SchoolCourseSubjectAreaOtherCodes_SelectOnly.sql,018.003_Dim6SchoolCourseSubjectAreaOtherCodes_InsertData.sql
+235,Dim5SectionInfo,,19,SectionInfo,SELECT * FROM cdm_demo_gold.Dim5SectionInfo;,019.001_Dim5SectionInfo_SelectOnly.sql,019.001_Dim5SectionInfo_InsertData.sql
+242,Dim6SectionInfoOtherCodes,,19,SectionInfo,SELECT * FROM cdm_demo_gold.Dim6SectionInfoOtherCodes;,019.002_Dim6SectionInfoOtherCodes_SelectOnly.sql,019.002_Dim6SectionInfoOtherCodes_InsertData.sql
+243,Fact6StudentSectionEnrollment,,20,StudentSectionEnrollment,SELECT * FROM cdm_demo_gold.Fact6StudentSectionEnrollment;,020.001_Fact6StudentSectionEnrollment_SelectOnly.sql,020.001_Fact6StudentSectionEnrollment_InsertData.sql
+192,Dim3TimeTable,,21,TimeTable,SELECT * FROM cdm_demo_gold.Dim3TimeTable;,021.001_Dim3TimeTable_SelectOnly.sql,021.001_Dim3TimeTable_InsertData.sql
+225,Dim4TimeTableDay,,21,TimeTable,SELECT * FROM cdm_demo_gold.Dim4TimeTableDay;,021.002_Dim4TimeTableDay_SelectOnly.sql,021.002_Dim4TimeTableDay_InsertData.sql
+231,Dim5TimeTablePeriod,,21,TimeTable,SELECT * FROM cdm_demo_gold.Dim5TimeTablePeriod;,021.003_Dim5TimeTablePeriod_SelectOnly.sql,021.003_Dim5TimeTablePeriod_InsertData.sql
+233,Dim5TimeTableSubject,,22,TimeTableSubject,SELECT * FROM cdm_demo_gold.Dim5TimeTableSubject;,022.001_Dim5TimeTableSubject_SelectOnly.sql,022.001_Dim5TimeTableSubject_InsertData.sql
+240,Dim6TimeTableSubjectOtherCodes,,22,TimeTableSubject,SELECT * FROM cdm_demo_gold.Dim6TimeTableSubjectOtherCodes;,022.002_Dim6TimeTableSubjectOtherCodes_SelectOnly.sql,022.002_Dim6TimeTableSubjectOtherCodes_InsertData.sql
+241,Dim6TeachingGroup,,23,TeachingGroup,SELECT * FROM cdm_demo_gold.Dim6TeachingGroup;,023.001_Dim6TeachingGroup_SelectOnly.sql,023.001_Dim6TeachingGroup_InsertData.sql
+244,Dim7TeachingGroupStudentList,,23,TeachingGroup,SELECT * FROM cdm_demo_gold.Dim7TeachingGroupStudentList;,023.002_Dim7TeachingGroupStudentList_SelectOnly.sql,023.002_Dim7TeachingGroupStudentList_InsertData.sql
+245,Dim7TeachingGroupTeacherList,,23,TeachingGroup,SELECT * FROM cdm_demo_gold.Dim7TeachingGroupTeacherList;,023.003_Dim7TeachingGroupTeacherList_SelectOnly.sql,023.003_Dim7TeachingGroupTeacherList_InsertData.sql
+248,Dim8TeachingGroupPeriodList,,23,TeachingGroup,SELECT * FROM cdm_demo_gold.Dim8TeachingGroupPeriodList;,023.004_Dim8TeachingGroupPeriodList_SelectOnly.sql,023.004_Dim8TeachingGroupPeriodList_InsertData.sql
+246,Dim7TimeTableCell,,24,TimeTableCell,SELECT * FROM cdm_demo_gold.Dim7TimeTableCell;,024.001_Dim7TimeTableCell_SelectOnly.sql,024.001_Dim7TimeTableCell_InsertData.sql
+249,Dim8TimeTableCellTeacherCoverList,,24,TimeTableCell,SELECT * FROM cdm_demo_gold.Dim8TimeTableCellTeacherCoverList;,024.002_Dim8TimeTableCellTeacherCoverList_SelectOnly.sql,024.002_Dim8TimeTableCellTeacherCoverList_InsertData.sql
+250,Dim8TimeTableCellRoomList,,24,TimeTableCell,SELECT * FROM cdm_demo_gold.Dim8TimeTableCellRoomList;,024.003_Dim8TimeTableCellRoomList_SelectOnly.sql,024.003_Dim8TimeTableCellRoomList_InsertData.sql
+99,Dim1TimeTableContainer,,25,TimeTableContainer,SELECT * FROM cdm_demo_gold.Dim1TimeTableContainer;,025.001_Dim1TimeTableContainer_SelectOnly.sql,025.001_Dim1TimeTableContainer_InsertData.sql
+227,Dim4TimeTableContainerSchedule,,25,TimeTableContainer,SELECT * FROM cdm_demo_gold.Dim4TimeTableContainerSchedule;,025.002_Dim4TimeTableContainerSchedule_SelectOnly.sql,025.002_Dim4TimeTableContainerSchedule_InsertData.sql
+234,Dim5TimeTableContainerDay,,25,TimeTableContainer,SELECT * FROM cdm_demo_gold.Dim5TimeTableContainerDay;,025.003_Dim5TimeTableContainerDay_SelectOnly.sql,025.003_Dim5TimeTableContainerDay_InsertData.sql
+247,Dim7TimeTableContainerTeachingGroupScheduleList,,25,TimeTableContainer,SELECT * FROM cdm_demo_gold.Dim7TimeTableContainerTeachingGroupScheduleList;,025.004_Dim7TimeTableContainerTeachingGroupScheduleList_SelectOnly.sql,025.004_Dim7TimeTableContainerTeachingGroupScheduleList_InsertData.sql
+251,Dim8TimeTableContainerScheduleCellList,,25,TimeTableContainer,SELECT * FROM cdm_demo_gold.Dim8TimeTableContainerScheduleCellList;,025.005_Dim8TimeTableContainerScheduleCellList_SelectOnly.sql,025.005_Dim8TimeTableContainerScheduleCellList_InsertData.sql
+252,Dim8TimeTableContainerTeachingGroupPeriodList,,25,TimeTableContainer,SELECT * FROM cdm_demo_gold.Dim8TimeTableContainerTeachingGroupPeriodList;,025.006_Dim8TimeTableContainerTeachingGroupPeriodList_SelectOnly.sql,025.006_Dim8TimeTableContainerTeachingGroupPeriodList_InsertData.sql
+253,Dim8TimeTableContainerTeachingGroupStudentList,,25,TimeTableContainer,SELECT * FROM cdm_demo_gold.Dim8TimeTableContainerTeachingGroupStudentList;,025.007_Dim8TimeTableContainerTeachingGroupStudentList_SelectOnly.sql,025.007_Dim8TimeTableContainerTeachingGroupStudentList_InsertData.sql
+254,Dim8TimeTableContainerTeachingGroupTeacherList,,25,TimeTableContainer,SELECT * FROM cdm_demo_gold.Dim8TimeTableContainerTeachingGroupTeacherList;,025.008_Dim8TimeTableContainerTeachingGroupTeacherList_SelectOnly.sql,025.008_Dim8TimeTableContainerTeachingGroupTeacherList_InsertData.sql
+256,Dim9TimeTableContainerTeacherCoverList,,25,TimeTableContainer,SELECT * FROM cdm_demo_gold.Dim9TimeTableContainerTeacherCoverList;,025.009_Dim9TimeTableContainerTeacherCoverList_SelectOnly.sql,025.009_Dim9TimeTableContainerTeacherCoverList_InsertData.sql
+257,Dim9TimeTableContainerRoomList,,25,TimeTableContainer,SELECT * FROM cdm_demo_gold.Dim9TimeTableContainerRoomList;,025.010_Dim9TimeTableContainerRoomList_SelectOnly.sql,025.010_Dim9TimeTableContainerRoomList_InsertData.sql
+255,Dim8ScheduledActivity,,26,ScheduledActivity,SELECT * FROM cdm_demo_gold.Dim8ScheduledActivity;,026.001_Dim8ScheduledActivity_SelectOnly.sql,026.001_Dim8ScheduledActivity_InsertData.sql
+258,Dim9ScheduledActivityTeacherCoverList,,26,ScheduledActivity,SELECT * FROM cdm_demo_gold.Dim9ScheduledActivityTeacherCoverList;,026.002_Dim9ScheduledActivityTeacherCoverList_SelectOnly.sql,026.002_Dim9ScheduledActivityTeacherCoverList_InsertData.sql
+259,Dim9ScheduledActivityRoomList,,26,ScheduledActivity,SELECT * FROM cdm_demo_gold.Dim9ScheduledActivityRoomList;,026.003_Dim9ScheduledActivityRoomList_SelectOnly.sql,026.003_Dim9ScheduledActivityRoomList_InsertData.sql
+260,Dim9ScheduledActivityAddressList,,26,ScheduledActivity,SELECT * FROM cdm_demo_gold.Dim9ScheduledActivityAddressList;,026.004_Dim9ScheduledActivityAddressList_SelectOnly.sql,026.004_Dim9ScheduledActivityAddressList_InsertData.sql
+261,Dim9ScheduledActivityStudentList,,26,ScheduledActivity,SELECT * FROM cdm_demo_gold.Dim9ScheduledActivityStudentList;,026.005_Dim9ScheduledActivityStudentList_SelectOnly.sql,026.005_Dim9ScheduledActivityStudentList_InsertData.sql
+262,Dim9ScheduledActivityTeachingGroupList,,26,ScheduledActivity,SELECT * FROM cdm_demo_gold.Dim9ScheduledActivityTeachingGroupList;,026.006_Dim9ScheduledActivityTeachingGroupList_SelectOnly.sql,026.006_Dim9ScheduledActivityTeachingGroupList_InsertData.sql
+263,Dim9ScheduledActivityYearLevels,,26,ScheduledActivity,SELECT * FROM cdm_demo_gold.Dim9ScheduledActivityYearLevels;,026.007_Dim9ScheduledActivityYearLevels_SelectOnly.sql,026.007_Dim9ScheduledActivityYearLevels_InsertData.sql
+264,Dim9ScheduledActivityChangeReasonList,,26,ScheduledActivity,SELECT * FROM cdm_demo_gold.Dim9ScheduledActivityChangeReasonList;,026.008_Dim9ScheduledActivityChangeReasonList_SelectOnly.sql,026.008_Dim9ScheduledActivityChangeReasonList_InsertData.sql
+265,Fact9ResourceBooking,,27,ResourceBooking,SELECT * FROM cdm_demo_gold.Fact9ResourceBooking;,027.001_Fact9ResourceBooking_SelectOnly.sql,027.001_Fact9ResourceBooking_InsertData.sql
