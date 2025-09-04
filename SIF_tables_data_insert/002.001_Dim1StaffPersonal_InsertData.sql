@@ -75,7 +75,7 @@ SELECT CONCAT( -- UuidV7Start plus 15 random hexadecimal characters
       ,UpdatedAt AS ee_UpdatedAt
 FROM dbo_Staff
 )
-INSERT INTO cdm_demo_gold.Dim0StaffEmploymentStatus (
+INSERT INTO cdm_demo_gold.Dim1StaffPersonal (
 SELECT RefId
       ,LocalId
 FROM Dim1StaffPersonal

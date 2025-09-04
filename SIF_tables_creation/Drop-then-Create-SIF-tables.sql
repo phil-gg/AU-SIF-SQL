@@ -15,9 +15,9 @@
 -- Need Azure SQL Database or Azure SQL Managed Instance for this demo.
 -- Enforcement of Primary Keys, Foreign Keys, and unique constraints test our mapping is correct.
 -- Such instance types can switch database with 'USE' command:
-USE [demo_integration_gold];
-PRINT N'Using database [demo_integration_gold]';
-GO
+--USE [demo_integration_gold];
+--PRINT N'Using database [demo_integration_gold]';
+--GO
 
 -- Set schema within which to build the SIF relational data structure
 DECLARE @schemaName SYSNAME = 'cdm_demo_gold';
