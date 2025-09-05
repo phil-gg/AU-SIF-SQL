@@ -7,7 +7,6 @@ The "xxx.yyy" filename prefix gives the recommended order in which  to complete 
 These filenames are generated with an Excel formula in "tables list" (stored in the Select Only folder).
 
 The "tables list" files track all the scripts to be built, and *(with "xxx.yyy" filename prefix)* recommends the order in which  to complete the mappings, and documents the dependency order in which data insert must occur.
-The status table below is a copy-paste of "tables list" columns A to E into [tablesgenerator.com/markdown_tables](https://www.tablesgenerator.com/markdown_tables).
 
 ## Current state of mapping
 
