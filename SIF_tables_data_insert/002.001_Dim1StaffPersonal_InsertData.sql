@@ -41,7 +41,7 @@ SELECT [StaffId] -- alphanumeric primary key
       ,[fwUpdatedBy] AS UpdatedBy
       ,CONVERT(datetime,[fwUpdated],127) AS UpdatedAt
 FROM [silver].[Staff]
-), Dim1StaffPersonal AS (
+), StaffPersonal AS (
 SELECT CONCAT( -- UuidV7Start plus 15 random hexadecimal characters
        (SELECT UuidV7Start from UuidTime), -- timestamp part of Uuidv7
        RIGHT( -- keep last 15 characters plus a hyphen
@@ -76,7 +76,10 @@ SELECT CONCAT( -- UuidV7Start plus 15 random hexadecimal characters
 FROM dbo_Staff
 )
 INSERT INTO cdm_demo_gold.Dim1StaffPersonal (
+       RefId
+      ,LocalId
+)
 SELECT RefId
       ,LocalId
-FROM Dim1StaffPersonal
-);
+FROM StaffPersonal
+;

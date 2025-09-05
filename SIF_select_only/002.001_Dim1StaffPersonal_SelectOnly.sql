@@ -41,7 +41,7 @@ SELECT [StaffId] -- alphanumeric primary key
       ,[fwUpdatedBy] AS UpdatedBy
       ,CONVERT(datetime,[fwUpdated],127) AS UpdatedAt
 FROM [silver].[Staff]
-)--, Dim1StaffPersonal AS (
+)--, StaffPersonal AS (
 SELECT CONCAT( -- UuidV7Start plus 15 random hexadecimal characters
        (SELECT UuidV7Start from UuidTime), -- timestamp part of Uuidv7
        RIGHT( -- keep last 15 characters plus a hyphen
@@ -52,11 +52,11 @@ SELECT CONCAT( -- UuidV7Start plus 15 random hexadecimal characters
        RIGHT(REPLICATE('0', 10) + CONVERT(VARCHAR(10),[EntityId]), 10) -- EntityId left pad with 0 to CHAR(10)
        ))), -- close concat hashbytes and convert functions
        16)) -- keep last 15 characters plus a hyphen then close right and original concat
-       AS DimRefId
---      ,CONCAT( -- stick StaffId and EntityId together
---       RIGHT(REPLICATE('0', 10) + [StaffId], 10), -- StaffId left pad with 0 to CHAR(10)
---       RIGHT(REPLICATE('0', 10) + CONVERT(VARCHAR(10),[EntityId]), 10) -- EntityId left pad with 0 to CHAR(10)
---       ) AS CombinedPKsToHash
+       AS RefId
+      ,CONCAT( -- stick StaffId and EntityId together
+       RIGHT(REPLICATE('0', 10) + [StaffId], 10), -- StaffId left pad with 0 to CHAR(10)
+       RIGHT(REPLICATE('0', 10) + CONVERT(VARCHAR(10),[EntityId]), 10) -- EntityId left pad with 0 to CHAR(10)
+       ) AS CombinedPKsToHash
       ,[EntityId] AS LocalId -- eMinerva EntityId mapped to SIF LocalId
 --     TO-DO: StateProvinceId
 --     TO-DO: PersonInfo
