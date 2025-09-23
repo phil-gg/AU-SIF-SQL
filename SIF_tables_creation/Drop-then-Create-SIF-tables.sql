@@ -2876,11 +2876,11 @@ CREATE TABLE cdm_demo_gold.Dim1VisaSubClass (
      [LocalId] CHAR (5) NOT NULL
     ,[VisaSubClassCode] VARCHAR (40) NOT NULL
     ,[VisaSubClassName] VARCHAR (255) NULL
-    ,[VisaType] VARCHAR (255) NULL
+    ,[VisaTypeCode] CHAR (5) NULL
+    ,[VisaTypeName] VARCHAR (255) NULL
     ,[InActive] BIT NULL
     ,[DisplayOrder] INT NOT NULL
     ,CONSTRAINT [PK_VisaSubClass] PRIMARY KEY ([LocalId])
-    ,CONSTRAINT [Unique_VisaSubClassCode] UNIQUE ([VisaSubClassCode])
 );
 PRINT N'Created cdm_demo_gold.Dim1VisaSubClass';
 GO
