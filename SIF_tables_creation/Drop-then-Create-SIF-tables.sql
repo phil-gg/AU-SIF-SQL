@@ -4381,7 +4381,7 @@ CREATE TABLE cdm_demo_gold.Dim2SchoolInfo (
     ,[LEAInfoRefId] CHAR (36) NULL
     ,[LEAInfoLocalId] INT NOT NULL
     ,[OtherLEARefId] CHAR (36) NULL
-    ,[OtherLEALocalId] INT NOT NULL
+    ,[OtherLEALocalId] INT NULL
     ,[SchoolDistrict] VARCHAR (111) NULL
     ,[SchoolDistrictLocalId] INT NULL
     ,[SchoolType] VARCHAR (17) NULL
